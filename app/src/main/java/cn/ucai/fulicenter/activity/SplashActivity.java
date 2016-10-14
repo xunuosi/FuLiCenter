@@ -1,10 +1,10 @@
 package cn.ucai.fulicenter.activity;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.utils.MFGT;
 
 public class SplashActivity extends AppCompatActivity {
     private long splashTimes = 2000;
@@ -13,6 +13,7 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
     }
 
     @Override
@@ -32,7 +33,10 @@ public class SplashActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                // 跳转到主界面
+                MFGT.gotoMainActivity(SplashActivity.this);
+                // 从activity栈中剔除闪屏界面
+                MFGT.finish(SplashActivity.this);
             }
         }).start();
     }

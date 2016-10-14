@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.activity;
 
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -19,25 +20,13 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        new Thread(new Runnable() {
+        // 该方法执行指定时长的线程
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                long startMillis = System.currentTimeMillis();
-                // 后台耗时操作
-                long costMills = System.currentTimeMillis() - startMillis;
-                if (costMills - splashTimes < 0) {
-                    try {
-                        // 如果耗时操作低于闪屏设置的时间线程等待
-                        Thread.sleep(splashTimes - costMills);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                // 跳转到主界面
                 MFGT.gotoMainActivity(SplashActivity.this);
-                // 从activity栈中剔除闪屏界面
-                MFGT.finish(SplashActivity.this);
+                finish();
             }
-        }).start();
+        }, splashTimes);
     }
 }

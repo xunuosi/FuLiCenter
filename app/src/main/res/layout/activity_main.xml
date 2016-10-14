@@ -7,18 +7,13 @@
     android:layout_height="match_parent"
     tools:context="cn.ucai.fulicenter.activity.MainActivity">
 
-    <LinearLayout
-        android:id="@+id/main_footer_menue_item_linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal"
-        >
         <RadioGroup
             android:id="@+id/rg_bottom_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true"
+            >
             <RadioButton
                 android:id="@+id/rb_newGoods"
                 android:layout_width="0dp"
@@ -104,20 +99,21 @@
                 android:checked="false"
                 />
         </RadioGroup>
-    </LinearLayout>
     <LinearLayout
         android:id="@+id/liLayout_blank"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:orientation="horizontal"
-        android:layout_above="@id/main_footer_menue_item_linearLayout"
+        android:layout_above="@id/rg_bottom_layout"
         android:background="#969493"
         />
 
     <FrameLayout
-        android:id="@+id/show_imageView"
+        android:id="@+id/show_frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_above="@id/liLayout_blank"
+        />
 </RelativeLayout>

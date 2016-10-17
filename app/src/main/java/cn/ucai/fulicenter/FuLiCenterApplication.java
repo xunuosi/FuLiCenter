@@ -4,6 +4,13 @@ import android.app.Application;
 
 
 public class FuLiCenterApplication extends Application {
+    public static FuLiCenterApplication application;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        application = this;
+    }
 
     public FuLiCenterApplication() {
 

@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="15dp"
+    android:padding="15dp"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:weightSum="1"
@@ -12,11 +12,12 @@
 
     <ImageView
         android:id="@+id/newgoods_image_view"
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
+        android:layout_width="150dp"
+        android:layout_height="200dp"
         android:src="@drawable/nopic"
         android:layout_weight="0.42"
-        />
+
+        android:scaleType="fitXY"/>
     <TextView
         android:id="@+id/newgoods_title_text_view"
         android:layout_width="wrap_content"
@@ -24,6 +25,7 @@
         tools:text="防雾霾口罩 黄色"
         android:layout_weight="0.29"
         />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

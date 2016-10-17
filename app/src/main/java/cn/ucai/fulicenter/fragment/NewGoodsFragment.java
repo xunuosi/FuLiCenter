@@ -83,7 +83,7 @@ public class NewGoodsFragment extends Fragment {
         );
         // 新建一个GridLayoutManager设置列数为2列
         GridLayoutManager gridLayoutManager =
-                new GridLayoutManager(getActivity(), I.COLUM_NUM);
+                new GridLayoutManager(getContext(), I.COLUM_NUM);
         mNewgoodsRecyclerView.setLayoutManager(gridLayoutManager);
         mList = new ArrayList<>();
         mNewGoodsAdapter = new NewGoodsAdapter(mList, getContext());

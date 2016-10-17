@@ -1,6 +1,8 @@
 package cn.ucai.fulicenter.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioButton;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.fragment.NewGoodsFragment;
 import cn.ucai.fulicenter.utils.L;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     int index;// 记录被点击RadioButton的下标索引
     RadioButton[] mRadioButtons;
+    Fragment[] mFragments;// 用于管理页脚导航存放的Fragment
+    FragmentManager mFragmentManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initView();
+        initFragment();
+    }
+
+    private void initFragment() {
+        mFragmentManager = getSupportFragmentManager();
+        mFragments = new Fragment[5];
+        mFragments[0] = new NewGoodsFragment();
+
+        mFragmentManager.beginTransaction()
+                .add(R.id.show_frameLayout, mFragments[0])
+                .show(mFragments[0])
+                .commit();
+
     }
 
     private void initView() {

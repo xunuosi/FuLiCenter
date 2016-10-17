@@ -26,7 +26,7 @@
                 android:textSize="18sp"
                 style="@style/menu_item_style"
                 android:button="@null"
-                android:checked="false"
+                android:checked="true"
                 />
             <RadioButton
                 android:id="@+id/rb_boutique"
@@ -114,7 +114,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
         android:layout_above="@id/liLayout_blank"
         />
 </RelativeLayout>

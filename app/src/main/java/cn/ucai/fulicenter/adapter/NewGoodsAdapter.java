@@ -91,7 +91,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             mNewgoodsTitleTextView.setText(newGoodsBean.getGoodsName());
             mNewgoodsPrieceTextView.setText(newGoodsBean.getCurrencyPrice());
             // setImageView
-            ImageLoader.setImage(I.DOWNLOAD_IMG_URL, mContext, mNewgoodsImageView, true);
+            ImageLoader.downloadImg(mContext,mNewgoodsImageView,newGoodsBean.getGoodsThumb());
         }
 
     }

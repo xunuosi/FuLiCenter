@@ -3,14 +3,41 @@ package cn.ucai.fulicenter.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.adapter.NewGoodsAdapter;
+import cn.ucai.fulicenter.bean.NewGoodsBean;
+import cn.ucai.fulicenter.dao.NetDao;
+import cn.ucai.fulicenter.dao.OkHttpUtils;
+import cn.ucai.fulicenter.utils.ConvertUtils;
+import cn.ucai.fulicenter.utils.L;
 
 public class NewGoodsFragment extends Fragment {
 
+    @BindView(R.id.newgoods_refresh_text_view)
+    TextView mNewgoodsRefreshTextView;
+    @BindView(R.id.newgoods_recycler_view)
+    RecyclerView mNewgoodsRecyclerView;
+    @BindView(R.id.newgoods_srl)
+
+    SwipeRefreshLayout mNewgoodsSrl;
+    NewGoodsAdapter mNewGoodsAdapter;
+    ArrayList<NewGoodsBean> mList;
+    private int mPageId = 1;
 
     public NewGoodsFragment() {
     }
@@ -21,7 +48,49 @@ public class NewGoodsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_new_goods, container, false);
 
+        ButterKnife.bind(this, layout);
+        initView();
+        initData();
         return layout;
     }
+
+    private void initData() {
+        NetDao.downloadNewGoods(getContext(), mPageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+            @Override
+            public void onSuccess(NewGoodsBean[] result) {
+                if (result != null && result.length > 0) {
+                    ArrayList<NewGoodsBean> newGoodsBeanArrayList =
+                            ConvertUtils.array2List(result);
+                    mNewGoodsAdapter.initList(newGoodsBeanArrayList);
+                }
+            }
+
+            @Override
+            public void onError(String error) {
+                L.e("ERROR:"+error);
+            }
+        });
+    }
+
+    private void initView() {
+        // 设置SwipeRefreshLayout刷新样式
+        mNewgoodsSrl.setColorSchemeColors(
+                getResources().getColor(R.color.google_blue),
+                getResources().getColor(R.color.google_green),
+                getResources().getColor(R.color.google_red),
+                getResources().getColor(R.color.google_yellow)
+
+        );
+        // 新建一个GridLayoutManager设置列数为2列
+        GridLayoutManager gridLayoutManager =
+                new GridLayoutManager(getActivity(), I.COLUM_NUM);
+        mNewgoodsRecyclerView.setLayoutManager(gridLayoutManager);
+        mList = new ArrayList<>();
+        mNewGoodsAdapter = new NewGoodsAdapter(mList, getContext());
+        mNewgoodsRecyclerView.setAdapter(mNewGoodsAdapter);
+        // 是否自动修复大小
+        mNewgoodsRecyclerView.setHasFixedSize(true);
+    }
+
 
 }

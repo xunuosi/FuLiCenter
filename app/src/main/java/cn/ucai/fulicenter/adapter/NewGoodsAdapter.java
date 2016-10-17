@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -22,6 +23,8 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     Context mContext;
 
     public NewGoodsAdapter(List<NewGoodsBean> newGoodsBeanList, Context context) {
+        // 通常采用这种方式
+        mNewGoodsBeanList = new ArrayList<>();
         mNewGoodsBeanList = newGoodsBeanList;
         mContext = context;
     }
@@ -63,7 +66,15 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         return I.TYPE_ITEM;
     }
 
-    private class NewGoodsItemViewHolder extends RecyclerView.ViewHolder{
+    public void initList(ArrayList<NewGoodsBean> newGoodsBeanArrayList) {
+        if (mNewGoodsBeanList != null) {
+            mNewGoodsBeanList.clear();
+        }
+        mNewGoodsBeanList.addAll(newGoodsBeanArrayList);
+        notifyDataSetChanged();
+    }
+
+    public class NewGoodsItemViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.newgoods_image_view)
         ImageView mNewgoodsImageView;
         @BindView(R.id.newgoods_title_text_view)

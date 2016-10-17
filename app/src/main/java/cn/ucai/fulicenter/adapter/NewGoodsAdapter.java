@@ -14,6 +14,7 @@ import butterknife.ButterKnife;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
+import cn.ucai.fulicenter.utils.ImageLoader;
 
 
 public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -79,6 +80,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             mNewgoodsTitleTextView.setText(newGoodsBean.getGoodsName());
             mNewgoodsPrieceTextView.setText(newGoodsBean.getCurrencyPrice());
             // setImageView
+            ImageLoader.setImage(I.DOWNLOAD_IMG_URL, mContext, mNewgoodsImageView, true);
         }
 
     }

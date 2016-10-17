@@ -7,12 +7,13 @@
     android:layout_height="match_parent"
     tools:context="cn.ucai.fulicenter.activity.MainActivity">
 
-        <RadioGroup
-            android:id="@+id/rg_bottom_layout"
+        <LinearLayout
+            android:id="@+id/main_bottom_liner_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="60dp"
             android:orientation="horizontal"
             android:layout_alignParentBottom="true"
+            android:background="@color/bottom_bar_taobao_bg"
             >
             <RadioButton
                 android:id="@+id/rb_newGoods"
@@ -98,13 +99,13 @@
                 style="@style/menu_item_style"
                 android:checked="false"
                 />
-        </RadioGroup>
+        </LinearLayout>
     <LinearLayout
         android:id="@+id/liLayout_blank"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:orientation="horizontal"
-        android:layout_above="@id/rg_bottom_layout"
+        android:layout_above="@id/main_bottom_liner_layout"
         android:background="#969493"
         />
 

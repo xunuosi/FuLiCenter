@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -20,6 +21,7 @@ import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.GoodsDetailActivity;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.MFGT;
 
 
 public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -122,8 +124,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public void newgoodsItemOnClick() {
             // 取出存放的GoodsId并发送给启动的Activity
             int goodsId= (int) mNewgoodsLinearLayout.getTag();
-            mContext.startActivity(
-                    new Intent(mContext, GoodsDetailActivity.class)
+            MFGT.startActivity((Activity) mContext, GoodsDetailActivity.class, new Intent()
                             .putExtra(I.GoodsDetails.KEY_GOODS_ID,goodsId));
         }
 

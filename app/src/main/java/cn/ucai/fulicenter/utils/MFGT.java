@@ -36,4 +36,17 @@ public class MFGT {
         context.startActivity(intent);
         context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
     }
+
+    /**
+     * 重写开启界面的方法
+     * @param context
+     * @param cls
+     * @param mIntent
+     */
+    public static void startActivity(Activity context,Class<?> cls,Intent mIntent){
+        Intent intent = mIntent;
+        intent.setClass(context,cls);
+        context.startActivity(intent);
+        context.overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+    }
 }

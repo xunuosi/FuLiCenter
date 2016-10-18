@@ -3,6 +3,7 @@ package cn.ucai.fulicenter.dao;
         import android.content.Context;
 
         import cn.ucai.fulicenter.I;
+        import cn.ucai.fulicenter.bean.GoodsDetailsBean;
         import cn.ucai.fulicenter.bean.NewGoodsBean;
         import cn.ucai.fulicenter.utils.L;
 
@@ -17,5 +18,14 @@ public class NetDao {
                 .targetClass(NewGoodsBean[].class)
                 .execute(listener);
         L.i("xns",utils.mUrl.toString());
+    }
+
+    public static void findGoodDetails(Context mcontext, int goodsId
+                , OkHttpUtils.OnCompleteListener<GoodsDetailsBean> listener) {
+        OkHttpUtils<GoodsDetailsBean> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_FIND_GOOD_DETAILS)
+                .addParam(I.GoodsDetails.KEY_GOODS_ID,String.valueOf(goodsId))
+                .targetClass(GoodsDetailsBean.class)
+                .execute(listener);
     }
 }

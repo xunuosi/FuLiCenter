@@ -52,20 +52,56 @@ public class NewGoodsFragment extends Fragment {
         ButterKnife.bind(this, layout);
         initView();
         initData();
+        setListener();
         return layout;
     }
 
+    private void setListener() {
+        pullDownListener();
+        pullUpListener();
+    }
+
+    private void pullUpListener() {
+
+    }
+
+    private void pullDownListener() {
+        mNewgoodsSrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mNewgoodsSrl.setRefreshing(true);
+                mNewgoodsRefreshTextView.setVisibility(View.VISIBLE);
+                mPageId = 1;
+                downLoadData(I.ACTION_PULL_DOWN);
+            }
+        });
+    }
+
     private void initData() {
-        NetDao.downloadNewGoods(getContext(), mPageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
+        downLoadData(I.ACTION_DOWNLOAD);
+    }
+
+    private void downLoadData(final int action) {
+        NetDao.downloadNewGoods(getContext(), mPageId,
+                new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
                 mNewGoodsAdapter.setMore(true);
+                // 获取到数据后修正SwipRefresh的状态
+                mNewgoodsSrl.setRefreshing(false);
+                mNewgoodsRefreshTextView.setVisibility(View.GONE);
                 if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> newGoodsBeanArrayList =
                             ConvertUtils.array2List(result);
                     // 如果每次请求数据小于10条就设置没有更多
-                    mNewGoodsAdapter.setMore(newGoodsBeanArrayList.size() >= I.PAGE_SIZE_DEFAULT);
-                    mNewGoodsAdapter.initList(newGoodsBeanArrayList);
+                    mNewGoodsAdapter.setMore
+                            (newGoodsBeanArrayList.size() >= I.PAGE_SIZE_DEFAULT);
+                    if (action != I.ACTION_PULL_UP) {
+                        mNewGoodsAdapter.initList(newGoodsBeanArrayList);
+                    } else {
+                        mNewGoodsAdapter.addList(newGoodsBeanArrayList);
+                    }
+
                 } else {
                     mNewGoodsAdapter.setMore(false);
                 }
@@ -73,6 +109,9 @@ public class NewGoodsFragment extends Fragment {
 
             @Override
             public void onError(String error) {
+                mNewgoodsRefreshTextView.setVisibility(View.GONE);
+                mNewgoodsSrl.setRefreshing(false);
+                mNewGoodsAdapter.setMore(false);
                 CommonUtils.showLongToast("网络访问异常，请检查网络设置。");
                 L.e("ERROR:"+error);
             }

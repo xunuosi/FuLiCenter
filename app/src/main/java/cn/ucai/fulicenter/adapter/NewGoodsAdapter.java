@@ -95,6 +95,11 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         notifyDataSetChanged();
     }
 
+    public void addList(ArrayList<NewGoodsBean> newGoodsBeanArrayList) {
+        mNewGoodsBeanList.addAll(newGoodsBeanArrayList);
+        notifyDataSetChanged();
+    }
+
     public class NewGoodsItemViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.newgoods_image_view)
         ImageView mNewgoodsImageView;

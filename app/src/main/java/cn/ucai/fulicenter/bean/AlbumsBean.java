@@ -1,7 +1,9 @@
 package cn.ucai.fulicenter.bean;
 
 
-public class AlbumsBean {
+import java.io.Serializable;
+
+public class AlbumsBean implements Serializable{
 
     /**
      * pid : 7677

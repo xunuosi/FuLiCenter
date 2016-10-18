@@ -26,6 +26,7 @@ import cn.ucai.fulicenter.dao.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.views.SpaceItemDecoration;
 
 public class NewGoodsFragment extends Fragment {
 
@@ -65,6 +66,11 @@ public class NewGoodsFragment extends Fragment {
 
     private void pullUpListener() {
         mNewgoodsRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            /**
+             * 滑动状态改变时回调的方法
+             * @param recyclerView
+             * @param newState
+             */
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -78,6 +84,12 @@ public class NewGoodsFragment extends Fragment {
                 }
             }
 
+            /**
+             * 正在被滑动时回调的方法
+             * @param recyclerView
+             * @param dx
+             * @param dy
+             */
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -156,6 +168,8 @@ public class NewGoodsFragment extends Fragment {
         mNewgoodsRecyclerView.setAdapter(mNewGoodsAdapter);
         // 是否自动修复大小
         mNewgoodsRecyclerView.setHasFixedSize(true);
+        // 设置Item之间的边距 上下左右边距都12px
+        mNewgoodsRecyclerView.addItemDecoration(new SpaceItemDecoration(12));
     }
 
 

@@ -1,7 +1,9 @@
 package cn.ucai.fulicenter.bean;
 
 
-public class ColorBean {
+import java.io.Serializable;
+
+public class ColorBean implements Serializable{
 
 
     /**

@@ -2,13 +2,142 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_goods_detail"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="cn.ucai.fulicenter.activity.GoodsDetailActivity">
 
+    <RelativeLayout
+        android:id="@+id/goodsDetail_bg_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/good_detail_title_bg"
+        >
+        <include layout="@layout/title_image_text"/>
+
+        <ImageView
+            android:id="@+id/goodsDetail_share_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/selector_share_bg"
+            />
+
+        <ImageView
+            android:id="@+id/goodsDetail_collect_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/goodsDetail_share_imageView"
+            android:src="@mipmap/bg_collect_in"
+            />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/goodsDetail_collect_imageView">
+            <ImageView
+                android:id="@+id/goodsDetail_cart_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/bg_cart_selected"
+                />
+            <TextView
+                android:id="@+id/goodsDetail_cart_textView"
+                android:layout_toRightOf="@id/goodsDetail_cart_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:textColor="#52d0f2"
+                tools:text="10"
+                android:visibility="gone"
+                />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/goodsDetail_title_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/goodsDetail_bg_relativeLayout"
+        android:layout_marginTop="10dp"
+        android:background="@color/good_detail_bg_white"
+        android:padding="50dp"
+        >
+
+        <TextView
+            android:id="@+id/goodsDetail_goodsEngTitle_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:textSize="15dp"
+            tools:text="Monbento"
+            />
+
+        <TextView
+            android:id="@+id/goodsDetail_goodsChiTitle_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/goodsDetail_goodsEngTitle_textView"
+            android:textSize="15dp"
+            tools:text="双层巨无霸汉堡"
+            />
+        <TextView
+            android:id="@+id/goodsDetail_shopPrice_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="15dp"
+            android:textColor="@color/item_good_price"
+            android:autoLink="all"
+            tools:text="$99"
+            />
+        <TextView
+            android:id="@+id/goodsDetail_cuurentPrice_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textSize="15dp"
+            android:textColor="@color/good_detail_currency_price"
+            android:layout_below="@id/goodsDetail_shopPrice_textView"
+            tools:text="$99"
+            />
+        <cn.ucai.fulicenter.views.SlideAutoLoopView
+            android:id="@+id/goodsDetail_showGoods_SlideAutoLoopView"
+            android:layout_width="match_parent"
+            android:layout_height="230dp"
+            android:layout_below="@id/goodsDetail_goodsChiTitle_textView"
+            android:layout_marginTop="10dp"
+            android:background="@color/good_detail_bg_white"
+            >
+
+        </cn.ucai.fulicenter.views.SlideAutoLoopView>
+        <cn.ucai.fulicenter.views.FlowIndicator
+            android:id="@+id/goodsDetail_FlowIndicator"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/goodsDetail_showGoods_SlideAutoLoopView"
+            app:count="4"
+            app:focus="0"
+            app:focus_color="@color/good_detaul_flow_indicator_focus"
+            app:normal_color="#a1d1d1"
+            app:r="5dp"
+            app:space="3dp"
+            />
+        <WebView
+            android:layout_marginTop="5dp"
+            android:id="@+id/goodsDetail_description_textView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/goodsDetail_FlowIndicator"
+            />
+    </RelativeLayout>
 </RelativeLayout>

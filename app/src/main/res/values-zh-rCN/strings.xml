@@ -5,4 +5,8 @@
     <string name="now_refresh">刷新中……</string>
     <string name="no_more">没有更多数据了……</string>
     <string name="load_more">加载更多数据……</string>
+
+    <string name="goods_detail_top">商品详情</string>
+    <string name="goods_des_detail">PP食品级材质，轻巧、易清洗、蠕变性小，不易变形，
+        可置于微波炉加热，可方巾洗碗机清洗。双层色彩可以随意组合，轻巧方便。</string>
 </resources>

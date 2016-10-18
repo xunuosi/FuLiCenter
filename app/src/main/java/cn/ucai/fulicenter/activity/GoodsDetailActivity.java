@@ -3,6 +3,7 @@ package cn.ucai.fulicenter.activity;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class GoodsDetailActivity extends AppCompatActivity {
     SlideAutoLoopView mGoodsDetailShowGoodsSlideAutoLoopView;
     @BindView(R.id.goodsDetail_FlowIndicator)
     FlowIndicator mGoodsDetailFlowIndicator;
+    @BindView(R.id.goodsDetail_description_webView)
+    WebView mGoodsDetailDescriptionWebView;
 
     int goodsId;
 
@@ -57,7 +60,7 @@ public class GoodsDetailActivity extends AppCompatActivity {
                 if (result != null) {
                     showGoodTitle(result);
                     recyclerShowImage(result);
-
+                    showWebView(result);
 
                 } else {
                     // 获取数据异常显示错误信息并关闭界面
@@ -75,6 +78,13 @@ public class GoodsDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void showWebView(GoodsDetailsBean result) {
+        // webView的数据显示
+        mGoodsDetailDescriptionWebView
+                .loadDataWithBaseURL(null,result.getGoodsBrief()
+                        , I.TEXT_HTML,I.UTF_8,null);
     }
 
     private void recyclerShowImage(GoodsDetailsBean result) {
@@ -102,9 +112,9 @@ public class GoodsDetailActivity extends AppCompatActivity {
 
     private String[] getAlbumImgUrl(AlbumsBean[] albums) {
         String[] urls = new String[]{};
-        for (int i=0;i<albums.length;i++) {
+        for (int i = 0; i < albums.length; i++) {
             urls = new String[albums.length];
-            urls[i]=albums[i].getImgUrl();
+            urls[i] = albums[i].getImgUrl();
         }
         return urls;
     }

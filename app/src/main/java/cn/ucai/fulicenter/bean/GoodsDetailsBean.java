@@ -124,14 +124,6 @@ public class GoodsDetailsBean implements Serializable{
         this.rankPrice = rankPrice;
     }
 
-    public boolean isIsPromote() {
-        return isPromote;
-    }
-
-    public void setIsPromote(boolean isPromote) {
-        this.isPromote = isPromote;
-    }
-
     public String getGoodsThumb() {
         return goodsThumb;
     }

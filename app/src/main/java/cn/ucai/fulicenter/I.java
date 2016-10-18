@@ -416,4 +416,7 @@ public interface I {
     String DOWNLOAD_IMG_URL= I.SERVER_ROOT+
             REQUEST_DOWNLOAD_IMAGE+I.QUESTION+ IMAGE_URL+"=";
 
+    /** 设置错误信息*/
+    String INTERNET_ERROR = "网络异常";
+
 }

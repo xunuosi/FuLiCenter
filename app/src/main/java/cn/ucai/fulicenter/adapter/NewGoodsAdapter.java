@@ -124,8 +124,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         public void newgoodsItemOnClick() {
             // 取出存放的GoodsId并发送给启动的Activity
             int goodsId= (int) mNewgoodsLinearLayout.getTag();
-            MFGT.startActivity((Activity) mContext, GoodsDetailActivity.class, new Intent()
-                            .putExtra(I.GoodsDetails.KEY_GOODS_ID,goodsId));
+            MFGT.gotoGoodsActivity(mContext,goodsId);
         }
 
         NewGoodsItemViewHolder(View view) {

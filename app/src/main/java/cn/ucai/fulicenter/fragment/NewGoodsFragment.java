@@ -23,6 +23,7 @@ import cn.ucai.fulicenter.adapter.NewGoodsAdapter;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.dao.NetDao;
 import cn.ucai.fulicenter.dao.OkHttpUtils;
+import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
 
@@ -58,15 +59,21 @@ public class NewGoodsFragment extends Fragment {
         NetDao.downloadNewGoods(getContext(), mPageId, new OkHttpUtils.OnCompleteListener<NewGoodsBean[]>() {
             @Override
             public void onSuccess(NewGoodsBean[] result) {
+                mNewGoodsAdapter.setMore(true);
                 if (result != null && result.length > 0) {
                     ArrayList<NewGoodsBean> newGoodsBeanArrayList =
                             ConvertUtils.array2List(result);
+                    // 如果每次请求数据小于10条就设置没有更多
+                    mNewGoodsAdapter.setMore(newGoodsBeanArrayList.size() >= I.PAGE_SIZE_DEFAULT);
                     mNewGoodsAdapter.initList(newGoodsBeanArrayList);
+                } else {
+                    mNewGoodsAdapter.setMore(false);
                 }
             }
 
             @Override
             public void onError(String error) {
+                CommonUtils.showLongToast("网络访问异常，请检查网络设置。");
                 L.e("ERROR:"+error);
             }
         });

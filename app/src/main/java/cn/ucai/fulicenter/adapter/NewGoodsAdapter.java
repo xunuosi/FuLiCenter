@@ -21,12 +21,23 @@ import cn.ucai.fulicenter.utils.ImageLoader;
 public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     List<NewGoodsBean> mNewGoodsBeanList;
     Context mContext;
+    boolean isMore;
 
     public NewGoodsAdapter(List<NewGoodsBean> newGoodsBeanList, Context context) {
         // 通常采用这种方式
         mNewGoodsBeanList = new ArrayList<>();
         mNewGoodsBeanList = newGoodsBeanList;
         mContext = context;
+    }
+
+    public boolean isMore() {
+        return isMore;
+    }
+
+    public void setMore(boolean more) {
+        isMore = more;
+        // 每次设置是否有更多时都应提醒Adapter更新数据
+        notifyDataSetChanged();
     }
 
     @Override
@@ -45,12 +56,22 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (getItemViewType(position) == I.TYPE_FOOTER) {
+            ItemFooterViewHolder footerHolder = (ItemFooterViewHolder) holder;
+            footerHolder.mFooterTextView.setText(getFooterStr());
             return;
         }
         NewGoodsBean newGoodsBean = mNewGoodsBeanList.get(position);
         NewGoodsItemViewHolder newGoodsItemViewHolder = (NewGoodsItemViewHolder) holder;
         newGoodsItemViewHolder.bindView(newGoodsBean);
 
+    }
+
+    /**
+     * 设置页脚显示文字的方法
+     * @return 返回字符串资源ID
+     */
+    private int getFooterStr() {
+        return isMore()?R.string.load_more:R.string.no_more;
     }
 
     @Override
@@ -97,9 +118,11 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     }
 
     private class ItemFooterViewHolder extends RecyclerView.ViewHolder {
+        TextView mFooterTextView;
 
         public ItemFooterViewHolder(View itemView) {
             super(itemView);
+            mFooterTextView = (TextView) itemView.findViewById(R.id.footer_text_view);
         }
     }
 

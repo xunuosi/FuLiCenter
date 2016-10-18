@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         mFragmentManager = getSupportFragmentManager();
         mFragments = new Fragment[5];
         mFragments[0] = new NewGoodsFragment();
-
+        // .show()可以指定显示哪个fragment显示你可以add很多
         mFragmentManager.beginTransaction()
                 .add(R.id.show_frameLayout, mFragments[0])
                 .show(mFragments[0])

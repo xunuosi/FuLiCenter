@@ -1,11 +1,7 @@
 package cn.ucai.fulicenter.bean;
 
 
-import java.util.List;
-
-/**
- * Created by Elder on 2016/10/13.
- */
+import java.util.Arrays;
 
 public class GoodsDetailsBean {
 
@@ -40,27 +36,12 @@ public class GoodsDetailsBean {
     private String currencyPrice;
     private String promotePrice;
     private String rankPrice;
-    private boolean isPromote;
     private String goodsThumb;
     private String goodsImg;
     private long addTime;
     private String shareUrl;
-    private boolean promote;
-    /**
-     * id : 9529
-     * goodsId : 0
-     * colorId : 7
-     * colorName : 白色
-     * colorCode : #ffffff
-     * colorImg :
-     * colorUrl : https://detail.tmall.com/item.htm?spm=a1z10.5-b.w4011-3609973698.66.6PtkVY&id=520971761592&rn=5ddf7aff64dbe1a24da0eaf7409e3389&abbucket=15&skuId=3104519239252
-     * albums : [{"pid":7677,"imgId":28296,"imgUrl":"201509/goods_img/7677_P_1442391216432.png","thumbUrl":"no_picture.gif"},{"pid":7677,"imgId":28297,"imgUrl":"201509/goods_img/7677_P_1442391216215.png","thumbUrl":"no_picture.gif"},{"pid":7677,"imgId":28298,"imgUrl":"201509/goods_img/7677_P_1442391216692.png","thumbUrl":"no_picture.gif"},{"pid":7677,"imgId":28299,"imgUrl":"201509/goods_img/7677_P_1442391216316.png","thumbUrl":"no_picture.gif"}]
-     */
-
-    private List<PropertiesBean> propertiesList;
-
-    public GoodsDetailsBean() {
-    }
+    private boolean isPromote;
+    private PropertiesBean[] properties;
 
     public int getId() {
         return id;
@@ -183,24 +164,24 @@ public class GoodsDetailsBean {
     }
 
     public boolean isPromote() {
-        return promote;
+        return isPromote;
     }
 
     public void setPromote(boolean promote) {
-        this.promote = promote;
+        this.isPromote = promote;
     }
 
-    public List<PropertiesBean> getPropertiesList() {
-        return propertiesList;
+    public PropertiesBean[] getProperties() {
+        return properties;
     }
 
-    public void setPropertiesList(List<PropertiesBean> propertiesList) {
-        this.propertiesList = propertiesList;
+    public void setProperties(PropertiesBean[] properties) {
+        this.properties = properties;
     }
 
     @Override
     public String toString() {
-        return "GoodsDetailsBean{" +
+        return "GoodDetailsBean{" +
                 "id=" + id +
                 ", goodsId=" + goodsId +
                 ", catId=" + catId +
@@ -211,13 +192,12 @@ public class GoodsDetailsBean {
                 ", currencyPrice='" + currencyPrice + '\'' +
                 ", promotePrice='" + promotePrice + '\'' +
                 ", rankPrice='" + rankPrice + '\'' +
-                ", isPromote=" + isPromote +
                 ", goodsThumb='" + goodsThumb + '\'' +
                 ", goodsImg='" + goodsImg + '\'' +
                 ", addTime=" + addTime +
                 ", shareUrl='" + shareUrl + '\'' +
-                ", promote=" + promote +
-                ", propertiesList=" + propertiesList +
+                ", promote=" + isPromote +
+                ", properties=" + Arrays.toString(properties) +
                 '}';
     }
 }

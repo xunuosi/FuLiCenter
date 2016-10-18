@@ -43,10 +43,6 @@ public class NewGoodsBean {
     private String colorCode;
     private String colorUrl;
     private String addTime;
-    private boolean promote;
-
-    public NewGoodsBean() {
-    }
 
     public int getId() {
         return id;
@@ -128,12 +124,12 @@ public class NewGoodsBean {
         this.rankPrice = rankPrice;
     }
 
-    public boolean isIsPromote() {
+    public boolean isPromote() {
         return isPromote;
     }
 
-    public void setIsPromote(boolean isPromote) {
-        this.isPromote = isPromote;
+    public void setPromote(boolean promote) {
+        this.isPromote = promote;
     }
 
     public String getGoodsThumb() {
@@ -192,17 +188,9 @@ public class NewGoodsBean {
         this.addTime = addTime;
     }
 
-    public boolean isPromote() {
-        return promote;
-    }
-
-    public void setPromote(boolean promote) {
-        this.promote = promote;
-    }
-
     @Override
     public String toString() {
-        return "NewGoodsBean{" +
+        return "NewGoodBean{" +
                 "id=" + id +
                 ", goodsId=" + goodsId +
                 ", catId=" + catId +
@@ -213,15 +201,14 @@ public class NewGoodsBean {
                 ", currencyPrice='" + currencyPrice + '\'' +
                 ", promotePrice='" + promotePrice + '\'' +
                 ", rankPrice='" + rankPrice + '\'' +
-                ", isPromote=" + isPromote +
+                ", promote=" + isPromote +
                 ", goodsThumb='" + goodsThumb + '\'' +
                 ", goodsImg='" + goodsImg + '\'' +
                 ", colorId=" + colorId +
                 ", colorName='" + colorName + '\'' +
                 ", colorCode='" + colorCode + '\'' +
                 ", colorUrl='" + colorUrl + '\'' +
-                ", addTime=" + addTime +
-                ", promote=" + promote +
+                ", addTime='" + addTime + '\'' +
                 '}';
     }
 }

@@ -1,8 +1,5 @@
 package cn.ucai.fulicenter.bean;
 
-/**
- * Created by Elder on 2016/10/13.
- */
 
 public class ColorBean {
 
@@ -17,31 +14,21 @@ public class ColorBean {
      * colorUrl : https://detail.tmall.com/item.htm?spm=a1z10.5-b.w4011-3609973698.66.6PtkVY&id=520971761592&rn=5ddf7aff64dbe1a24da0eaf7409e3389&abbucket=15&skuId=3104519239252
      */
 
-    private int id;
-    private int goodsId;
+    private int catId;
     private int colorId;
     private String colorName;
     private String colorCode;
     private String colorImg;
-    private String colorUrl;
 
     public ColorBean() {
     }
 
-    public int getId() {
-        return id;
+    public int getCatId() {
+        return catId;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getGoodsId() {
-        return goodsId;
-    }
-
-    public void setGoodsId(int goodsId) {
-        this.goodsId = goodsId;
+    public void setCatId(int catId) {
+        this.catId = catId;
     }
 
     public int getColorId() {
@@ -76,24 +63,14 @@ public class ColorBean {
         this.colorImg = colorImg;
     }
 
-    public String getColorUrl() {
-        return colorUrl;
-    }
-
-    public void setColorUrl(String colorUrl) {
-        this.colorUrl = colorUrl;
-    }
-
     @Override
     public String toString() {
         return "ColorBean{" +
-                "id=" + id +
-                ", goodsId=" + goodsId +
+                "catId=" + catId +
                 ", colorId=" + colorId +
                 ", colorName='" + colorName + '\'' +
                 ", colorCode='" + colorCode + '\'' +
                 ", colorImg='" + colorImg + '\'' +
-                ", colorUrl='" + colorUrl + '\'' +
                 '}';
     }
 }

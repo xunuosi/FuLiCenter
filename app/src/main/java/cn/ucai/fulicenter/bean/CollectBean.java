@@ -1,9 +1,5 @@
 package cn.ucai.fulicenter.bean;
 
-/**
- * Created by Elder on 2016/10/13.
- */
-
 public class CollectBean {
 
 
@@ -19,7 +15,7 @@ public class CollectBean {
      */
 
     private int id;
-    private int userName;
+    private String userName;
     private int goodsId;
     private String goodsName;
     private String goodsEnglishName;
@@ -38,11 +34,11 @@ public class CollectBean {
         this.id = id;
     }
 
-    public int getUserName() {
+    public String getUserName() {
         return userName;
     }
 
-    public void setUserName(int userName) {
+    public void setUserName(String userName) {
         this.userName = userName;
     }
 

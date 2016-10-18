@@ -38,6 +38,8 @@ public class NewGoodsFragment extends Fragment {
     SwipeRefreshLayout mNewgoodsSrl;
     NewGoodsAdapter mNewGoodsAdapter;
     ArrayList<NewGoodsBean> mList;
+    GridLayoutManager gridLayoutManager;
+
     private int mPageId = 1;
 
     public NewGoodsFragment() {
@@ -62,7 +64,25 @@ public class NewGoodsFragment extends Fragment {
     }
 
     private void pullUpListener() {
+        mNewgoodsRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                // 记录当前数据的位置最多为11 数据请求+页脚
+                int lastPosition = gridLayoutManager.findLastVisibleItemPosition();
+                if (lastPosition >= mNewGoodsAdapter.getItemCount() - 1
+                        && newState == RecyclerView.SCROLL_STATE_IDLE
+                        && mNewGoodsAdapter.isMore()) {
+                    mPageId++;
+                    downLoadData(I.ACTION_PULL_UP);
+                }
+            }
 
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
     }
 
     private void pullDownListener() {
@@ -128,7 +148,7 @@ public class NewGoodsFragment extends Fragment {
 
         );
         // 新建一个GridLayoutManager设置列数为2列
-        GridLayoutManager gridLayoutManager =
+        gridLayoutManager =
                 new GridLayoutManager(getContext(), I.COLUM_NUM);
         mNewgoodsRecyclerView.setLayoutManager(gridLayoutManager);
         mList = new ArrayList<>();

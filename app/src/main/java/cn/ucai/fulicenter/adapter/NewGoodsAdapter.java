@@ -1,10 +1,12 @@
 package cn.ucai.fulicenter.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -12,8 +14,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.activity.GoodsDetailActivity;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
 
@@ -64,6 +68,9 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         NewGoodsItemViewHolder newGoodsItemViewHolder = (NewGoodsItemViewHolder) holder;
         newGoodsItemViewHolder.bindView(newGoodsBean);
 
+        // 使用LinearLayout.tag属性保存被每个Item的商品ID值
+        newGoodsItemViewHolder.mNewgoodsLinearLayout
+                .setTag(newGoodsBean.getGoodsId());
     }
 
     /**
@@ -107,6 +114,18 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         TextView mNewgoodsTitleTextView;
         @BindView(R.id.newgoods_priece_text_view)
         TextView mNewgoodsPrieceTextView;
+        @BindView(R.id.newgoods_linear_layout)
+        LinearLayout mNewgoodsLinearLayout;
+
+        // 使用BufferKnife设置LinearLayout的监听器
+        @OnClick(R.id.newgoods_linear_layout)
+        public void newgoodsItemOnClick() {
+            // 取出存放的GoodsId并发送给启动的Activity
+            int goodsId= (int) mNewgoodsLinearLayout.getTag();
+            mContext.startActivity(
+                    new Intent(mContext, GoodsDetailActivity.class)
+                            .putExtra(I.GoodsDetails.KEY_GOODS_ID,goodsId));
+        }
 
         NewGoodsItemViewHolder(View view) {
             super(view);

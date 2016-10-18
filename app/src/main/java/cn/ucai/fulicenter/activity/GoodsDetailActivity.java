@@ -12,11 +12,14 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.bean.AlbumsBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.dao.NetDao;
 import cn.ucai.fulicenter.dao.OkHttpUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
+import cn.ucai.fulicenter.views.FlowIndicator;
+import cn.ucai.fulicenter.views.SlideAutoLoopView;
 
 public class GoodsDetailActivity extends AppCompatActivity {
 
@@ -30,6 +33,10 @@ public class GoodsDetailActivity extends AppCompatActivity {
     TextView mGoodsDetailShopPriceTextView;
     @BindView(R.id.goodsDetail_cuurentPrice_textView)
     TextView mGoodsDetailCuurentPriceTextView;
+    @BindView(R.id.goodsDetail_showGoods_SlideAutoLoopView)
+    SlideAutoLoopView mGoodsDetailShowGoodsSlideAutoLoopView;
+    @BindView(R.id.goodsDetail_FlowIndicator)
+    FlowIndicator mGoodsDetailFlowIndicator;
 
     int goodsId;
 
@@ -48,17 +55,9 @@ public class GoodsDetailActivity extends AppCompatActivity {
             @Override
             public void onSuccess(GoodsDetailsBean result) {
                 if (result != null) {
-                    // 设置商品标题显示
-                    mGoodsDetailGoodsEngTitleTextView.
-                            setText(result.getGoodsEnglishName());
-                    mGoodsDetailGoodsChiTitleTextView
-                            .setText(result.getGoodsName());
-                    mGoodsDetailShopPriceTextView
-                            .setText(result.getShopPrice());
-                    mGoodsDetailShopPriceTextView
-                            .getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
-                    mGoodsDetailCuurentPriceTextView
-                            .setText(result.getCurrencyPrice());
+                    showGoodTitle(result);
+                    recyclerShowImage(result);
+
 
                 } else {
                     // 获取数据异常显示错误信息并关闭界面
@@ -76,6 +75,54 @@ public class GoodsDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void recyclerShowImage(GoodsDetailsBean result) {
+        // 设置轮播图片
+        if (result.getProperties() != null
+                && result.getProperties().length > 0) {
+            // 得到轮播图片的数组
+            AlbumsBean[] albums = result.getProperties()[0].getAlbums();
+            if (albums != null && albums.length > 0) {
+                mGoodsDetailShowGoodsSlideAutoLoopView
+                        .startPlayLoop(mGoodsDetailFlowIndicator
+                                , getAlbumImgUrl(albums)
+                                , getAlbumImgCount(albums));
+            }
+        } else {
+            // 获取数据异常显示错误信息并关闭界面
+            Toast.makeText(GoodsDetailActivity.this,
+                    I.INTERNET_ERROR, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private int getAlbumImgCount(AlbumsBean[] albums) {
+        return albums.length;
+    }
+
+    private String[] getAlbumImgUrl(AlbumsBean[] albums) {
+        String[] urls = new String[]{};
+        for (int i=0;i<albums.length;i++) {
+            urls = new String[albums.length];
+            urls[i]=albums[i].getImgUrl();
+        }
+        return urls;
+    }
+
+
+    private void showGoodTitle(GoodsDetailsBean result) {
+        // 设置商品标题显示
+        mGoodsDetailGoodsEngTitleTextView.
+                setText(result.getGoodsEnglishName());
+        mGoodsDetailGoodsChiTitleTextView
+                .setText(result.getGoodsName());
+        mGoodsDetailShopPriceTextView
+                .setText(result.getShopPrice());
+        // 设置删除线
+        mGoodsDetailShopPriceTextView
+                .getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        mGoodsDetailCuurentPriceTextView
+                .setText(result.getCurrencyPrice());
     }
 
     @Override

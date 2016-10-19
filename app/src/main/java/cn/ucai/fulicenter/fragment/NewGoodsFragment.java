@@ -26,7 +26,7 @@ import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.views.SpaceItemDecoration;
 
-public class NewGoodsFragment extends Fragment {
+public class NewGoodsFragment extends BaseFragment {
 
     @BindView(R.id.newgoods_refresh_text_view)
     TextView mNewgoodsRefreshTextView;
@@ -42,6 +42,7 @@ public class NewGoodsFragment extends Fragment {
     private int mPageId = 1;
 
     public NewGoodsFragment() {
+
     }
 
 
@@ -49,15 +50,14 @@ public class NewGoodsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View layout = inflater.inflate(R.layout.fragment_new_goods, container, false);
-
         ButterKnife.bind(this, layout);
-        initView();
-        initData();
-        setListener();
+
+        super.onCreateView(inflater, container, savedInstanceState);
         return layout;
     }
 
-    private void setListener() {
+    @Override
+    protected void setListener() {
         pullDownListener();
         pullUpListener();
     }
@@ -107,7 +107,8 @@ public class NewGoodsFragment extends Fragment {
         });
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         downLoadData(I.ACTION_DOWNLOAD);
     }
 
@@ -148,7 +149,8 @@ public class NewGoodsFragment extends Fragment {
         });
     }
 
-    private void initView() {
+    @Override
+    protected void initView() {
         // 设置SwipeRefreshLayout刷新样式
         mNewgoodsSrl.setColorSchemeColors(
                 getResources().getColor(R.color.google_blue),

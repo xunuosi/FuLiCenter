@@ -27,7 +27,7 @@ import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.views.SpaceItemDecoration;
 
-public class BoutiqueFragment extends Fragment {
+public class BoutiqueFragment extends BaseFragment {
 
     @BindView(R.id.newgoods_refresh_text_view)
     TextView mNewgoodsRefreshTextView;
@@ -53,13 +53,12 @@ public class BoutiqueFragment extends Fragment {
         View layout = inflater.inflate(R.layout.fragment_new_goods, container, false);
         ButterKnife.bind(this, layout);
         mContext = (MainActivity) getContext();
-        initView();
-        initData();
-        setListener();
+        super.onCreateView(inflater, container, savedInstanceState);
         return layout;
     }
 
-    private void setListener() {
+    @Override
+    public void setListener() {
         pullDownListener();
     }
 
@@ -75,7 +74,8 @@ public class BoutiqueFragment extends Fragment {
         });
     }
 
-    private void initData() {
+    @Override
+    public void initData() {
         downLoadData();
     }
 
@@ -106,7 +106,8 @@ public class BoutiqueFragment extends Fragment {
                 });
     }
 
-    private void initView() {
+    @Override
+    public void initView() {
         // 设置SwipeRefreshLayout刷新样式
         mNewgoodsSrl.setColorSchemeColors(
                 getResources().getColor(R.color.google_blue),

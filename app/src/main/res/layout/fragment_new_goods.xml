@@ -17,14 +17,8 @@
            android:layout_height="match_parent"
            android:background="@color/list_background"
            android:orientation="vertical">
-           <TextView
-               android:id="@+id/newgoods_refresh_text_view"
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="Loading..."
-               android:gravity="center"
-               android:visibility="gone"
-               />
+           <include layout="@layout/title_refresh_layout" />
+
            <android.support.v7.widget.RecyclerView
                android:id="@+id/newgoods_recycler_view"
                android:layout_width="match_parent"

@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,7 +29,8 @@ public class BoutiqueAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     public BoutiqueAdapter(Context context, List<BoutiqueBean> list) {
         mContext = context;
-        mList = list;
+        mList = new ArrayList<>();
+        mList.addAll(list);
     }
 
     public boolean isMore() {
@@ -83,7 +85,7 @@ public class BoutiqueAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return mList == null ? mList.size() + 1 : 1;
+        return mList == null ? 1 : mList.size()+1;
     }
 
     @Override
@@ -92,6 +94,19 @@ public class BoutiqueAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             return I.TYPE_FOOTER;
         }
         return I.TYPE_ITEM;
+    }
+
+    public void initList(ArrayList<BoutiqueBean> newList) {
+        if (mList != null) {
+            mList.clear();
+        }
+        mList.addAll(newList);
+        notifyDataSetChanged();
+    }
+
+    public void addList(ArrayList<BoutiqueBean> newList) {
+        mList.addAll(newList);
+        notifyDataSetChanged();
     }
 
     static class BoutiqueItemViewHolder extends RecyclerView.ViewHolder {

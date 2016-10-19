@@ -15,9 +15,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.MFGT;
 
 
 public class BoutiqueAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -54,6 +57,9 @@ public class BoutiqueAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ImageLoader.downloadImg(mContext,
                     ((BoutiqueItemViewHolder) holder).mBoutiqueImageView
                     , boutiqueBean.getImageurl());
+            // 将解析出的每个BoutiqueBean存放在父容器的Tag属性中
+            ((BoutiqueItemViewHolder) holder).mBoutiqueContentLayout
+                    .setTag(boutiqueBean);
     }
 
 
@@ -85,6 +91,13 @@ public class BoutiqueAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         LinearLayout mBoutiqueLinearLayout;
         @BindView(R.id.boutique_content_layout)
         RelativeLayout mBoutiqueContentLayout;
+
+        // 设置单击监听
+        @OnClick(R.id.boutique_content_layout)
+        public void onBoutiqueItemClick() {
+            BoutiqueBean bean = (BoutiqueBean) mBoutiqueContentLayout.getTag();
+            MFGT.gotoBoutiqueChildActivity(mContext, bean);
+        }
 
         public BoutiqueItemViewHolder(View view) {
             super(view);

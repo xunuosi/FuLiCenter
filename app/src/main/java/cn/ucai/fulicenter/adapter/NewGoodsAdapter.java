@@ -141,7 +141,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     }
 
-    private class ItemFooterViewHolder extends RecyclerView.ViewHolder {
+    public static class ItemFooterViewHolder extends RecyclerView.ViewHolder {
         TextView mFooterTextView;
 
         public ItemFooterViewHolder(View itemView) {

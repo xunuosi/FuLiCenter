@@ -16,5 +16,8 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="goods_detail_top">商品详情</string>
     <string name="goods_des_detail">PP食品级材质，轻巧、易清洗、蠕变性小，不易变形，可置于微波炉加热，可方巾洗碗机清洗。双层色彩可以随意组合，轻巧方便。</string>
+    <string name="boutique_title">不一样的新妆，不一样的美丽</string>
+    <string name="boutique_description">快速增长修护预防脱发洗发水让头发健康快速生长更美丽</string>
+    <string name="boutique_name">拯救头发，美丽新妆</string>
 
 </resources>

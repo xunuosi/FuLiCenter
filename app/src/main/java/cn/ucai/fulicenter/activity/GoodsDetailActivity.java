@@ -2,7 +2,6 @@ package cn.ucai.fulicenter.activity;
 
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,7 +21,7 @@ import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.views.FlowIndicator;
 import cn.ucai.fulicenter.views.SlideAutoLoopView;
 
-public class GoodsDetailActivity extends AppCompatActivity {
+public class GoodsDetailActivity extends BaseActivity {
 
     @BindView(R.id.title_back_imageView)
     ImageView mTitleBackImageView;
@@ -45,15 +44,22 @@ public class GoodsDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_detail);
         ButterKnife.bind(this);
         goodsId = getIntent().getIntExtra(I.GoodsDetails.KEY_GOODS_ID, 0);
         L.e("test:" + goodsId);
-        initData();
+        super.onCreate(savedInstanceState);
+
     }
 
-    private void initData() {
+    @Override
+    protected void setListener() {
+
+    }
+
+
+    @Override
+    protected void initData() {
         NetDao.findGoodDetails(this, goodsId, new OkHttpUtils.OnCompleteListener<GoodsDetailsBean>() {
             @Override
             public void onSuccess(GoodsDetailsBean result) {
@@ -78,6 +84,11 @@ public class GoodsDetailActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void initView() {
+
     }
 
     private void showWebView(GoodsDetailsBean result) {

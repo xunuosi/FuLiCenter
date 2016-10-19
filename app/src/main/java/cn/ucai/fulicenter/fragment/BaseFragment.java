@@ -24,7 +24,7 @@ public abstract class BaseFragment extends Fragment {
         initData();
         setListener();
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blank, container, false);
+        return null;
     }
 
     protected abstract void setListener();

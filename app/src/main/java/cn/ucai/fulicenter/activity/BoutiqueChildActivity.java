@@ -168,5 +168,8 @@ public class BoutiqueChildActivity extends BaseActivity {
         mNewgoodsRecyclerView.setHasFixedSize(true);
         // 设置Item之间的边距 上下左右边距都12px
         mNewgoodsRecyclerView.addItemDecoration(new SpaceItemDecoration(12));
+
+        // 设置得到详情页的指定标题
+        mTitleShowMessageTextView.setText(mBean.getTitle());
     }
 }

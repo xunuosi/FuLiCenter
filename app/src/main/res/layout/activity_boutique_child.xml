@@ -1,18 +1,32 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_boutique_child"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="cn.ucai.fulicenter.activity.MainActivity">
+    tools:context="cn.ucai.fulicenter.fragment.NewGoodsFragment">
 
-    <include layout="@layout/title_image_text"/>
-
-    <FrameLayout
-        android:id="@+id/show_frameLayout"
+    <!-- TODO: Update blank fragment layout -->
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/newgoods_srl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/list_background"
+            android:orientation="vertical">
+            <include layout="@layout/title_refresh_layout" />
+            <include layout="@layout/title_image_text"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/newgoods_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+        </LinearLayout>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
 </LinearLayout>

@@ -61,40 +61,6 @@ public class BoutiqueFragment extends Fragment {
 
     private void setListener() {
         pullDownListener();
-        pullUpListener();
-    }
-
-    private void pullUpListener() {
-        mNewgoodsRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            /**
-             * 滑动状态改变时回调的方法
-             * @param recyclerView
-             * @param newState
-             */
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                // 记录当前数据的位置最多为11 数据请求+页脚
-                int lastPosition = mLinearLayoutManager.findLastVisibleItemPosition();
-                if (lastPosition >= mAdapter.getItemCount() - 1
-                        && newState == RecyclerView.SCROLL_STATE_IDLE
-                        && mAdapter.isMore()) {
-
-                    downLoadData(I.ACTION_PULL_UP);
-                }
-            }
-
-            /**
-             * 正在被滑动时回调的方法
-             * @param recyclerView
-             * @param dx
-             * @param dy
-             */
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-            }
-        });
     }
 
     private void pullDownListener() {
@@ -104,46 +70,36 @@ public class BoutiqueFragment extends Fragment {
                 mNewgoodsSrl.setRefreshing(true);
                 mNewgoodsRefreshTextView.setVisibility(View.VISIBLE);
 
-                downLoadData(I.ACTION_PULL_DOWN);
+                downLoadData();
             }
         });
     }
 
     private void initData() {
-        downLoadData(I.ACTION_DOWNLOAD);
+        downLoadData();
     }
 
-    private void downLoadData(final int action) {
+    private void downLoadData() {
         NetDao.findBoutiques(getContext(),
                 new OkHttpUtils.OnCompleteListener<BoutiqueBean[]>() {
                     @Override
                     public void onSuccess(BoutiqueBean[] result) {
-                        mAdapter.setMore(true);
                         // 获取到数据后修正SwipRefresh的状态
                         mNewgoodsSrl.setRefreshing(false);
                         mNewgoodsRefreshTextView.setVisibility(View.GONE);
                         if (result != null && result.length > 0) {
                             ArrayList<BoutiqueBean> mList =
                                     ConvertUtils.array2List(result);
-
-                            if (action != I.ACTION_PULL_UP) {
-                                mAdapter.initList(mList);
-                                L.e("Bou初始化成功");
-                            } else {
-                                // 已经滑到最后一条不再显示数据
-                                mAdapter.setMore(false);
-                            }
-
-                        } else {
-                            mAdapter.setMore(false);
+                            mAdapter.initList(mList);
+                            L.e("Bou初始化成功");
                         }
+
                     }
 
                     @Override
                     public void onError(String error) {
                         mNewgoodsRefreshTextView.setVisibility(View.GONE);
                         mNewgoodsSrl.setRefreshing(false);
-                        mAdapter.setMore(false);
                         CommonUtils.showLongToast(I.INTERNET_ERROR);
                         L.e("ERROR:"+error);
                     }

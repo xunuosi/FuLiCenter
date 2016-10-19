@@ -11,7 +11,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         tools:src="@drawable/nopic"
-        />
+        android:scaleType="fitXY"/>
     <LinearLayout
         android:id="@+id/boutique_linearLayout"
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.3"
-            android:gravity="center"
+            android:gravity="center_vertical"
             tools:text="@string/boutique_title"
             android:textColor="@color/google_red"
             />
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.3"
-            android:gravity="center"
+            android:gravity="center_vertical"
             tools:text="@string/boutique_name"
             android:textColor="@color/black"
             android:textStyle="bold"
@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="0.4"
-            android:gravity="center"
+            android:gravity="center_vertical"
             tools:text="@string/boutique_description"
             android:textColor="@color/black"
             />

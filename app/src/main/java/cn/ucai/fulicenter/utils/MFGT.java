@@ -46,7 +46,7 @@ public class MFGT {
      */
     public static void startActivity(Context context,Intent intent){
         context.startActivity(intent);
-        ((Activity)context).overridePendingTransition(R.anim.push_left_in,R.anim.push_left_out);
+        ((Activity)context).overridePendingTransition(R.anim.push_left_in, R.anim.push_left_out);
     }
 
     /**

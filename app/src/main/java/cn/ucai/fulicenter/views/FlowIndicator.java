@@ -20,6 +20,7 @@ public class FlowIndicator extends View {
     
     public FlowIndicator(Context context, AttributeSet attrs) {
         super(context, attrs);
+        // 得到属性数组
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.FlowIndicator);
         mNormalColor = array.getColor(R.styleable.FlowIndicator_normal_color,
                 0xffffff);

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.adapter.NewGoodsAdapter;
@@ -22,6 +23,7 @@ import cn.ucai.fulicenter.dao.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.views.SpaceItemDecoration;
 
 public class BoutiqueChildActivity extends BaseActivity {
@@ -171,5 +173,11 @@ public class BoutiqueChildActivity extends BaseActivity {
 
         // 设置得到详情页的指定标题
         mTitleShowMessageTextView.setText(mBean.getTitle());
+    }
+
+    // 设置上方回退键的监听
+    @OnClick(R.id.title_back_imageView)
+    public void onBackIamgeViewClick() {
+        MFGT.finish(this);
     }
 }

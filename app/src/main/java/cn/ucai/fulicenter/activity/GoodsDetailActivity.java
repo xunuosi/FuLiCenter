@@ -48,6 +48,9 @@ public class GoodsDetailActivity extends BaseActivity {
         ButterKnife.bind(this);
         goodsId = getIntent().getIntExtra(I.GoodsDetails.KEY_GOODS_ID, 0);
         L.e("test:" + goodsId);
+        if (goodsId == 0) {
+            finish();
+        }
         super.onCreate(savedInstanceState);
 
     }

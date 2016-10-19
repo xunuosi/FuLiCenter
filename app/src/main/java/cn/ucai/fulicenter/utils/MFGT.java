@@ -6,8 +6,10 @@ import android.content.Intent;
 
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.activity.BoutiqueChildActivity;
 import cn.ucai.fulicenter.activity.GoodsDetailActivity;
 import cn.ucai.fulicenter.activity.MainActivity;
+import cn.ucai.fulicenter.bean.BoutiqueBean;
 
 
 public class MFGT {
@@ -58,6 +60,18 @@ public class MFGT {
         Intent intent = new Intent();
         intent.putExtra(I.GoodsDetails.KEY_GOODS_ID, goodsId);
         intent.setClass(context, GoodsDetailActivity.class);
+        startActivity(context,intent);
+    }
+
+    /**
+     * 调转到精品二级页的方法
+     * @param context
+     * @param bean
+     */
+    public static void gotoBoutiqueChildActivity(Context context, BoutiqueBean bean) {
+        Intent intent = new Intent();
+        intent.putExtra(I.Boutique.CAT_ID, bean);
+        intent.setClass(context, BoutiqueChildActivity.class);
         startActivity(context,intent);
     }
 }

@@ -55,7 +55,58 @@ public class BoutiqueFragment extends Fragment {
         mContext = (MainActivity) getContext();
         initView();
         initData();
+        setListener();
         return layout;
+    }
+
+    private void setListener() {
+        pullDownListener();
+        pullUpListener();
+    }
+
+    private void pullUpListener() {
+        mNewgoodsRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            /**
+             * 滑动状态改变时回调的方法
+             * @param recyclerView
+             * @param newState
+             */
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                // 记录当前数据的位置最多为11 数据请求+页脚
+                int lastPosition = mLinearLayoutManager.findLastVisibleItemPosition();
+                if (lastPosition >= mAdapter.getItemCount() - 1
+                        && newState == RecyclerView.SCROLL_STATE_IDLE
+                        && mAdapter.isMore()) {
+
+                    downLoadData(I.ACTION_PULL_UP);
+                }
+            }
+
+            /**
+             * 正在被滑动时回调的方法
+             * @param recyclerView
+             * @param dx
+             * @param dy
+             */
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+            }
+        });
+    }
+
+    private void pullDownListener() {
+        mNewgoodsSrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                mNewgoodsSrl.setRefreshing(true);
+                mNewgoodsRefreshTextView.setVisibility(View.VISIBLE);
+
+                downLoadData(I.ACTION_PULL_DOWN);
+            }
+        });
     }
 
     private void initData() {
@@ -79,7 +130,8 @@ public class BoutiqueFragment extends Fragment {
                                 mAdapter.initList(mList);
                                 L.e("Bou初始化成功");
                             } else {
-                                mAdapter.addList(mList);
+                                // 已经滑到最后一条不再显示数据
+                                mAdapter.setMore(false);
                             }
 
                         } else {

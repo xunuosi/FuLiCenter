@@ -91,7 +91,6 @@ public class BoutiqueFragment extends BaseFragment {
                             ArrayList<BoutiqueBean> mList =
                                     ConvertUtils.array2List(result);
                             mAdapter.initList(mList);
-                            L.e("Bou初始化成功");
                         }
 
                     }

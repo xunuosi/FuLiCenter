@@ -32,8 +32,6 @@ public class CategoryFragment extends BaseFragment {
     MainActivity mContext;
     CategoryAdapter mAdapter;
 
-    int index = 0;// 指向父分类中的下标
-
     @BindView(R.id.elv)
     ExpandableListView mElv;
     @BindView(R.id.category_fragment_parent)
@@ -53,10 +51,9 @@ public class CategoryFragment extends BaseFragment {
         return layout;
     }
 
-    @Override
-    protected void setListener() {
-
+    public void setListener() {
     }
+
 
     @Override
     protected void initData() {
@@ -67,38 +64,37 @@ public class CategoryFragment extends BaseFragment {
         NetDao.findCategoryGroup(mContext
                 , new OkHttpUtils.OnCompleteListener<CategoryGroupBean[]>() {
 
-            @Override
-            public void onSuccess(CategoryGroupBean[] result) {
-                L.e("downloadCategoryGroupData(),result:" + result.length);
-                if (result != null && result.length > 0) {
-                    ArrayList<CategoryGroupBean> gBeanList = ConvertUtils.array2List(result);
-                    // 请求数据装入Adapter指定的数组中
-                    if (mGroupList != null && mGroupList.size() > 0) {
-                        mGroupList.clear();
-                    }
-                    mGroupList.addAll(gBeanList);
-                    // 清理之前数据
-                    mChildList.clear();
-                    // 初始化指定数量的ChildList集合，为后续指定赋值做准备
-                    for (int i=0;i<mGroupList.size();i++) {
-                        mChildList.add(new ArrayList<CategoryChildBean>());
-                    }
-                    // 每个父分类都需要加载小分类
-                    for (CategoryGroupBean gBean : gBeanList) {
-                        downloadCategoryChildData(gBean.getId(), index);
-                        index++;
-                    }
-                } else {
-                   CommonUtils.showShortToast(I.INTERNET_ERROR);
-                } 
-            }
+                    @Override
+                    public void onSuccess(CategoryGroupBean[] result) {
+                        L.e("downloadCategoryGroupData(),result:" + result.length);
+                        if (result != null && result.length > 0) {
+                            ArrayList<CategoryGroupBean> gBeanList = ConvertUtils.array2List(result);
+                            // 请求数据装入Adapter指定的数组中
+                            if (mGroupList != null && mGroupList.size() > 0) {
+                                mGroupList.clear();
+                            }
+                            mGroupList.addAll(gBeanList);
+                            // 清理之前数据
+                            mChildList.clear();
+                            // 初始化指定数量的ChildList集合，为后续指定赋值做准备
+                            // 每个父分类都需要加载小分类
+                            for (int i = 0; i < mGroupList.size(); i++) {
+                                mChildList.add(new ArrayList<CategoryChildBean>());
+                                CategoryGroupBean gBean = mGroupList.get(i);
+                                downloadCategoryChildData(gBean.getId(), i);
+                            }
 
-            @Override
-            public void onError(String error) {
-                L.e("downloadCategoryGroupData()，ERROR:" + error);
-                CommonUtils.showShortToast(I.INTERNET_ERROR);
-            }
-        });
+                        } else {
+                            CommonUtils.showShortToast(I.INTERNET_ERROR);
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        L.e("downloadCategoryGroupData()，ERROR:" + error);
+                        CommonUtils.showShortToast(I.INTERNET_ERROR);
+                    }
+                });
     }
 
     private void downloadCategoryChildData(int parentId, final int groupIndex) {
@@ -111,15 +107,15 @@ public class CategoryFragment extends BaseFragment {
                         if (result != null && result.length > 0) {
                             ArrayList<CategoryChildBean> cBeanList = ConvertUtils.array2List(result);
                             // 请求数据装入Adapter指定的数组中
-                            mChildList.get(groupIndex).addAll(cBeanList);
-                            if (groupIndex >= mGroupList.size()-1) {
+                            mChildList.set(groupIndex, cBeanList);
+                            if (groupIndex >= mGroupList.size() - 1) {
                                 mAdapter.initList(mGroupList, mChildList);
                             }
                         } else {
-                           CommonUtils.showShortToast(I.INTERNET_ERROR);
-                        } 
+                            CommonUtils.showShortToast(I.INTERNET_ERROR);
+                        }
                     }
-                    
+
                     @Override
                     public void onError(String error) {
                         L.e("downloadCategoryChildData()，ERROR:" + error);

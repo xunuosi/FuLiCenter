@@ -7,12 +7,11 @@
     android:background="@color/list_background"
     tools:context="cn.ucai.fulicenter.fragment.CategoryFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <ExpandableListView
-        android:id="@+id/elv"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:dividerHeight="8dp"
-        />
+        <ExpandableListView
+            android:id="@+id/elv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:dividerHeight="8dp"
+            />
 
 </RelativeLayout>

@@ -1,4 +1,4 @@
-package cn.ucai.fulicenter.utils;
+package cn.ucai.fulicenter.views;
 
 import android.content.Context;
 import android.content.Intent;
@@ -23,6 +23,8 @@ import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.CategoryChildActivity;
 import cn.ucai.fulicenter.bean.CategoryChildBean;
+import cn.ucai.fulicenter.utils.ConvertUtils;
+import cn.ucai.fulicenter.utils.ImageLoader;
 
 /**
  * 显示分类中当前所属小类的列表
@@ -54,11 +56,12 @@ public class CatChildFilterButton extends Button {
     private void initPopupWindow() {
         mPopupWindow=new PopupWindow();
         mPopupWindow.setWidth(LinearLayout.LayoutParams.MATCH_PARENT);
-        if(mgvCategory.getAdapter().getCount()<16){
+        // xns
+        //if(mgvCategory.getAdapter().getCount()<16){
             mPopupWindow.setHeight(LinearLayout.LayoutParams.WRAP_CONTENT);
-        }else{
-            mPopupWindow.setHeight(ConvertUtils.px2dp(mContext, 200));
-        }
+        //}else{
+       //     mPopupWindow.setHeight(ConvertUtils.px2dp(mContext, 200));
+       // }
         mPopupWindow.setTouchable(true);
         mPopupWindow.setOutsideTouchable(true);
         mPopupWindow.setBackgroundDrawable(new ColorDrawable(0xbb000000));
@@ -148,7 +151,8 @@ public class CatChildFilterButton extends Button {
                     }
                     Intent intent=new Intent(mContext, CategoryChildActivity.class);
                     intent.putExtra(I.CategoryChild.CAT_ID, child.getId());
-                    intent.putExtra("childList", Children);
+                    // xns
+                    intent.putExtra(I.CategoryChild.ID, Children);
                     intent.putExtra(I.CategoryGroup.NAME, mbtnTop.getText().toString());
                     mContext.startActivity(intent);
                     ((CategoryChildActivity)mContext).finish();

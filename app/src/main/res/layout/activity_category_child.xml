@@ -23,7 +23,7 @@
             android:layout_height="match_parent"
             android:text="@string/cartegroy_child_price_button"
             android:drawableRight="@mipmap/arrow_order_up"
-            android:padding="10dp"
+            android:paddingRight="10dp"
             />
         <Button
             android:id="@+id/category_child_activity_time"
@@ -33,7 +33,7 @@
             android:layout_height="match_parent"
             android:text="@string/cartegroy_child_time_button"
             android:drawableRight="@mipmap/arrow_order_up"
-            android:padding="10dp"
+            android:paddingRight="10dp"
             />
     </LinearLayout>
     <include layout="@layout/fragment_new_goods"/>

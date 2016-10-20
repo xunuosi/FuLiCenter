@@ -9,6 +9,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -18,6 +20,7 @@ import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.views.ItemFooterViewHolder;
 
@@ -26,6 +29,59 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     List<NewGoodsBean> mNewGoodsBeanList;
     Context mContext;
     boolean isMore;
+
+    public int getSortBy() {
+        return sortBy;
+    }
+
+    public void setSortBy(int sortBy) {
+        this.sortBy = sortBy;
+        listSort();
+        notifyDataSetChanged();
+    }
+
+    /**
+     * 重新按指定条件进行排序
+     *
+     * 返回值如果大于0就进行指定排序
+     */
+    private void listSort() {
+        Collections.sort(mNewGoodsBeanList, new Comparator<NewGoodsBean>() {
+            @Override
+            public int compare(NewGoodsBean left, NewGoodsBean right) {
+                int result = 0;
+                switch (sortBy) {
+                    case I.SORT_BY_PRICE_ASC:
+                        result= (int) (getPrice(left) - getPrice(right));
+                        break;
+                    case I.SORT_BY_PRICE_DESC:
+                        result = (int) (getPrice(right) - getPrice(left));
+                        break;
+                    case I.SORT_BY_ADDTIME_ASC:
+                        result = (int)
+                                (Long.valueOf(left.getAddTime()) - Long.valueOf(right.getAddTime()));
+                        break;
+                    case I.SORT_BY_ADDTIME_DESC:
+                        result = (int)
+                                (Long.valueOf(right.getAddTime()) - Long.valueOf(left.getAddTime()));
+                        break;
+                }
+                return result;
+            }
+        });
+    }
+
+    /**
+     * 将价格字符串转换成数字
+     * @param bean
+     */
+    private double getPrice(NewGoodsBean bean) {
+        String price = bean.getCurrencyPrice();
+        L.e("xns", price.substring(price.indexOf("￥") + 1));
+        return Double.valueOf(price.substring(price.indexOf("￥") + 1));
+    }
+
+    int sortBy=I.SORT_BY_ADDTIME_ASC;// 默认按添加时间升序排序
 
     public NewGoodsAdapter(List<NewGoodsBean> newGoodsBeanList, Context context) {
         // 通常采用这种方式

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/category_child_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:background="@color/windows_color"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingRight="100dp"
+    android:paddingLeft="100dp"
+    >
+
+    <ImageView
+        android:id="@+id/category_child_goodsImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        tools:src="@mipmap/arrow2_down"
+        />
+    <TextView
+        android:id="@+id/category_child_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="防晒"
+        android:textSize="16sp"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/category_child_goodsImage"
+        android:layout_marginLeft="20dp"
+        />
+</RelativeLayout>

@@ -11,10 +11,11 @@
     >
     <ImageView
         android:id="@+id/category_group_goodsimage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         tools:src="@drawable/arrow2_down"
         android:layout_centerVertical="true"
+        android:scaleType="fitXY"
         />
     <TextView
         android:id="@+id/category_group_textView"

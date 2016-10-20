@@ -88,7 +88,7 @@ public class MFGT {
      * @param mList
      */
     public static void gotoCategoryChildActivity(Context context, int catId
-            , String groupName, ArrayList<ArrayList<CategoryChildBean>> mList) {
+            , String groupName, ArrayList<CategoryChildBean> mList) {
         Intent intent = new Intent();
         intent.putExtra(I.CategoryChild.CAT_ID, catId);
         intent.putExtra(I.CategoryGroup.NAME, groupName);

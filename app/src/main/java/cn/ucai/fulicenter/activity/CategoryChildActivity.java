@@ -18,6 +18,7 @@ import butterknife.OnClick;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.adapter.NewGoodsAdapter;
+import cn.ucai.fulicenter.bean.CategoryChildBean;
 import cn.ucai.fulicenter.bean.NewGoodsBean;
 import cn.ucai.fulicenter.dao.NetDao;
 import cn.ucai.fulicenter.dao.OkHttpUtils;
@@ -25,27 +26,30 @@ import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
+import cn.ucai.fulicenter.views.CatChildFilterButton;
 import cn.ucai.fulicenter.views.SpaceItemDecoration;
 
 public class CategoryChildActivity extends BaseActivity {
 
     int catId;
-    private int mPageId = 1;
-    private boolean priceAsc = false;
-    private boolean timeAsc = false;// 默认上架时间降序排序
-    private int sortBy = I.SORT_BY_ADDTIME_DESC;
-
+    String groupName;
+    ArrayList<CategoryChildBean> mChildBeanList;
     NewGoodsAdapter mNewGoodsAdapter;
     ArrayList<NewGoodsBean> mList;
     GridLayoutManager gridLayoutManager;
+
+    private int mPageId = 1;
+    private boolean priceAsc = false;
+    private boolean timeAsc = false;// 默认上架时间降序排序
+
+    @BindView(R.id.btnCatChildFilter)
+    CatChildFilterButton mBtnCatChildFilter;
     @BindView(R.id.title_back_imageView)
     ImageView mTitleBackImageView;
     @BindView(R.id.category_child_activity_price)
     Button mCategoryChildActivityPrice;
     @BindView(R.id.category_child_activity_time)
     Button mCategoryChildActivityTime;
-    @BindView(R.id.title_show_message_textView)
-    TextView mTitleShowMessageTextView;
     @BindView(R.id.newgoods_refresh_text_view)
     TextView mNewgoodsRefreshTextView;
     @BindView(R.id.newgoods_recycler_view)
@@ -58,7 +62,15 @@ public class CategoryChildActivity extends BaseActivity {
         setContentView(R.layout.activity_category_child);
         ButterKnife.bind(this);
         catId = getIntent().getIntExtra(I.CategoryChild.CAT_ID, 0);
-        L.e("catId:" + catId);
+        if (catId == 0) {
+            finish();
+        }
+        groupName = getIntent().getStringExtra(I.CategoryGroup.NAME);
+        mChildBeanList = (ArrayList<CategoryChildBean>) getIntent().getSerializableExtra(I.CategoryChild.ID);
+        L.e("xns",mChildBeanList.size()+"");
+
+        // 初始化筛选器
+        mBtnCatChildFilter.setOnCatFilterClickListener(groupName, mChildBeanList);
         super.onCreate(savedInstanceState);
     }
 
@@ -158,6 +170,7 @@ public class CategoryChildActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+
         // 设置SwipeRefreshLayout刷新样式
         mNewgoodsSrl.setColorSchemeColors(
                 getResources().getColor(R.color.google_blue),
@@ -192,19 +205,19 @@ public class CategoryChildActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.category_child_activity_price:
                 if (priceAsc) {
-                    arrow= getResources().getDrawable(R.mipmap.arrow_order_up);
+                    arrow = getResources().getDrawable(R.mipmap.arrow_order_up);
                     mNewGoodsAdapter.setSortBy(I.SORT_BY_PRICE_ASC);
                     // 前两个参数为控件左上角的坐标,后两个参数为控件的宽度和高度
                     // getIntrinsicWidth()返回固有的宽度
-                    arrow.setBounds(0,0,arrow.getIntrinsicWidth(),arrow.getIntrinsicHeight());
+                    arrow.setBounds(0, 0, arrow.getIntrinsicWidth(), arrow.getIntrinsicHeight());
                     // 设置控件上下左右出现的图标
                     mCategoryChildActivityPrice
-                            .setCompoundDrawablesWithIntrinsicBounds(null,null,arrow,null);
+                            .setCompoundDrawablesWithIntrinsicBounds(null, null, arrow, null);
                 } else {
                     // 得到向下箭头
-                    arrow= getResources().getDrawable(R.mipmap.arrow_order_down);
-                    arrow.setBounds(0,0
-                            ,arrow.getIntrinsicWidth(),arrow.getIntrinsicHeight());
+                    arrow = getResources().getDrawable(R.mipmap.arrow_order_down);
+                    arrow.setBounds(0, 0
+                            , arrow.getIntrinsicWidth(), arrow.getIntrinsicHeight());
                     mCategoryChildActivityPrice
                             .setCompoundDrawablesWithIntrinsicBounds(null, null, arrow, null);
                     mNewGoodsAdapter.setSortBy(I.SORT_BY_PRICE_DESC);
@@ -214,14 +227,14 @@ public class CategoryChildActivity extends BaseActivity {
                 break;
             case R.id.category_child_activity_time:
                 if (timeAsc) {
-                    arrow= getResources().getDrawable(R.mipmap.arrow_order_up);
-                    arrow.setBounds(0,0,arrow.getIntrinsicWidth(),arrow.getIntrinsicHeight());
+                    arrow = getResources().getDrawable(R.mipmap.arrow_order_up);
+                    arrow.setBounds(0, 0, arrow.getIntrinsicWidth(), arrow.getIntrinsicHeight());
                     mCategoryChildActivityTime
                             .setCompoundDrawablesWithIntrinsicBounds(null, null, arrow, null);
                     mNewGoodsAdapter.setSortBy(I.SORT_BY_ADDTIME_ASC);
                 } else {
-                    arrow= getResources().getDrawable(R.mipmap.arrow_order_down);
-                    arrow.setBounds(0,0,arrow.getIntrinsicWidth(),arrow.getIntrinsicHeight());
+                    arrow = getResources().getDrawable(R.mipmap.arrow_order_down);
+                    arrow.setBounds(0, 0, arrow.getIntrinsicWidth(), arrow.getIntrinsicHeight());
                     mCategoryChildActivityTime
                             .setCompoundDrawablesWithIntrinsicBounds(null, null, arrow, null);
                     mNewGoodsAdapter.setSortBy(I.SORT_BY_ADDTIME_DESC);

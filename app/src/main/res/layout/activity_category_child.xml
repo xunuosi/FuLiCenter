@@ -7,7 +7,32 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="cn.ucai.fulicenter.activity.CategoryChildActivity">
-    <include layout="@layout/title_image_text"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/good_detail_title_bg"
+        >
+        <ImageView
+            android:id="@+id/title_back_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/back"
+            />
+        <cn.ucai.fulicenter.views.CatChildFilterButton
+            android:id="@+id/btnCatChildFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="55dp"
+            android:layout_marginRight="10dp"
+            android:drawableRight="@drawable/arrow2_up"
+            android:background="@null"
+            android:textColor="@color/white"
+            android:text="分类"/>
+    </RelativeLayout>
+
     <LinearLayout
         android:background="@color/orange"
         android:orientation="horizontal"

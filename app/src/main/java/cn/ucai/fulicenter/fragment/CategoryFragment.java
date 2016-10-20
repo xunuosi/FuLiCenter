@@ -66,7 +66,7 @@ public class CategoryFragment extends BaseFragment {
                 CategoryGroupBean gBean = mAdapter.getGroup(groupPosition);
                 CategoryChildBean cBean = mAdapter.getChild(groupPosition, childPosition);
 
-                MFGT.gotoCategoryChildActivity(mContext, cBean.getId(), gBean.getName(),mChildList);
+                MFGT.gotoCategoryChildActivity(mContext, cBean.getId(), gBean.getName(),mChildList.get(groupPosition));
                 return true;
             }
         });

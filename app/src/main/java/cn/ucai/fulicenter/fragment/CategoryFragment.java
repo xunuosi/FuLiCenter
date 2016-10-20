@@ -9,7 +9,6 @@ import android.widget.ExpandableListView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,18 +23,19 @@ import cn.ucai.fulicenter.dao.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.MFGT;
 
 public class CategoryFragment extends BaseFragment {
 
-    List<CategoryGroupBean> mGroupList;
-    List<List<CategoryChildBean>> mChildList;
+    ArrayList<CategoryGroupBean> mGroupList;
+    ArrayList<ArrayList<CategoryChildBean>> mChildList;
     MainActivity mContext;
     CategoryAdapter mAdapter;
 
-    @BindView(R.id.elv)
-    ExpandableListView mElv;
     @BindView(R.id.category_fragment_parent)
     RelativeLayout mCategoryFragmentParent;
+    @BindView(R.id.elv)
+    ExpandableListView mElv;
 
     public CategoryFragment() {
         // Required empty public constructor
@@ -51,7 +51,25 @@ public class CategoryFragment extends BaseFragment {
         return layout;
     }
 
-    public void setListener() {
+    @Override
+    protected void setListener() {
+        setOnClickExpandableListViewItemListener();
+    }
+
+
+    private void setOnClickExpandableListViewItemListener() {
+        mElv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView parent, View v
+                    , int groupPosition, int childPosition, long id) {
+
+                CategoryGroupBean gBean = mAdapter.getGroup(groupPosition);
+                CategoryChildBean cBean = mAdapter.getChild(groupPosition, childPosition);
+
+                MFGT.gotoCategoryChildActivity(mContext, cBean.getId(), gBean.getName(),mChildList);
+                return true;
+            }
+        });
     }
 
 
@@ -136,5 +154,6 @@ public class CategoryFragment extends BaseFragment {
         mElv.setGroupIndicator(null);
 
     }
+
 
 }

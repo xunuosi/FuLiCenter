@@ -58,9 +58,10 @@ public class BoutiqueFragment extends BaseFragment {
     }
 
     @Override
-    public void setListener() {
+    protected void setListener() {
         pullDownListener();
     }
+
 
     private void pullDownListener() {
         mNewgoodsSrl.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -75,7 +76,7 @@ public class BoutiqueFragment extends BaseFragment {
     }
 
     @Override
-    public void initData() {
+    protected void initData() {
         downLoadData();
     }
 
@@ -106,7 +107,7 @@ public class BoutiqueFragment extends BaseFragment {
     }
 
     @Override
-    public void initView() {
+    protected void initView() {
         // 设置SwipeRefreshLayout刷新样式
         mNewgoodsSrl.setColorSchemeColors(
                 getResources().getColor(R.color.google_blue),

@@ -20,4 +20,7 @@
     <string name="boutique_description">快速增长修护预防脱发洗发水让头发健康快速生长更美丽</string>
     <string name="boutique_name">拯救头发，美丽新妆</string>
 
+    <string name="cartegroy_child_price_button">价格</string>
+    <string name="cartegroy_child_time_button">上架时间</string>
+
 </resources>

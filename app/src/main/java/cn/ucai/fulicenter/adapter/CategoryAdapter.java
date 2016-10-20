@@ -124,6 +124,18 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         return false;
     }
 
+    public void initList(List<CategoryGroupBean> groupList
+            , List<List<CategoryChildBean>> childList) {
+
+        mGroupList.clear();
+        mGroupList.addAll(groupList);
+
+        mChildList.clear();
+        mChildList.addAll(childList);
+
+        notifyDataSetChanged();
+    }
+
     class GroupViewHolder {
         @BindView(R.id.category_group_goodsimage)
         ImageView mCategoryGroupGoodsimage;

@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,14 +29,20 @@ import cn.ucai.fulicenter.views.SpaceItemDecoration;
 public class CategoryChildActivity extends BaseActivity {
 
     int catId;
+    private int mPageId = 1;
+    private boolean priceAsc = false;
+    private boolean timeAsc = false;// 默认上架时间降序排序
+    private int sortBy = I.SORT_BY_ADDTIME_DESC;
+
     NewGoodsAdapter mNewGoodsAdapter;
     ArrayList<NewGoodsBean> mList;
     GridLayoutManager gridLayoutManager;
     @BindView(R.id.title_back_imageView)
     ImageView mTitleBackImageView;
-
-    private int mPageId = 1;
-
+    @BindView(R.id.category_child_activity_price)
+    Button mCategoryChildActivityPrice;
+    @BindView(R.id.category_child_activity_time)
+    Button mCategoryChildActivityTime;
     @BindView(R.id.title_show_message_textView)
     TextView mTitleShowMessageTextView;
     @BindView(R.id.newgoods_refresh_text_view)
@@ -175,5 +182,28 @@ public class CategoryChildActivity extends BaseActivity {
     @OnClick(R.id.title_back_imageView)
     public void onBackIamgeViewClick() {
         MFGT.finish(this);
+    }
+
+    @OnClick({R.id.category_child_activity_price, R.id.category_child_activity_time})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.category_child_activity_price:
+                if (priceAsc) {
+                    mNewGoodsAdapter.setSortBy(I.SORT_BY_PRICE_ASC);
+                } else {
+                    mNewGoodsAdapter.setSortBy(I.SORT_BY_PRICE_DESC);
+                }
+                // 每次点击都要取反更新标志变量
+                priceAsc = !priceAsc;
+                break;
+            case R.id.category_child_activity_time:
+                if (timeAsc) {
+                    mNewGoodsAdapter.setSortBy(I.SORT_BY_ADDTIME_ASC);
+                } else {
+                    mNewGoodsAdapter.setSortBy(I.SORT_BY_ADDTIME_DESC);
+                }
+                timeAsc = !timeAsc;
+                break;
+        }
     }
 }

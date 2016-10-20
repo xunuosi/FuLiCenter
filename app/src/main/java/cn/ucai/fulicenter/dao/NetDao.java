@@ -59,4 +59,23 @@ public class NetDao {
                 .targetClass(CategoryChildBean[].class)
                 .execute(listener);
     }
+
+    /**
+     * 请求下载分类二级界面的数据
+     * @param mcontext
+     * @param catId
+     * @param page_id
+     * @param listener
+     */
+    public static void findGoodsDetails(Context mcontext, int catId, int page_id,
+                                        OkHttpUtils.OnCompleteListener<NewGoodsBean[]> listener) {
+
+        OkHttpUtils<NewGoodsBean[]> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_FIND_GOODS_DETAILS)
+                .addParam(I.GoodsDetails.KEY_CAT_ID,String.valueOf(catId))
+                .addParam(I.PAGE_ID,String.valueOf(page_id))
+                .addParam(I.PAGE_SIZE,String.valueOf(I.PAGE_SIZE_DEFAULT))
+                .targetClass(NewGoodsBean[].class)
+                .execute(listener);
+    }
 }

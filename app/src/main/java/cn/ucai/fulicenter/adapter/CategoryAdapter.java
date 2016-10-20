@@ -15,10 +15,12 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.CategoryChildBean;
 import cn.ucai.fulicenter.bean.CategoryGroupBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.MFGT;
 
 public class CategoryAdapter extends BaseExpandableListAdapter {
     Context mContext;
@@ -115,6 +117,8 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
             holder.mCategoryChildTextView.setText(cBean.getName());
             ImageLoader.downloadImg(mContext, holder.mCategoryChildGoodsImage
                     , cBean.getImageUrl());
+            // 保存每个子类的ID
+            holder.mCategoryChildParent.setTag(cBean.getId());
         }
         return convertView;
     }
@@ -151,13 +155,18 @@ public class CategoryAdapter extends BaseExpandableListAdapter {
         }
     }
 
-    static class ChildViewHolder {
+    class ChildViewHolder {
         @BindView(R.id.category_child_goodsImage)
         ImageView mCategoryChildGoodsImage;
         @BindView(R.id.category_child_textView)
         TextView mCategoryChildTextView;
         @BindView(R.id.category_child_parent)
         RelativeLayout mCategoryChildParent;
+        @OnClick(R.id.category_child_parent)
+        public void onCategoryItemClick() {
+            int cat_id = (int) mCategoryChildParent.getTag();
+            MFGT.gotoCategoryChildActivity(mContext, cat_id);
+        }
 
         ChildViewHolder(View view) {
             ButterKnife.bind(this, view);

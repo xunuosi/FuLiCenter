@@ -4,6 +4,8 @@ package cn.ucai.fulicenter.dao;
 
         import cn.ucai.fulicenter.I;
         import cn.ucai.fulicenter.bean.BoutiqueBean;
+        import cn.ucai.fulicenter.bean.CategoryChildBean;
+        import cn.ucai.fulicenter.bean.CategoryGroupBean;
         import cn.ucai.fulicenter.bean.GoodsDetailsBean;
         import cn.ucai.fulicenter.bean.NewGoodsBean;
         import cn.ucai.fulicenter.utils.L;
@@ -33,9 +35,28 @@ public class NetDao {
     public static void findBoutiques(Context mcontext
             , OkHttpUtils.OnCompleteListener<BoutiqueBean[]> listener) {
 
-        OkHttpUtils utils = new OkHttpUtils(mcontext);
+        OkHttpUtils<BoutiqueBean[]> utils = new OkHttpUtils(mcontext);
         utils.setRequestUrl(I.REQUEST_FIND_BOUTIQUES)
                 .targetClass(BoutiqueBean[].class)
+                .execute(listener);
+    }
+
+    public static void findCategoryGroup(Context mcontext
+            , OkHttpUtils.OnCompleteListener<CategoryGroupBean[]> listener) {
+
+        OkHttpUtils<CategoryGroupBean[]> utils = new OkHttpUtils(mcontext);
+        utils.setRequestUrl(I.REQUEST_FIND_CATEGORY_GROUP)
+                .targetClass(CategoryGroupBean[].class)
+                .execute(listener);
+    }
+
+    public static void findCategoryChildren(Context mcontext,int parentId
+            , OkHttpUtils.OnCompleteListener<CategoryChildBean[]> listener) {
+
+        OkHttpUtils<CategoryChildBean[]> utils = new OkHttpUtils(mcontext);
+        utils.setRequestUrl(I.REQUEST_FIND_CATEGORY_CHILDREN)
+                .addParam(I.CategoryChild.PARENT_ID,String.valueOf(parentId))
+                .targetClass(CategoryChildBean[].class)
                 .execute(listener);
     }
 }

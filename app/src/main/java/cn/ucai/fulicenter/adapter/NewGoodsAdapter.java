@@ -29,6 +29,7 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     List<NewGoodsBean> mNewGoodsBeanList;
     Context mContext;
     boolean isMore;
+    int sortBy=I.SORT_BY_ADDTIME_ASC;// 默认按添加时间升序排序
 
     public int getSortBy() {
         return sortBy;
@@ -80,8 +81,6 @@ public class NewGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         L.e("xns", price.substring(price.indexOf("￥") + 1));
         return Double.valueOf(price.substring(price.indexOf("￥") + 1));
     }
-
-    int sortBy=I.SORT_BY_ADDTIME_ASC;// 默认按添加时间升序排序
 
     public NewGoodsAdapter(List<NewGoodsBean> newGoodsBeanList, Context context) {
         // 通常采用这种方式

@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.activity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
@@ -186,11 +187,26 @@ public class CategoryChildActivity extends BaseActivity {
 
     @OnClick({R.id.category_child_activity_price, R.id.category_child_activity_time})
     public void onClick(View view) {
+        // 获取箭头的对象
+        Drawable arrow;
         switch (view.getId()) {
             case R.id.category_child_activity_price:
                 if (priceAsc) {
+                    arrow= getResources().getDrawable(R.mipmap.arrow_order_up);
                     mNewGoodsAdapter.setSortBy(I.SORT_BY_PRICE_ASC);
+                    // 前两个参数为控件左上角的坐标,后两个参数为控件的宽度和高度
+                    // getIntrinsicWidth()返回固有的宽度
+                    arrow.setBounds(0,0,arrow.getIntrinsicWidth(),arrow.getIntrinsicHeight());
+                    // 设置控件上下左右出现的图标
+                    mCategoryChildActivityPrice
+                            .setCompoundDrawablesWithIntrinsicBounds(null,null,arrow,null);
                 } else {
+                    // 得到向下箭头
+                    arrow= getResources().getDrawable(R.mipmap.arrow_order_down);
+                    arrow.setBounds(0,0
+                            ,arrow.getIntrinsicWidth(),arrow.getIntrinsicHeight());
+                    mCategoryChildActivityPrice
+                            .setCompoundDrawablesWithIntrinsicBounds(null, null, arrow, null);
                     mNewGoodsAdapter.setSortBy(I.SORT_BY_PRICE_DESC);
                 }
                 // 每次点击都要取反更新标志变量
@@ -198,8 +214,16 @@ public class CategoryChildActivity extends BaseActivity {
                 break;
             case R.id.category_child_activity_time:
                 if (timeAsc) {
+                    arrow= getResources().getDrawable(R.mipmap.arrow_order_up);
+                    arrow.setBounds(0,0,arrow.getIntrinsicWidth(),arrow.getIntrinsicHeight());
+                    mCategoryChildActivityTime
+                            .setCompoundDrawablesWithIntrinsicBounds(null, null, arrow, null);
                     mNewGoodsAdapter.setSortBy(I.SORT_BY_ADDTIME_ASC);
                 } else {
+                    arrow= getResources().getDrawable(R.mipmap.arrow_order_down);
+                    arrow.setBounds(0,0,arrow.getIntrinsicWidth(),arrow.getIntrinsicHeight());
+                    mCategoryChildActivityTime
+                            .setCompoundDrawablesWithIntrinsicBounds(null, null, arrow, null);
                     mNewGoodsAdapter.setSortBy(I.SORT_BY_ADDTIME_DESC);
                 }
                 timeAsc = !timeAsc;

@@ -7,6 +7,7 @@ import android.content.Intent;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.BoutiqueChildActivity;
+import cn.ucai.fulicenter.activity.CategoryChildActivity;
 import cn.ucai.fulicenter.activity.GoodsDetailActivity;
 import cn.ucai.fulicenter.activity.MainActivity;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
@@ -72,6 +73,18 @@ public class MFGT {
         Intent intent = new Intent();
         intent.putExtra(I.Boutique.CAT_ID, bean);
         intent.setClass(context, BoutiqueChildActivity.class);
+        startActivity(context,intent);
+    }
+
+    /**
+     * 调转到分类二级详情页的方法
+     * @param context
+     * @param catId
+     */
+    public static void gotoCategoryChildActivity(Context context, int catId) {
+        Intent intent = new Intent();
+        intent.putExtra(I.CategoryChild.CAT_ID, catId);
+        intent.setClass(context, CategoryChildActivity.class);
         startActivity(context,intent);
     }
 }

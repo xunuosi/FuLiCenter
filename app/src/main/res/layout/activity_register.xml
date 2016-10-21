@@ -1,0 +1,65 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="cn.ucai.fulicenter.activity.RegisterActivity"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/white_title_image_text"/>
+
+    <EditText
+        android:id="@+id/register_account_editText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:hint="@string/account"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:drawableRight="@drawable/icon_account"
+        />
+    <EditText
+        android:id="@+id/register_nick_editText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:hint="@string/register_nick"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:drawableRight="@drawable/icon_account"
+        />
+    <EditText
+        android:id="@+id/register_password_editText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:hint="@string/password"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:drawableRight="@drawable/icon_pwd"
+        />
+    <EditText
+        android:id="@+id/register_repassword_editText"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:hint="@string/repassword"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:drawableRight="@drawable/icon_pwd"
+        />
+    <Button
+        android:id="@+id/register_button"
+        android:background="@color/good_detaul_flow_indicator_focus"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/register"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        />
+</LinearLayout>

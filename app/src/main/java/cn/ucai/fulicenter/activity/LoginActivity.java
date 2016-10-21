@@ -1,15 +1,27 @@
 package cn.ucai.fulicenter.activity;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.EditText;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.utils.MFGT;
 
 public class LoginActivity extends BaseActivity {
 
+    @BindView(R.id.login_account_editText)
+    EditText mLoginAccountEditText;
+    @BindView(R.id.login_password_editText)
+    EditText mLoginPasswordEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -26,4 +38,17 @@ public class LoginActivity extends BaseActivity {
     protected void initView() {
 
     }
+
+    @OnClick({R.id.login_button, R.id.register_button})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.login_button:
+                break;
+            case R.id.register_button:
+                MFGT.gotoRegisterActivity(this);
+                break;
+        }
+    }
+
+
 }

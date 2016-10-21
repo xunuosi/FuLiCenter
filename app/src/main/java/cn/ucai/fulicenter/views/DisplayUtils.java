@@ -5,13 +5,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.utils.MFGT;
 
 public class DisplayUtils {
     public static void initBack(final Activity activity){
         activity.findViewById(R.id.backClickArea).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.finish();
+                MFGT.finish(activity);
             }
         });
     }

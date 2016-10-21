@@ -39,6 +39,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:drawableRight="@drawable/icon_pwd"
+        android:inputType="textPassword"
         />
     <EditText
         android:id="@+id/register_repassword_editText"
@@ -49,6 +50,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:drawableRight="@drawable/icon_pwd"
+        android:inputType="textPassword"
         />
     <Button
         android:id="@+id/register_button"

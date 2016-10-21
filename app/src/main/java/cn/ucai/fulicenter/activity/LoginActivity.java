@@ -37,7 +37,6 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        DisplayUtils.initBack(this);
         DisplayUtils.initBackWithTitle(this,"账户登录");
     }
 

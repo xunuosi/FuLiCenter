@@ -23,4 +23,13 @@
     <string name="cartegroy_child_price_button">价格</string>
     <string name="cartegroy_child_time_button">上架时间</string>
 
+    <string name="account">用户名</string>
+    <string name="password">密码</string>
+    <string name="login">登      录</string>
+    <string name="register_str">免费注册</string>
+    <string name="register_nick">昵称</string>
+    <string name="repassword">确认密码</string>
+    <string name="register">免费注册</string>
+
+
 </resources>

@@ -81,6 +81,14 @@ public class NetDao {
                 .execute(listener);
     }
 
+    /**
+     * 申请注册方法
+     * @param mcontext
+     * @param username
+     * @param nick
+     * @param password
+     * @param listener
+     */
     public static void register(Context mcontext, String username, String nick
             , String password, OkHttpUtils.OnCompleteListener<Result> listener) {
 
@@ -91,6 +99,24 @@ public class NetDao {
                 .addParam(I.User.PASSWORD, MD5.getMessageDigest(password))
                 .targetClass(Result.class)
                 .post()
+                .execute(listener);
+    }
+
+    /**
+     * 登录方法的
+     * @param mcontext
+     * @param username
+     * @param password
+     * @param listener
+     */
+    public static void login(Context mcontext,String username, String password
+                                ,OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_LOGIN)
+                .addParam(I.User.USER_NAME, username)
+                .addParam(I.User.PASSWORD, password)
+                .targetClass(String.class)
                 .execute(listener);
     }
 }

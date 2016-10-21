@@ -38,7 +38,7 @@ public class ResultUtils {
                     String date;
                     try {
                         date = URLDecoder.decode(jsonRetData.toString(), I.UTF_8);
-                        Log.e("Utils", "jsonRetData=" + date);
+                        Log.e("Utils", "jsonRetData2=" + date);
                         T t = new Gson().fromJson(date, clazz);
                         result.setRetData(t);
                         return result;

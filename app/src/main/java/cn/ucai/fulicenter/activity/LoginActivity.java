@@ -11,11 +11,18 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.bean.Result;
+import cn.ucai.fulicenter.bean.UserBean;
+import cn.ucai.fulicenter.dao.NetDao;
+import cn.ucai.fulicenter.dao.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
+import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
+import cn.ucai.fulicenter.utils.ResultUtils;
 import cn.ucai.fulicenter.views.DisplayUtils;
 
 public class LoginActivity extends BaseActivity {
+    private static final String TAG = LoginActivity.class.getSimpleName();
 
     @BindView(R.id.login_account_editText)
     EditText mLoginAccountEditText;
@@ -24,11 +31,13 @@ public class LoginActivity extends BaseActivity {
 
     String username;
     String password;
+    LoginActivity mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        mContext = this;
         super.onCreate(savedInstanceState);
     }
 
@@ -73,7 +82,31 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void login() {
+        NetDao.login(mContext, username, password
+                , new OkHttpUtils.OnCompleteListener<String>() {
+                    @Override
+                    public void onSuccess(String json) {
+                        L.e(TAG, json);
+                        Result result = ResultUtils.getResultFromJson(json, UserBean.class);
+                        if (result.getRetData() != null) {
+                            CommonUtils.showShortToast(R.string.login_success);
+                            UserBean user = (UserBean) result.getRetData();
+                            L.e(TAG, user.toString());
+                        } else if (result.getRetCode() == I.MSG_LOGIN_UNKNOW_USER) {
+                            CommonUtils.showShortToast(R.string.login_nouser);
+                        } else if (result.getRetCode() == I.MSG_LOGIN_ERROR_PASSWORD) {
+                            CommonUtils.showShortToast(R.string.login_password_error);
+                        } else {
+                            CommonUtils.showShortToast(R.string.login_fail);
+                        }
+                    }
 
+                    @Override
+                    public void onError(String error) {
+                        L.e(TAG, "ERROR:" + error);
+                        CommonUtils.showShortToast(error);
+                    }
+                });
     }
 
     @Override

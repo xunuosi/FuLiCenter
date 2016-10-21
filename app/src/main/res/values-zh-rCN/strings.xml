@@ -30,4 +30,8 @@
     <string name="boutique_description">快速增长修护预防脱发洗发水让头发健康快速生长更美丽</string>
     <string name="login_title">账户登录</string>
     <string name="login_username_isempty">登录用户名不能为空</string>
+    <string name="login_nouser">用户名不存在</string>
+    <string name="login_password_error">Password Error</string>
+    <string name="login_fail">登录失败</string>
+    <string name="login_success">用户登录成功</string>
 </resources>

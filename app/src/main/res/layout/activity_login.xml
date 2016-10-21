@@ -28,6 +28,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:drawableRight="@drawable/icon_pwd"
+        android:inputType="textPassword"
         />
     <Button
         android:id="@+id/login_button"

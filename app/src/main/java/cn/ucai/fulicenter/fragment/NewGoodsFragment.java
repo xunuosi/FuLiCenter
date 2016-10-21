@@ -129,6 +129,8 @@ public class NewGoodsFragment extends BaseFragment {
                             (newGoodsBeanArrayList.size() >= I.PAGE_SIZE_DEFAULT);
                     if (action != I.ACTION_PULL_UP) {
                         mNewGoodsAdapter.initList(newGoodsBeanArrayList);
+                        // 刷新数据自动按照添加商品时间降序排序
+                        mNewGoodsAdapter.setSortBy(I.SORT_BY_ADDTIME_DESC);
                     } else {
                         mNewGoodsAdapter.addList(newGoodsBeanArrayList);
                     }

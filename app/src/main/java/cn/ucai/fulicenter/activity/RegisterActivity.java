@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.activity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -99,10 +100,14 @@ public class RegisterActivity extends BaseActivity {
     }
 
     private void startRegister() {
+        final ProgressDialog dialog = new ProgressDialog(mContext);
+        dialog.setMessage(getResources().getString(R.string.registering));
+        dialog.show();
         NetDao.register(mContext, username, nick, password
                 , new OkHttpUtils.OnCompleteListener<Result>() {
                     @Override
                     public void onSuccess(Result result) {
+                        dialog.dismiss();
                         if (result.isRetMsg()) {
                             CommonUtils.showLongToast(R.string.register_success);
                             MFGT.gotoLoginActivity(mContext);
@@ -118,6 +123,7 @@ public class RegisterActivity extends BaseActivity {
 
                     @Override
                     public void onError(String error) {
+                        dialog.dismiss();
                         L.e(TAG + ",ERROR:" + error);
                         CommonUtils.showLongToast("ERROR:"+error);
                     }

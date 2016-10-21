@@ -6,9 +6,6 @@ import android.widget.TextView;
 
 import cn.ucai.fulicenter.R;
 
-/**
- * Created by clawpo on 16/8/3.
- */
 public class DisplayUtils {
     public static void initBack(final Activity activity){
         activity.findViewById(R.id.backClickArea).setOnClickListener(new View.OnClickListener() {

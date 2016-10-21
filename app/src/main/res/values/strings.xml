@@ -31,6 +31,7 @@
     <string name="repassword">确认密码</string>
     <string name="register">免费注册</string>
     <string name="login_title">账户登录</string>
+    <string name="login_username_isempty">acconut is empty!</string>
 
 
 </resources>

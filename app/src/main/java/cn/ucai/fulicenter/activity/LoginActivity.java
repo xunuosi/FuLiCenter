@@ -2,6 +2,7 @@ package cn.ucai.fulicenter.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 
@@ -10,6 +11,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.views.DisplayUtils;
 
@@ -21,6 +23,7 @@ public class LoginActivity extends BaseActivity {
     EditText mLoginPasswordEditText;
 
     String username;
+    String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +51,29 @@ public class LoginActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.login_button:
+                checkLogin();
                 break;
             case R.id.register_button:
                 MFGT.gotoRegisterActivity(this);
                 break;
         }
+    }
+
+    private void checkLogin() {
+        username = mLoginAccountEditText.getText().toString().trim();
+        password = mLoginPasswordEditText.getText().toString().trim();
+        if (TextUtils.isEmpty(username)) {
+            CommonUtils.showShortToast(R.string.login_username_isempty);
+            return;
+        } else if (TextUtils.isEmpty(password)) {
+            CommonUtils.showShortToast(R.string.password_connot_be_empty);
+            return;
+        }
+        login();
+    }
+
+    private void login() {
+
     }
 
     @Override

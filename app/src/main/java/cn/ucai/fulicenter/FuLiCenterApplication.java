@@ -5,6 +5,7 @@ import android.app.Application;
 
 public class FuLiCenterApplication extends Application {
     public static FuLiCenterApplication application;
+    public static String username;// 设置全局变量用于判断用户是否登录
 
     @Override
     public void onCreate() {

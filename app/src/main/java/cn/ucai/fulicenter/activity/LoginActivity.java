@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -7,6 +8,7 @@ import android.widget.EditText;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.views.DisplayUtils;
@@ -17,6 +19,8 @@ public class LoginActivity extends BaseActivity {
     EditText mLoginAccountEditText;
     @BindView(R.id.login_password_editText)
     EditText mLoginPasswordEditText;
+
+    String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,5 +55,17 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == I.REQUEST_CODE_REGISTER && resultCode == RESULT_OK) {
+            if (data == null) {
+                return;
+            } else {
+                username = data.getStringExtra(I.User.USER_NAME);
+                mLoginAccountEditText.setText(username);
+                mLoginPasswordEditText.requestFocus();
+            }
+        }
+    }
 }

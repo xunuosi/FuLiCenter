@@ -2,6 +2,7 @@ package cn.ucai.fulicenter.activity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
@@ -37,7 +38,7 @@ public class RegisterActivity extends BaseActivity {
     String repassword;
     String nick;
 
-    Context mContext;
+    RegisterActivity mContext;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,7 +111,10 @@ public class RegisterActivity extends BaseActivity {
                         dialog.dismiss();
                         if (result.isRetMsg()) {
                             CommonUtils.showLongToast(R.string.register_success);
-                            MFGT.gotoLoginActivity(mContext);
+                            // 将注册成功的username返回给登录界面
+                            setResult(RESULT_OK
+                                    , new Intent().putExtra(I.User.USER_NAME, username));
+                            MFGT.finish(mContext);
                         } else {
                             if (result.getRetCode() == I.MSG_REGISTER_USERNAME_EXISTS) {
                                 CommonUtils.showShortToast(R.string.register_fail_exists);

@@ -38,6 +38,7 @@
     <string name="login_success">Login Success</string>
     <string name="loging">Login...</string>
     <string name="user_save_error">user save error</string>
+    <string name="setting">Setting</string>
 
 
 </resources>

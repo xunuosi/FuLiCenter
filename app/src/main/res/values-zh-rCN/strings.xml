@@ -36,4 +36,5 @@
     <string name="login_success">用户登录成功</string>
     <string name="loging">Login...</string>
     <string name="user_save_error">用户数据库读取异常</string>
+    <string name="setting">设置</string>
 </resources>

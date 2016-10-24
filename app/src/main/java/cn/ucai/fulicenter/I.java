@@ -30,6 +30,7 @@ public interface I {
 
     /** 请求码*/
     public static final int REQUEST_CODE_REGISTER=666;
+    public static final int REQUEST_CODE_LOGIN = 667;
 
     /**
      * BeeColud APP ID
@@ -396,6 +397,10 @@ public interface I {
     int MSG_ILLEGAL_REQUEST = -1;    //非法请求
 
     /**
+     * 上传头像的后缀类型：.jpg或.png
+     */
+    String AVATAR_SUFFIX = "m_avatar_suffix";
+    /**
      * 上传头像图片的类型：user_avatar或group_icon
      */
     String AVATAR_TYPE = "avatarType";
@@ -570,6 +575,12 @@ public interface I {
      */
     String DOWNLOAD_IMG_URL = I.SERVER_ROOT +
             REQUEST_DOWNLOAD_IMAGE + I.QUESTION + IMAGE_URL + "=";
+
+    /**
+     * 下载用户头像的接口
+     */
+    String DOWNLOAD_AVATAR_URL = I.SERVER_ROOT +
+            REQUEST_DOWNLOAD_AVATAR + I.QUESTION;
 
     /**
      * 设置错误信息

@@ -15,15 +15,13 @@ import java.net.URLEncoder;
 
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.bean.UserBean;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * Created by yao on 2016/5/18.
- */
 public class ImageLoader {
     private static final String UTF_8 = "utf-8";
     private static final int DOWNLOAD_SUCCESS=0;
@@ -357,5 +355,36 @@ public class ImageLoader {
                 .imageView(imageView)
                 .setDragging(isDragging)
                 .showImage(context);
+    }
+
+    /**
+     * 下载用户头像的方法
+     *
+     * @param url
+     * @param context
+     * @param imageView
+     */
+    public static void setAvatar(String url, Context context, ImageView imageView) {
+
+        ImageLoader.build(url)
+                .defaultPicture(R.drawable.contactlogo)
+                .imageView(imageView)
+                .showImage(context);
+    }
+
+    /**
+     * 得到下载用户头像请求的Url
+     * @param user
+     * @return
+     */
+    public static String getAvatarUrl(UserBean user){
+        if(user!=null) {
+            String url = I.DOWNLOAD_AVATAR_URL + I.NAME_OR_HXID + "=" + user.getMuserName()
+                    + I.AND + I.AVATAR_TYPE + "=" + user.getMavatarPath() + I.AND + I.AVATAR_SUFFIX
+                    + "=" + user.getMavatarSuffix() + I.AND + "width=200&height=200";
+            L.e("useravatar=" + url);
+            return url;
+        }
+        return null;
     }
 }

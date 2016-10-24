@@ -9,7 +9,6 @@ package cn.ucai.fulicenter.dao;
         import cn.ucai.fulicenter.bean.GoodsDetailsBean;
         import cn.ucai.fulicenter.bean.NewGoodsBean;
         import cn.ucai.fulicenter.bean.Result;
-        import cn.ucai.fulicenter.utils.L;
         import cn.ucai.fulicenter.utils.MD5;
 
 public class NetDao {

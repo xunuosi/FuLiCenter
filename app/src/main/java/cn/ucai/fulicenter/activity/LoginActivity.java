@@ -1,10 +1,12 @@
 package cn.ucai.fulicenter.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,6 +84,9 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void login() {
+        final ProgressDialog pd = new ProgressDialog(mContext);
+        pd.setMessage(getResources().getString(R.string.loging));
+        pd.show();
         NetDao.login(mContext, username, password
                 , new OkHttpUtils.OnCompleteListener<String>() {
                     @Override
@@ -99,10 +104,12 @@ public class LoginActivity extends BaseActivity {
                         } else {
                             CommonUtils.showShortToast(R.string.login_fail);
                         }
+                        pd.dismiss();
                     }
 
                     @Override
                     public void onError(String error) {
+                        pd.dismiss();
                         L.e(TAG, "ERROR:" + error);
                         CommonUtils.showShortToast(error);
                     }

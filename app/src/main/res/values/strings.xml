@@ -36,6 +36,7 @@
     <string name="login_password_error">Password Error</string>
     <string name="login_fail">Login Fail</string>
     <string name="login_success">Login Success</string>
+    <string name="loging">Login...</string>
 
 
 </resources>

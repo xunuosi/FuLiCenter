@@ -100,7 +100,7 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.rb_myCenter:
 
-                if (FuLiCenterApplication.username == null) {
+                if (FuLiCenterApplication.getUser() == null) {
                     MFGT.gotoLoginActivity(this);
                 }else {
                     index = 4;

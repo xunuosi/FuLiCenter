@@ -6,17 +6,18 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserBean;
-import cn.ucai.fulicenter.dao.NetDao;
-import cn.ucai.fulicenter.dao.OkHttpUtils;
+import cn.ucai.fulicenter.dao.UserDao;
+import cn.ucai.fulicenter.net.NetDao;
+import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
@@ -97,6 +98,15 @@ public class LoginActivity extends BaseActivity {
                             CommonUtils.showShortToast(R.string.login_success);
                             UserBean user = (UserBean) result.getRetData();
                             L.e(TAG, user.toString());
+                            // 储存用户登录信息
+                            UserDao dao = new UserDao(mContext);
+                            boolean isSuccess = dao.addUser(user);
+                            if (isSuccess) {
+                                FuLiCenterApplication.setUser(user);
+                                MFGT.finish(mContext);
+                            } else {
+                                CommonUtils.showShortToast(R.string.user_save_error);
+                            }
                         } else if (result.getRetCode() == I.MSG_LOGIN_UNKNOW_USER) {
                             CommonUtils.showShortToast(R.string.login_nouser);
                         } else if (result.getRetCode() == I.MSG_LOGIN_ERROR_PASSWORD) {

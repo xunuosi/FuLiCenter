@@ -17,7 +17,7 @@ public class UserBean {
     private String muserNick;
     private int mavatarId;
     private String mavatarPath;
-    private Object mavatarSuffix;
+    private String mavatarSuffix;
     private int mavatarType;
     private String mavatarLastUpdateTime;
 
@@ -53,11 +53,11 @@ public class UserBean {
         this.mavatarPath = mavatarPath;
     }
 
-    public Object getMavatarSuffix() {
+    public String getMavatarSuffix() {
         return mavatarSuffix;
     }
 
-    public void setMavatarSuffix(Object mavatarSuffix) {
+    public void setMavatarSuffix(String mavatarSuffix) {
         this.mavatarSuffix = mavatarSuffix;
     }
 

@@ -8,6 +8,7 @@
     <string name="user_name">用户名</string>
     <string name="nickname">昵称</string>
     <string name="password">密码</string>
+
     <string name="confirmpassword">确认密码</string>
     <string name="register">免费注册</string>
     <string name="user_name_connot_be_empty">帐号不能为空</string>
@@ -37,4 +38,5 @@
     <string name="loging">Login...</string>
     <string name="user_save_error">用户数据库读取异常</string>
     <string name="setting">设置</string>
+    <string name="my_Center">我</string>
 </resources>

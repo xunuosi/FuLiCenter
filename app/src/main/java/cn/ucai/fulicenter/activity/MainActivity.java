@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -12,14 +13,18 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.ucai.fulicenter.FuLiCenterApplication;
+import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.fragment.BoutiqueFragment;
 import cn.ucai.fulicenter.fragment.CategoryFragment;
+import cn.ucai.fulicenter.fragment.MyCenterFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 
 public class MainActivity extends BaseActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
+
     @BindView(R.id.rb_newGoods)
     RadioButton mRbNewGoods;
     @BindView(R.id.rb_boutique)
@@ -62,6 +67,7 @@ public class MainActivity extends BaseActivity {
         mFragments[0] = new NewGoodsFragment();
         mFragments[1] = new BoutiqueFragment();
         mFragments[2] = new CategoryFragment();
+        mFragments[4] = new MyCenterFragment();
         // .show()可以指定显示哪个fragment显示你可以add很多
         mFragmentManager.beginTransaction()
                 .add(R.id.show_frameLayout, mFragments[0])
@@ -115,6 +121,8 @@ public class MainActivity extends BaseActivity {
      * 设置点击菜单显示指定Fragment
      */
     private void setFragment() {
+        L.i(TAG, "index:" + index);
+        L.i(TAG, "current:" + currentIndex);
         // 还在点击当前按钮不响应
         if (index != currentIndex) {
             FragmentManager manager = getSupportFragmentManager();
@@ -133,8 +141,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void updateRadioButtonView() {
-        L.i("xns", "index:"+index);
-        L.i("xns", "current:" + currentIndex);
+
         for (int i = 0; i < mRadioButtons.length; i++) {
             if (i == index) {
                 mRadioButtons[i].setChecked(true);
@@ -150,7 +157,25 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         L.e("xns","MainActivity,onBackPressed()");
-        super.onBackPressed();
         finish();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        L.e(TAG, "MainActitity,onResume");
+        setFragment();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        L.e(TAG, "onActivityResult,requestCode:" + requestCode);
+        // 判断是否由登录界面登录成功后跳转回来
+        if (requestCode == I.REQUEST_CODE_LOGIN && FuLiCenterApplication.getUser() != null) {
+            index = 4;
+            // 更新下方按钮的显示
+            updateRadioButtonView();
+        }
     }
 }

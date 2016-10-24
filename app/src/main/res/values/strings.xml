@@ -10,9 +10,8 @@
     <string name="boutique">精选</string>
     <string name="category">分类</string>
     <string name="cart">购物车</string>
-    <string name="my_Center">我</string>
+    <string name="my_Center">me</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="goods_detail_top">商品详情</string>
     <string name="goods_des_detail">PP食品级材质，轻巧、易清洗、蠕变性小，不易变形，可置于微波炉加热，可方巾洗碗机清洗。双层色彩可以随意组合，轻巧方便。</string>
@@ -39,6 +38,19 @@
     <string name="loging">Login...</string>
     <string name="user_save_error">user save error</string>
     <string name="setting">Setting</string>
+    <string name="confirm_password_connot_be_empty">confirm password is empty</string>
+    <string name="confirmpassword">confirm password</string>
+    <string name="illegal_user_name">Illegal account,must be first 6-16 number and word</string>
+    <string name="nick_name_connot_be_empty">nick is not empty</string>
+    <string name="nickname">nick</string>
+    <string name="password_connot_be_empty">password is not empty</string>
+    <string name="register_fail">register fail</string>
+    <string name="register_fail_exists">username already exists</string>
+    <string name="register_success">register success</string>
+    <string name="registering">resgistering...</string>
+    <string name="two_input_password">Enter the password twice</string>
+    <string name="user_name">Account</string>
+    <string name="user_name_connot_be_empty">Account is not empty</string>
 
 
 </resources>

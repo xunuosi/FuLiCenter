@@ -18,6 +18,7 @@ import cn.ucai.fulicenter.bean.UserBean;
 import cn.ucai.fulicenter.dao.UserDao;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
+import cn.ucai.fulicenter.shared_prefs.SharedPreferencesUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
@@ -100,9 +101,15 @@ public class LoginActivity extends BaseActivity {
                             L.e(TAG, user.toString());
                             // 储存用户登录信息
                             UserDao dao = new UserDao(mContext);
+                            // 保存在数据库中
                             boolean isSuccess = dao.addUser(user);
                             if (isSuccess) {
+                                // 保存在内存中
                                 FuLiCenterApplication.setUser(user);
+                                // 保存到首选项中
+                                SharedPreferencesUtils.getInstance(mContext)
+                                        .saveUser(user.getMuserName());
+
                                 MFGT.finish(mContext);
                             } else {
                                 CommonUtils.showShortToast(R.string.user_save_error);

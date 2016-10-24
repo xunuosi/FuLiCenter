@@ -1,6 +1,5 @@
 package cn.ucai.fulicenter.activity;
 
-import android.content.Context;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +8,7 @@ import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.UserBean;
 import cn.ucai.fulicenter.dao.UserDao;
+import cn.ucai.fulicenter.shared_prefs.SharedPreferencesUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 
@@ -33,12 +33,17 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 // 如果内存中有user数据直接读取
                 UserBean user = FuLiCenterApplication.getUser();
-                if (user != null) {
-                    L.e(TAG, "FuLiCenterApplication"+user);
-                } else {// 否则数据库中读取数据
+                // 判断首选项是否读取到用户名
+                String username = SharedPreferencesUtils.getInstance(mContext).getUser();
+                L.e(TAG, "fulicenter,username=" + username);
+                if (user == null && username != null) {
+                    // 数据库中读取信息
                     UserDao dao = new UserDao(mContext);
-                    user = dao.getUser("xns1987");
-                    L.e(TAG, "dataBase:"+user);
+                    user = dao.getUser(username);
+                    L.e(TAG, "dataBase:" + user);
+                    if (user != null) {
+                        FuLiCenterApplication.setUser(user);
+                    }
                 }
 
                 MFGT.gotoMainActivity(SplashActivity.this);

@@ -5,20 +5,20 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 
-public class SharedPrefrencesUtils {
+public class SharedPreferencesUtils {
     private static String SHARED_PREFRENCES_NAME = "userInfo";
     private static String SHARED_KEY_USER_NAME = "account";
 
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
 
-    private SharedPrefrencesUtils(){}
+    private SharedPreferencesUtils(){}
 
     private static class SharedPrefrencesUtilsInstance {
-        static SharedPrefrencesUtils instance = new SharedPrefrencesUtils();
+        static SharedPreferencesUtils instance = new SharedPreferencesUtils();
     }
 
-    public static SharedPrefrencesUtils getInstance(Context context) {
+    public static SharedPreferencesUtils getInstance(Context context) {
         SharedPrefrencesUtilsInstance.instance.mSharedPreferences =
                     context.getApplicationContext()
                         .getSharedPreferences(SHARED_PREFRENCES_NAME, Context.MODE_PRIVATE);

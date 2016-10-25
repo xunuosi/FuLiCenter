@@ -120,6 +120,6 @@ public class MFGT {
     public static void gotoSettingActivity(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, SettingsActivity.class);
-        startActivityForResult((Activity) context, intent, I.REQUEST_CODE_SETTING);
+        startActivity(context, intent);
     }
 }

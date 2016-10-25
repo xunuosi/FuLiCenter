@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -125,6 +124,7 @@ public class SettingsActivity extends BaseActivity {
                         .show();
                 break;
             case R.id.person_setting_quit_button:
+                L.e(TAG,"quit_button");
                 // 清除首选项中的数据
                 SharedPreferencesUtils.getInstance(mContext).removeUser();
                 // 清楚内存中的用户数据

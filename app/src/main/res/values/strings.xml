@@ -55,6 +55,9 @@
     <string name="user_avatar">Avatar</string>
     <string name="quit">quit</string>
     <string name="account_not_change">Account is not change</string>
+    <string name="change_nick_title">Change Nick</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
 
 
 </resources>

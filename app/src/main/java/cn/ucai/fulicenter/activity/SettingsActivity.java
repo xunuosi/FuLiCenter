@@ -1,9 +1,12 @@
 package cn.ucai.fulicenter.activity;
 
 import android.app.ProgressDialog;
-import android.icu.math.MathContext;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,6 +24,7 @@ import cn.ucai.fulicenter.views.DisplayUtils;
 
 public class SettingsActivity extends BaseActivity {
     SettingsActivity mContext;
+
     @BindView(R.id.person_setting_avatar_imageView)
     ImageView mPersonSettingAvatarImageView;
     @BindView(R.id.person_setting_account_textView)
@@ -73,6 +77,17 @@ public class SettingsActivity extends BaseActivity {
                 CommonUtils.showShortToast(R.string.account_not_change);
                 break;
             case R.id.person_setting_nick_layout:
+                new AlertDialog.Builder(mContext)
+                        .setTitle(R.string.change_nick_title)
+                        .setView(LayoutInflater.from(mContext).inflate(R.layout.nick_changed, null))
+                        .setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        })
+                        .setNegativeButton(R.string.cancel, null)
+                        .show();
                 break;
             case R.id.person_setting_quit_button:
                 // 清除首选项中的数据
@@ -84,4 +99,5 @@ public class SettingsActivity extends BaseActivity {
                 break;
         }
     }
+
 }

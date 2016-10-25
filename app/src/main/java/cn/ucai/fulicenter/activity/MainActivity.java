@@ -114,7 +114,7 @@ public class MainActivity extends BaseActivity {
                 break;
         }
         setFragment();
-        updateRadioButtonView();
+
     }
 
     /**
@@ -138,6 +138,7 @@ public class MainActivity extends BaseActivity {
                 currentIndex = index;
 
         }
+        updateRadioButtonView();
     }
 
     private void updateRadioButtonView() {
@@ -164,6 +165,10 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         L.e(TAG, "MainActitity,onResume");
+        // 如果没有登录用户跳转会MainActivity就应显示新品界面的功能
+        if (index == 4 && FuLiCenterApplication.getUser() == null) {
+            index = 0;
+        }
         setFragment();
     }
 

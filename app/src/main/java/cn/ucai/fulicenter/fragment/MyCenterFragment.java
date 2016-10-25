@@ -2,7 +2,6 @@ package cn.ucai.fulicenter.fragment;
 
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,6 +28,8 @@ public class MyCenterFragment extends BaseFragment {
     @BindView(R.id.tv_user_name)
     TextView mTvUserName;
 
+    UserBean user;
+
     public MyCenterFragment() {
         // Required empty public constructor
     }
@@ -52,14 +53,15 @@ public class MyCenterFragment extends BaseFragment {
     @Override
     protected void initData() {
 
-        UserBean user = FuLiCenterApplication.getUser();
+        user = FuLiCenterApplication.getUser();
         if (user != null) {
             mTvUserName.setText(user.getMuserNick());
             ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user)
                     , mContext, mIvUserAvatar);
 
         } else {
-            MFGT.gotoMainActivity((Activity) mContext);
+            // 没有得到用户继续登录一次
+            MFGT.gotoLoginActivity(mContext);
         }
     }
 
@@ -77,6 +79,11 @@ public class MyCenterFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         // 重新回到界面刷新数据
-        initData();
+        user = FuLiCenterApplication.getUser();
+        if (user != null) {
+            mTvUserName.setText(user.getMuserNick());
+            ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user)
+                    , mContext, mIvUserAvatar);
+        }
     }
 }

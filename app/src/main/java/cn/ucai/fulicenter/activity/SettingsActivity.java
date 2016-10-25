@@ -80,6 +80,7 @@ public class SettingsActivity extends BaseActivity {
                 // 清楚内存中的用户数据
                 FuLiCenterApplication.setUser(null);
                 MFGT.gotoLoginActivity(mContext);
+                finish();
                 break;
         }
     }

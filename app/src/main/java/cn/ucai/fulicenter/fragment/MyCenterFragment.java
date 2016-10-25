@@ -68,7 +68,7 @@ public class MyCenterFragment extends BaseFragment {
 
     }
 
-    @OnClick(R.id.tv_center_settings)
+    @OnClick({R.id.tv_center_settings, R.id.iv_user_avatar, R.id.tv_user_name, R.id.iv_user_qrcode})
     public void onClick() {
         MFGT.gotoSettingActivity(mContext);
     }

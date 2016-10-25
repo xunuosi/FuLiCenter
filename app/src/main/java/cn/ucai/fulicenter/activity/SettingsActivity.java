@@ -13,21 +13,29 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.io.File;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserBean;
+import cn.ucai.fulicenter.net.NetDao;
+import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.shared_prefs.SharedPreferencesUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.utils.OnSetAvatarListener;
+import cn.ucai.fulicenter.utils.ResultUtils;
 import cn.ucai.fulicenter.views.DisplayUtils;
 
 public class SettingsActivity extends BaseActivity {
+    private static final String TAG = SettingsActivity.class.getSimpleName();
     SettingsActivity mContext;
     UserBean user;
     OnSetAvatarListener mAvatarListener;
@@ -43,7 +51,7 @@ public class SettingsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
-        mContext = this;
+        mContext = SettingsActivity.this;
         super.onCreate(savedInstanceState);
     }
 
@@ -107,7 +115,9 @@ public class SettingsActivity extends BaseActivity {
                                     CommonUtils.showShortToast(R.string.nick_no_change);
                                 } else {
                                     // 更新昵称的方法
-                                    updateNick();
+                                    L.e(TAG, "editText:" + ed.getText().toString());
+                                    updateNick(ed.getText().toString());
+
                                 }
                             }
                         })
@@ -125,8 +135,44 @@ public class SettingsActivity extends BaseActivity {
         }
     }
 
-    private void updateNick() {
+    private void updateNick(String newNick) {
+        final ProgressDialog pd = new ProgressDialog(mContext);
+        pd.setMessage(getResources().getString(R.string.load));
+        pd.show();
+        NetDao.updateNick(mContext, user.getMuserName(), newNick
+                , new OkHttpUtils.OnCompleteListener<String>() {
+                    @Override
+                    public void onSuccess(String json) {
+                        L.e(TAG, json);
+                        Result result = ResultUtils.getResultFromJson(json, UserBean.class);
+                        if (result == null) {
+                            CommonUtils.showLongToast(R.string.update_fail);
+                        } else if (result.isRetMsg()) {
+                            user = (UserBean) result.getRetData();
+                            L.e(TAG, "user:" + user);
+                            FuLiCenterApplication.setUser(user);
+                            L.e(TAG, "userNick:" + user.getMuserNick());
+                            // 修改昵称显示
+                            mPersonSettingNickTextView.setText(user.getMuserNick());
+                        } else {
+                            if (result.getRetCode() == I.MSG_USER_SAME_NICK) {
+                                CommonUtils.showLongToast(R.string.update_nick_fail_unmodify);
+                            } else if (result.getRetCode() == I.MSG_USER_UPDATE_NICK_FAIL) {
+                                CommonUtils.showLongToast(R.string.update_fail);
+                            } else {
+                                CommonUtils.showLongToast(R.string.update_fail);
+                            }
+                        }
+                        pd.dismiss();
+                    }
 
+                    @Override
+                    public void onError(String error) {
+                        pd.dismiss();
+                        L.e(TAG, "ERROR:" + error);
+                        CommonUtils.showShortToast(error);
+                    }
+                });
     }
 
     @Override
@@ -136,14 +182,18 @@ public class SettingsActivity extends BaseActivity {
         if (resultCode != RESULT_OK) {
             return;
         }
+        L.e(TAG,"Setting,requestCode:"+requestCode);
         mAvatarListener.setAvatar(requestCode, data, mPersonSettingAvatarImageView);
-
         if (requestCode == OnSetAvatarListener.REQUEST_CROP_PHOTO) {
+            L.e(TAG,"Setting,requestCode2:"+requestCode);
             updateAvatar();
         }
     }
 
     private void updateAvatar() {
-
+        String path = OnSetAvatarListener.getAvatarPath(mContext, I.AVATAR_TYPE_USER_PATH);
+        L.e(TAG, "path:" + path);
+        File file = new File(path, user.getMuserName() + user.getMavatarSuffix());
+        L.e(TAG,"file path:"+file.getAbsolutePath());
     }
 }

@@ -35,7 +35,7 @@
     <string name="login_password_error">Password Error</string>
     <string name="login_fail">登录失败</string>
     <string name="login_success">用户登录成功</string>
-    <string name="loging">Login...</string>
+    <string name="loging">Login…</string>
     <string name="user_save_error">用户数据库读取异常</string>
     <string name="setting">设置</string>
     <string name="my_Center">我</string>
@@ -47,4 +47,7 @@
     <string name="save">保存</string>
     <string name="cancel">取消</string>
     <string name="nick_no_change">昵称未改变</string>
+    <string name="load">加载中…</string>
+    <string name="update_fail">更新数据失败</string>
+    <string name="update_nick_fail_unmodify">昵称未修改</string>
 </resources>

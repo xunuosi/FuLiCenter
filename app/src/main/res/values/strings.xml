@@ -59,6 +59,9 @@
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
     <string name="nick_no_change">Nick no change</string>
+    <string name="load">Load…</string>
+    <string name="update_fail">Update Fail</string>
+    <string name="update_nick_fail_unmodify">Nick fail unmodify</string>
 
 
 </resources>

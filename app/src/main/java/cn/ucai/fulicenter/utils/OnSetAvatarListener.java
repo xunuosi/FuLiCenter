@@ -44,8 +44,11 @@ import cn.ucai.fulicenter.R;
  *
  */
 public class OnSetAvatarListener implements View.OnClickListener {
+    // 拍照
     private static final int REQUEST_TAKE_PICTURE=1;
+    // 选图
     private static final int REQUEST_CHOOSE_PHOTO=2;
+    // 截图
     public static final int REQUEST_CROP_PHOTO=3;
     private Activity mActivity;
     /** popuWindos的布局view*/

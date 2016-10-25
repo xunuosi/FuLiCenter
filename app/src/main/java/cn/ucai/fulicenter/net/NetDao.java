@@ -2,6 +2,8 @@ package cn.ucai.fulicenter.net;
 
         import android.content.Context;
 
+        import java.io.File;
+
         import cn.ucai.fulicenter.I;
         import cn.ucai.fulicenter.bean.BoutiqueBean;
         import cn.ucai.fulicenter.bean.CategoryChildBean;
@@ -115,6 +117,37 @@ public class NetDao {
         utils.setRequestUrl(I.REQUEST_LOGIN)
                 .addParam(I.User.USER_NAME, username)
                 .addParam(I.User.PASSWORD, MD5.getMessageDigest(password))
+                .targetClass(String.class)
+                .execute(listener);
+    }
+
+    /**
+     * 更新用户头像的方法
+     * @param mcontext
+     * @param username
+     * @param file
+     * @param listener
+     */
+    public static void updateAvatar(Context mcontext,String username,File file
+            ,OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_UPDATE_AVATAR)
+                .addParam(I.NAME_OR_HXID, username)
+                .addParam(I.AVATAR_TYPE, I.AVATAR_TYPE_USER_PATH)
+                .addFile2(file)
+                .targetClass(String.class)
+                .post()
+                .execute(listener);
+    }
+
+    public static void updateNick(Context mcontext,String username,String newNick
+            ,OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_UPDATE_USER_NICK)
+                .addParam(I.User.USER_NAME, username)
+                .addParam(I.User.NICK, newNick)
                 .targetClass(String.class)
                 .execute(listener);
     }

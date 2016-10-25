@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.fragment;
 
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -57,6 +58,8 @@ public class MyCenterFragment extends BaseFragment {
             ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user)
                     , mContext, mIvUserAvatar);
 
+        } else {
+            MFGT.gotoMainActivity((Activity) mContext);
         }
     }
 
@@ -68,5 +71,12 @@ public class MyCenterFragment extends BaseFragment {
     @OnClick(R.id.tv_center_settings)
     public void onClick() {
         MFGT.gotoSettingActivity(mContext);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // 重新回到界面刷新数据
+        initData();
     }
 }

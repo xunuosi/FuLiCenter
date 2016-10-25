@@ -1,6 +1,7 @@
 package cn.ucai.fulicenter.fragment;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,10 +12,12 @@ import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.UserBean;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.MFGT;
 
 public class MyCenterFragment extends BaseFragment {
 
@@ -47,11 +50,13 @@ public class MyCenterFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+
         UserBean user = FuLiCenterApplication.getUser();
         if (user != null) {
             mTvUserName.setText(user.getMuserNick());
             ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user)
                     , mContext, mIvUserAvatar);
+
         }
     }
 
@@ -60,4 +65,8 @@ public class MyCenterFragment extends BaseFragment {
 
     }
 
+    @OnClick(R.id.tv_center_settings)
+    public void onClick() {
+        MFGT.gotoSettingActivity(mContext);
+    }
 }

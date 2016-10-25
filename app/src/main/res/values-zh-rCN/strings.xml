@@ -39,4 +39,8 @@
     <string name="user_save_error">用户数据库读取异常</string>
     <string name="setting">设置</string>
     <string name="my_Center">我</string>
+    <string name="person_info">个人资料</string>
+    <string name="user_avatar">用户头像</string>
+    <string name="quit">登出</string>
+    <string name="account_not_change">用户名不能被修改</string>
 </resources>

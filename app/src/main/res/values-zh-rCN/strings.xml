@@ -46,4 +46,5 @@
     <string name="change_nick_title">修改昵称</string>
     <string name="save">保存</string>
     <string name="cancel">取消</string>
+    <string name="nick_no_change">昵称未改变</string>
 </resources>

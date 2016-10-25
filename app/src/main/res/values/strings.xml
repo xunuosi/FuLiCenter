@@ -58,6 +58,7 @@
     <string name="change_nick_title">Change Nick</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
+    <string name="nick_no_change">Nick no change</string>
 
 
 </resources>

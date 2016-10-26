@@ -1,6 +1,8 @@
 package cn.ucai.fulicenter.bean;
 
 
+import cn.ucai.fulicenter.I;
+
 public class UserBean {
 
     /**
@@ -54,7 +56,7 @@ public class UserBean {
     }
 
     public String getMavatarSuffix() {
-        return mavatarSuffix;
+        return mavatarSuffix != null ? mavatarSuffix : I.AVATAR_SUFFIX_JPG;
     }
 
     public void setMavatarSuffix(String mavatarSuffix) {

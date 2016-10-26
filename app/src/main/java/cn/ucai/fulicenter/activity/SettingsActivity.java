@@ -12,6 +12,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.zfdang.multiple_images_selector.ImagesSelectorActivity;
+import com.zfdang.multiple_images_selector.SelectorSettings;
+
+import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -138,9 +142,9 @@ public class SettingsActivity extends BaseActivity {
         // start multiple photos selector
         Intent intent = new Intent(SettingsActivity.this, ImagesSelectorActivity.class);
 // max number of images to be selected
-        intent.putExtra(SelectorSettings.SELECTOR_MAX_IMAGE_NUMBER, 5);
+        intent.putExtra(SelectorSettings.SELECTOR_MAX_IMAGE_NUMBER, 1);
 // min size of image which will be shown; to filter tiny images (mainly icons)
-        intent.putExtra(SelectorSettings.SELECTOR_MIN_IMAGE_SIZE, 100000);
+        intent.putExtra(SelectorSettings.SELECTOR_MIN_IMAGE_SIZE, 10000);
 // show camera or not
         intent.putExtra(SelectorSettings.SELECTOR_SHOW_CAMERA, true);
 // pass current selected images as the initial value
@@ -191,7 +195,64 @@ public class SettingsActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // get selected images from selector
+        if(requestCode == REQUEST_CODE) {
+            if(resultCode == RESULT_OK) {
+                mResults = data.getStringArrayListExtra(SelectorSettings.SELECTOR_RESULTS);
+                // 判断不为空
+                assert mResults != null;
+                L.e(TAG, "setting,mResults:" + mResults);
+                // show results in textview
+                StringBuffer sb = new StringBuffer();
+                sb.append(String.format("Totally %d images selected:", mResults.size())).append("\n");
+                for(String result : mResults) {
+                    L.e(TAG, "setting,result:" + result);
+                    updateAvatar(result);
+                    sb.append(result).append("\n");
+                }
+                // tvResults.setText(sb.toString());
+                L.e(TAG, "setting,onActivityResult"+sb.toString());
+
+            }
+        }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void updateAvatar(String result) {
+        File file = new File(result);
+        L.e(TAG, "File:" + file.toString());
+        final ProgressDialog pd = new ProgressDialog(mContext);
+        pd.setMessage(getResources().getString(R.string.load));
+        pd.show();
+        NetDao.updateAvatar(mContext, user.getMuserName(), file
+                , new OkHttpUtils.OnCompleteListener<String>() {
+                    @Override
+                    public void onSuccess(String s) {
+                        L.e(TAG, "updateAvatar,result:" + s);
+                        Result result = ResultUtils.getResultFromJson(s,UserBean.class);
+                        L.e("result="+result);
+                        if(result==null){
+                            CommonUtils.showLongToast(R.string.update_user_avatar_fail);
+                        }else{
+                            UserBean u = (UserBean) result.getRetData();
+                            if(result.isRetMsg()){
+                                FuLiCenterApplication.setUser(u);
+                                ImageLoader.setAvatar(ImageLoader.getAvatarUrl(u),mContext,mPersonSettingAvatarImageView);
+                                CommonUtils.showLongToast(R.string.update_user_avatar_success);
+                            }else{
+                                CommonUtils.showLongToast(R.string.update_user_avatar_fail);
+                            }
+                        }
+                        pd.dismiss();
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        pd.dismiss();
+                        CommonUtils.showLongToast(R.string.update_user_avatar_fail);
+                        L.e("error="+error);
+                    }
+                });
     }
 
 }

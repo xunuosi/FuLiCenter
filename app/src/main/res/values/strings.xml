@@ -62,6 +62,8 @@
     <string name="load">Load…</string>
     <string name="update_fail">Update Fail</string>
     <string name="update_nick_fail_unmodify">Nick fail unmodify</string>
+    <string name="update_user_avatar_fail">Update fail</string>
+    <string name="update_user_avatar_success">Update Success</string>
 
 
 </resources>

@@ -15,9 +15,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserBean;
+import cn.ucai.fulicenter.dao.UserDao;
+import cn.ucai.fulicenter.net.NetDao;
+import cn.ucai.fulicenter.net.OkHttpUtils;
+import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.MFGT;
+import cn.ucai.fulicenter.utils.ResultUtils;
 
 public class MyCenterFragment extends BaseFragment {
 
@@ -84,6 +90,45 @@ public class MyCenterFragment extends BaseFragment {
             mTvUserName.setText(user.getMuserNick());
             ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user)
                     , mContext, mIvUserAvatar);
+            // 再次回到用户中心界面刷新数据
+            syncUserInfo();
         }
+    }
+
+    /**
+     * 同步个人信息的方法
+     */
+    private void syncUserInfo() {
+        NetDao.findUserByUserName(mContext, user.getMuserName()
+                , new OkHttpUtils.OnCompleteListener<String>() {
+                    @Override
+                    public void onSuccess(String jsonStr) {
+                        Result result = ResultUtils.getResultFromJson(jsonStr, UserBean.class);
+                        if (result != null) {
+                            UserBean u = (UserBean) result.getRetData();
+                            // 判断如果用户有更新就进行同步
+                            if (!u.equals(user)) {
+                                // 更新用户数据库
+                                UserDao dao = new UserDao(mContext);
+                                boolean b = dao.addUser(u);
+                                if (b) {
+                                    // 更新内存中的用户
+                                    FuLiCenterApplication.setUser(u);
+                                    // 更新局部变量
+                                    user = u;
+                                    ImageLoader.setAvatar(ImageLoader.getAvatarUrl(user)
+                                            , mContext, mIvUserAvatar);
+                                    mTvUserName.setText(user.getMuserNick());
+                                }
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        CommonUtils.showShortToast("ERROR:" + error);
+                    }
+                });
     }
 }

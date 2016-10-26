@@ -80,6 +80,25 @@ public class UserBean {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof UserBean)) return false;
+
+        UserBean userBean = (UserBean) o;
+
+        if (!muserName.equals(userBean.muserName)) return false;
+        return mavatarLastUpdateTime.equals(userBean.mavatarLastUpdateTime);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = muserName.hashCode();
+        result = 31 * result + mavatarLastUpdateTime.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "UserBean{" +
                 "muserName='" + muserName + '\'' +

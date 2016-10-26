@@ -1,5 +1,6 @@
 package cn.ucai.fulicenter.activity;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.webkit.WebView;
@@ -27,6 +28,11 @@ import cn.ucai.fulicenter.views.SlideAutoLoopView;
 
 public class GoodsDetailActivity extends BaseActivity {
     private static final String TAG = GoodsDetailActivity.class.getSimpleName();
+    // 定义广播标志
+    public static final String BROAD_CAST = "cn.ucai.fulicenter.activity.GoodsDetailActivity";
+    // 传入广播的信息
+    private static final int ADD_COLLECT = 1;
+    private static final int DEL_COLLECT = 2;
 
     @BindView(R.id.title_back_imageView)
     ImageView mTitleBackImageView;
@@ -237,6 +243,11 @@ public class GoodsDetailActivity extends BaseActivity {
                             // 根据状态改变显示
                             checkCollectStatus();
                             CommonUtils.showShortToast(R.string.delete_success);
+                            // 发出广播用于正确显示收藏宝贝界面数据
+                            Intent intent = new Intent(BROAD_CAST);
+                            intent.putExtra(TAG, DEL_COLLECT);
+                            // 发送广播
+                            sendBroadcast(intent);
                         } else {
                             CommonUtils.showShortToast(R.string.delete_fail);
                         }
@@ -260,6 +271,11 @@ public class GoodsDetailActivity extends BaseActivity {
                             // 根据状态改变显示
                             checkCollectStatus();
                             CommonUtils.showShortToast(R.string.collect_success);
+                            // 发出广播用于正确显示收藏宝贝界面数据
+                            Intent intent = new Intent(BROAD_CAST);
+                            intent.putExtra(TAG, ADD_COLLECT);
+                            // 发送广播
+                            sendBroadcast(intent);
                         } else {
                             CommonUtils.showShortToast(R.string.delete_fail);
                         }

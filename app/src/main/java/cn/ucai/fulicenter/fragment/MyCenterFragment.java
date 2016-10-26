@@ -1,7 +1,6 @@
 package cn.ucai.fulicenter.fragment;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,6 +14,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.R;
+import cn.ucai.fulicenter.bean.MessageBean;
 import cn.ucai.fulicenter.bean.Result;
 import cn.ucai.fulicenter.bean.UserBean;
 import cn.ucai.fulicenter.dao.UserDao;
@@ -22,11 +22,12 @@ import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.utils.ResultUtils;
 
 public class MyCenterFragment extends BaseFragment {
-
+    private static final String TAG = MyCenterFragment.class.getSimpleName();
 
     Context mContext;
     @BindView(R.id.iv_user_avatar)
@@ -35,6 +36,8 @@ public class MyCenterFragment extends BaseFragment {
     TextView mTvUserName;
 
     UserBean user;
+    @BindView(R.id.tv_collect_count)
+    TextView mTvCollectCount;
 
     public MyCenterFragment() {
         // Required empty public constructor
@@ -92,6 +95,7 @@ public class MyCenterFragment extends BaseFragment {
                     , mContext, mIvUserAvatar);
             // 再次回到用户中心界面刷新数据
             syncUserInfo();
+            syncCollectInfo();
         }
     }
 
@@ -122,6 +126,29 @@ public class MyCenterFragment extends BaseFragment {
                                 }
 
                             }
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        CommonUtils.showShortToast("ERROR:" + error);
+                    }
+                });
+    }
+
+    /**
+     * 同步收藏宝贝数量的方法
+     */
+    private void syncCollectInfo() {
+        NetDao.findCollectCount(mContext, user.getMuserName()
+                , new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean message) {
+                        L.e(TAG, "message:" + message);
+                        if (message != null && message.isSuccess()) {
+                            mTvCollectCount.setText(message.getMsg());
+                        } else {// 如果没有得到信息显示收藏为0
+                            mTvCollectCount.setText(String.valueOf(0));
                         }
                     }
 

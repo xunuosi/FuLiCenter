@@ -144,7 +144,7 @@ public class SettingsActivity extends BaseActivity {
 // max number of images to be selected
         intent.putExtra(SelectorSettings.SELECTOR_MAX_IMAGE_NUMBER, 1);
 // min size of image which will be shown; to filter tiny images (mainly icons)
-        intent.putExtra(SelectorSettings.SELECTOR_MIN_IMAGE_SIZE, 10000);
+        intent.putExtra(SelectorSettings.SELECTOR_MIN_IMAGE_SIZE, 1000);
 // show camera or not
         intent.putExtra(SelectorSettings.SELECTOR_SHOW_CAMERA, true);
 // pass current selected images as the initial value

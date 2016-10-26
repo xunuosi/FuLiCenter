@@ -32,8 +32,8 @@ public class NewGoodsFragment extends BaseFragment {
     @BindView(R.id.newgoods_recycler_view)
     RecyclerView mNewgoodsRecyclerView;
     @BindView(R.id.newgoods_srl)
-
     SwipeRefreshLayout mNewgoodsSrl;
+
     NewGoodsAdapter mNewGoodsAdapter;
     ArrayList<NewGoodsBean> mList;
     GridLayoutManager gridLayoutManager;

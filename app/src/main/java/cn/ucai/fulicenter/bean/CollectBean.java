@@ -1,6 +1,8 @@
 package cn.ucai.fulicenter.bean;
 
-public class CollectBean {
+import java.io.Serializable;
+
+public class CollectBean implements Serializable{
 
 
     /**

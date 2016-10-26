@@ -10,18 +10,23 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.AlbumsBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
+import cn.ucai.fulicenter.bean.MessageBean;
+import cn.ucai.fulicenter.bean.UserBean;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
+import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.views.FlowIndicator;
 import cn.ucai.fulicenter.views.SlideAutoLoopView;
 
 public class GoodsDetailActivity extends BaseActivity {
+    private static final String TAG = GoodsDetailActivity.class.getSimpleName();
 
     @BindView(R.id.title_back_imageView)
     ImageView mTitleBackImageView;
@@ -39,13 +44,20 @@ public class GoodsDetailActivity extends BaseActivity {
     FlowIndicator mGoodsDetailFlowIndicator;
     @BindView(R.id.goodsDetail_description_webView)
     WebView mGoodsDetailDescriptionWebView;
+    @BindView(R.id.goodsDetail_collect_imageView)
+    ImageView mGoodsDetailCollectImageView;
 
     int goodsId;
+    UserBean user;
+    GoodsDetailActivity mContext;
+    // 标志变量标识是否收藏了这个宝贝
+    boolean isCollect = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_goods_detail);
         ButterKnife.bind(this);
+        mContext = GoodsDetailActivity.this;
         goodsId = getIntent().getIntExtra(I.GoodsDetails.KEY_GOODS_ID, 0);
         L.e("test:" + goodsId);
         if (goodsId == 0) {
@@ -97,8 +109,8 @@ public class GoodsDetailActivity extends BaseActivity {
     private void showWebView(GoodsDetailsBean result) {
         // webView的数据显示
         mGoodsDetailDescriptionWebView
-                .loadDataWithBaseURL(null,result.getGoodsBrief()
-                        , I.TEXT_HTML,I.UTF_8,null);
+                .loadDataWithBaseURL(null, result.getGoodsBrief()
+                        , I.TEXT_HTML, I.UTF_8, null);
     }
 
     private void recyclerShowImage(GoodsDetailsBean result) {
@@ -158,5 +170,49 @@ public class GoodsDetailActivity extends BaseActivity {
     @OnClick(R.id.title_back_imageView)
     public void onClick() {
         MFGT.finish(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        user = FuLiCenterApplication.getUser();
+        if (user != null) {
+            checkCollectStatus();
+        }
+    }
+
+    private void checkCollectStatus() {
+        NetDao.isCollect(mContext, user.getMuserName(), goodsId,
+                new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result != null && result.isSuccess()) {
+                            isCollect = true;
+                            changeCollectStatus();
+                        } else {
+                            changeCollectStatus();
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        L.e(TAG, "ERROR:" + error);
+                        CommonUtils.showShortToast(error);
+                        changeCollectStatus();
+                    }
+                });
+    }
+
+    private void changeCollectStatus() {
+        if (isCollect) {
+            mGoodsDetailCollectImageView.setImageResource(R.mipmap.bg_collect_out);
+        } else {
+            mGoodsDetailCollectImageView.setImageResource(R.mipmap.bg_collect_in);
+        }
+    }
+
+    @OnClick(R.id.goodsDetail_collect_imageView)
+    public void onClickChangeCollectStatus() {
+
     }
 }

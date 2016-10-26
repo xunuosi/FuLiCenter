@@ -158,4 +158,9 @@ public class MyCenterFragment extends BaseFragment {
                     }
                 });
     }
+
+    @OnClick(R.id.layout_center_collect)
+    public void openCollectActivity() {
+        MFGT.gotoCollectGoodsActivity(mContext);
+    }
 }

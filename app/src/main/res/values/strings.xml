@@ -64,6 +64,7 @@
     <string name="update_nick_fail_unmodify">Nick fail unmodify</string>
     <string name="update_user_avatar_fail">Update fail</string>
     <string name="update_user_avatar_success">Update Success</string>
+    <string name="collect_title">Collects</string>
 
 
 </resources>

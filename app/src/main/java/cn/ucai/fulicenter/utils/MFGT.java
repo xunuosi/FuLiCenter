@@ -11,6 +11,7 @@ import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.BoutiqueChildActivity;
 import cn.ucai.fulicenter.activity.CategoryChildActivity;
+import cn.ucai.fulicenter.activity.CollectGoodsActivity;
 import cn.ucai.fulicenter.activity.GoodsDetailActivity;
 import cn.ucai.fulicenter.activity.LoginActivity;
 import cn.ucai.fulicenter.activity.MainActivity;
@@ -120,6 +121,12 @@ public class MFGT {
     public static void gotoSettingActivity(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, SettingsActivity.class);
+        startActivity(context, intent);
+    }
+
+    public static void gotoCollectGoodsActivity(Context context) {
+        Intent intent = new Intent();
+        intent.setClass(context, CollectGoodsActivity.class);
         startActivity(context, intent);
     }
 }

@@ -213,6 +213,63 @@ public class GoodsDetailActivity extends BaseActivity {
 
     @OnClick(R.id.goodsDetail_collect_imageView)
     public void onClickChangeCollectStatus() {
+        user = FuLiCenterApplication.getUser();
+        if (user != null) {
+            // 调用检查方法改变标志变量
+            checkCollectStatus();
+            if (isCollect) {
+                deleteCollectGoods();
+            } else {
+                addCollectGoods();
+            }
+        } else {
+            MFGT.gotoLoginActivity(mContext);
+        }
+    }
 
+    private void deleteCollectGoods() {
+        NetDao.deleteCollect(mContext, user.getMuserName(), goodsId,
+                new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result != null && result.isSuccess()) {
+                            isCollect = !isCollect;
+                            // 根据状态改变显示
+                            checkCollectStatus();
+                            CommonUtils.showShortToast(R.string.delete_success);
+                        } else {
+                            CommonUtils.showShortToast(R.string.delete_fail);
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        L.e(TAG, "ERROR:" + error);
+                        CommonUtils.showShortToast(error);
+                    }
+                });
+    }
+
+    private void addCollectGoods() {
+        NetDao.addCollect(mContext, user.getMuserName(), goodsId,
+                new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                    @Override
+                    public void onSuccess(MessageBean result) {
+                        if (result != null && result.isSuccess()) {
+                            isCollect = !isCollect;
+                            // 根据状态改变显示
+                            checkCollectStatus();
+                            CommonUtils.showShortToast(R.string.collect_success);
+                        } else {
+                            CommonUtils.showShortToast(R.string.delete_fail);
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        L.e(TAG, "ERROR:" + error);
+                        CommonUtils.showShortToast(error);
+                    }
+                });
     }
 }

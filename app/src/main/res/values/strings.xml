@@ -67,6 +67,7 @@
     <string name="collect_title">Collects</string>
     <string name="delete_fail">Delete Fail</string>
     <string name="delete_success">Del Success</string>
+    <string name="collect_success">Collected</string>
 
 
 </resources>

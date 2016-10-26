@@ -65,6 +65,8 @@
     <string name="update_user_avatar_fail">Update fail</string>
     <string name="update_user_avatar_success">Update Success</string>
     <string name="collect_title">Collects</string>
+    <string name="delete_fail">Delete Fail</string>
+    <string name="delete_success">Del Success</string>
 
 
 </resources>

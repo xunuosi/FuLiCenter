@@ -8,7 +8,7 @@
     tools:context="cn.ucai.fulicenter.activity.CollectGoodsActivity">
     <include layout="@layout/white_title_image_text" />
     <LinearLayout
-        android:layout_marginTop="40dp"
+        android:layout_below="@+id/white_title_image_relativlayout"
         android:id="@+id/collect_item_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

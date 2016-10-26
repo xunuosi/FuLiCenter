@@ -14,15 +14,23 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.CollectBean;
+import cn.ucai.fulicenter.bean.MessageBean;
+import cn.ucai.fulicenter.net.NetDao;
+import cn.ucai.fulicenter.net.OkHttpUtils;
+import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.views.ItemFooterViewHolder;
 
 
 public class CollectGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = CollectGoodsItemViewHolder.class.getSimpleName();
+
     List<CollectBean> mList;
     Context mContext;
     boolean isMore;
@@ -70,7 +78,7 @@ public class CollectGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
         // 使用LinearLayout.tag属性保存被每个Item的商品ID值
         viewHolder.mLayout
-                .setTag(bean.getGoodsId());
+                .setTag(bean);
     }
 
     /**
@@ -107,7 +115,7 @@ public class CollectGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         notifyDataSetChanged();
     }
 
-    public class CollectGoodsItemViewHolder extends RecyclerView.ViewHolder{
+    class CollectGoodsItemViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.newgoods_image_view)
         ImageView mNewgoodsImageView;
         @BindView(R.id.newgoods_title_text_view)
@@ -121,7 +129,8 @@ public class CollectGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @OnClick(R.id.collect_item)
         public void itemOnClick() {
             // 取出存放的GoodsId并发送给启动的Activity
-            int goodsId= (int) mLayout.getTag();
+            CollectBean bean = (CollectBean) mLayout.getTag();
+            int goodsId = bean.getGoodsId();
             MFGT.gotoGoodsActivity(mContext,goodsId);
         }
 
@@ -136,8 +145,33 @@ public class CollectGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             ImageLoader.downloadImg(mContext,mNewgoodsImageView,bean.getGoodsThumb());
         }
 
+        @OnClick(R.id.delete_imageView)
+        public void deleteGoods() {
+            String username = FuLiCenterApplication.getUser().getMuserName();
+            CollectBean bean = (CollectBean) mLayout.getTag();
+            int goodsId = bean.getGoodsId();
+
+            NetDao.deleteCollect(mContext, username, goodsId
+                    , new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                        @Override
+                        public void onSuccess(MessageBean result) {
+                            if (result != null && result.isSuccess()) {
+                                // 删除List集合中的数据
+                                CommonUtils.showShortToast(
+                                        mContext.getResources().getString(R.string.delete_success));
+                            } else {
+                                CommonUtils.showShortToast(
+                                        mContext.getResources().getString(R.string.delete_fail));
+                            }
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            L.e(TAG, "ERROR:" + error);
+                            CommonUtils.showShortToast(error);
+                        }
+                    });
+        }
+
     }
-
-
-
 }

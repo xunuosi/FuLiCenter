@@ -112,7 +112,7 @@ public class CollectGoodsActivity extends BaseActivity {
     }
 
     private void downLoadData(final int action) {
-        NetDao.findCollects(mContext,"yujie" ,mPageId,
+        NetDao.findCollects(mContext, user.getMuserName(), mPageId,
                 new OkHttpUtils.OnCompleteListener<CollectBean[]>() {
                     @Override
                     public void onSuccess(CollectBean[] result) {
@@ -143,7 +143,7 @@ public class CollectGoodsActivity extends BaseActivity {
                         mNewgoodsSrl.setRefreshing(false);
                         mAdapter.setMore(false);
                         CommonUtils.showLongToast("网络访问异常，请检查网络设置。");
-                        L.e("ERROR:"+error);
+                        L.e("ERROR:" + error);
                     }
                 });
     }

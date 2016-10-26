@@ -2,6 +2,8 @@ package cn.ucai.fulicenter;
 
 import android.app.Application;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
+
 import cn.ucai.fulicenter.bean.UserBean;
 
 
@@ -12,6 +14,8 @@ public class FuLiCenterApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        // the following line is important
+        Fresco.initialize(getApplicationContext());
         application = this;
     }
 

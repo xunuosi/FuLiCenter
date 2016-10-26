@@ -35,4 +35,5 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.4.1'
     testCompile 'junit:junit:4.12'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+    compile 'com.zfdang.multiple-images-selector:multiple-images-selector:1.1.3'
 }

@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.io.File;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +29,6 @@ import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.MFGT;
-import cn.ucai.fulicenter.utils.OnSetAvatarListener;
 import cn.ucai.fulicenter.utils.ResultUtils;
 import cn.ucai.fulicenter.views.DisplayUtils;
 
@@ -37,7 +36,10 @@ public class SettingsActivity extends BaseActivity {
     private static final String TAG = SettingsActivity.class.getSimpleName();
     SettingsActivity mContext;
     UserBean user;
-    OnSetAvatarListener mAvatarListener;
+
+    // class variables
+    private static final int REQUEST_CODE = 123;
+    private ArrayList<String> mResults = new ArrayList<>();
 
     @BindView(R.id.person_setting_avatar_imageView)
     ImageView mPersonSettingAvatarImageView;
@@ -86,10 +88,7 @@ public class SettingsActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.person_setting_avatar_layout:
-                // 初始化上传头像的监听对象
-                mAvatarListener = new OnSetAvatarListener(mContext,
-                        R.id.activity_settings,
-                        user.getMuserName(), I.AVATAR_TYPE_USER_PATH);
+                initImageUtils();
                 break;
             case R.id.person_setting_account_layout:
                 CommonUtils.showShortToast(R.string.account_not_change);
@@ -135,6 +134,21 @@ public class SettingsActivity extends BaseActivity {
         }
     }
 
+    private void initImageUtils() {
+        // start multiple photos selector
+        Intent intent = new Intent(SettingsActivity.this, ImagesSelectorActivity.class);
+// max number of images to be selected
+        intent.putExtra(SelectorSettings.SELECTOR_MAX_IMAGE_NUMBER, 5);
+// min size of image which will be shown; to filter tiny images (mainly icons)
+        intent.putExtra(SelectorSettings.SELECTOR_MIN_IMAGE_SIZE, 100000);
+// show camera or not
+        intent.putExtra(SelectorSettings.SELECTOR_SHOW_CAMERA, true);
+// pass current selected images as the initial value
+        intent.putStringArrayListExtra(SelectorSettings.SELECTOR_INITIAL_SELECTED_LIST, mResults);
+// start the selector
+        startActivityForResult(intent, REQUEST_CODE);
+    }
+
     private void updateNick(String newNick) {
         final ProgressDialog pd = new ProgressDialog(mContext);
         pd.setMessage(getResources().getString(R.string.load));
@@ -178,22 +192,6 @@ public class SettingsActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        // 初始化相片的框架对象
-        if (resultCode != RESULT_OK) {
-            return;
-        }
-        L.e(TAG,"Setting,requestCode:"+requestCode);
-        mAvatarListener.setAvatar(requestCode, data, mPersonSettingAvatarImageView);
-        if (requestCode == OnSetAvatarListener.REQUEST_CROP_PHOTO) {
-            L.e(TAG,"Setting,requestCode2:"+requestCode);
-            updateAvatar();
-        }
     }
 
-    private void updateAvatar() {
-        String path = OnSetAvatarListener.getAvatarPath(mContext, I.AVATAR_TYPE_USER_PATH);
-        L.e(TAG, "path:" + path);
-        File file = new File(path, user.getMuserName() + user.getMavatarSuffix());
-        L.e(TAG,"file path:"+file.getAbsolutePath());
-    }
 }

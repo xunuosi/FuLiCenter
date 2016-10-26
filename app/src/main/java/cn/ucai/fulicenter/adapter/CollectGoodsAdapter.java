@@ -148,7 +148,7 @@ public class CollectGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         @OnClick(R.id.delete_imageView)
         public void deleteGoods() {
             String username = FuLiCenterApplication.getUser().getMuserName();
-            CollectBean bean = (CollectBean) mLayout.getTag();
+            final CollectBean bean = (CollectBean) mLayout.getTag();
             int goodsId = bean.getGoodsId();
 
             NetDao.deleteCollect(mContext, username, goodsId
@@ -157,6 +157,8 @@ public class CollectGoodsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                         public void onSuccess(MessageBean result) {
                             if (result != null && result.isSuccess()) {
                                 // 删除List集合中的数据
+                                mList.remove(bean);
+                                notifyDataSetChanged();
                                 CommonUtils.showShortToast(
                                         mContext.getResources().getString(R.string.delete_success));
                             } else {

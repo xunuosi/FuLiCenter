@@ -9,64 +9,10 @@
     tools:context="cn.ucai.fulicenter.activity.GoodsDetailActivity">
 
     <RelativeLayout
-        android:id="@+id/goodsDetail_bg_relativeLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/good_detail_title_bg"
-        >
-        <include layout="@layout/title_image_text"/>
-
-        <ImageView
-            android:id="@+id/goodsDetail_share_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:src="@drawable/selector_share_bg"
-            />
-
-        <ImageView
-            android:id="@+id/goodsDetail_collect_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@id/goodsDetail_share_imageView"
-            android:src="@mipmap/bg_collect_in"
-            />
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@id/goodsDetail_collect_imageView">
-            <ImageView
-                android:id="@+id/goodsDetail_cart_imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:src="@mipmap/bg_cart_selected"
-                />
-            <TextView
-                android:id="@+id/goodsDetail_cart_textView"
-                android:layout_toRightOf="@id/goodsDetail_cart_imageView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:textColor="#52d0f2"
-                tools:text="10"
-                android:visibility="gone"
-                />
-        </RelativeLayout>
-
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/goodsDetail_title_relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/goodsDetail_bg_relativeLayout"
+        android:layout_below="@+id/goodsDetail_bg_relativeLayout"
         android:layout_marginTop="10dp"
         android:background="@color/good_detail_bg_white"
         android:padding="50dp"
@@ -138,5 +84,60 @@
             android:layout_height="match_parent"
             android:layout_below="@id/goodsDetail_FlowIndicator"
             />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/goodsDetail_bg_relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/good_detail_title_bg"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+        <include layout="@layout/title_image_text"/>
+
+        <ImageView
+            android:id="@+id/goodsDetail_share_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:src="@drawable/selector_share_bg"
+            />
+
+        <ImageView
+            android:id="@+id/goodsDetail_collect_imageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/goodsDetail_share_imageView"
+            android:src="@mipmap/bg_collect_in"
+            />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@id/goodsDetail_collect_imageView">
+            <ImageView
+                android:id="@+id/goodsDetail_cart_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/bg_cart_selected"
+                />
+            <TextView
+                android:id="@+id/goodsDetail_cart_textView"
+                android:layout_toRightOf="@id/goodsDetail_cart_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:textColor="#52d0f2"
+                tools:text="10"
+                android:visibility="gone"
+                />
+        </RelativeLayout>
+
     </RelativeLayout>
 </RelativeLayout>

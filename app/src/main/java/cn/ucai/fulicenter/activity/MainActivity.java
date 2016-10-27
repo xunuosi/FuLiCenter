@@ -100,10 +100,13 @@ public class MainActivity extends BaseActivity {
                 index = 2;
                 break;
             case R.id.rb_cart:
-                index = 3;
+                if (FuLiCenterApplication.getUser() == null) {
+                    MFGT.gotoLoginActivityFromCart(this);
+                }else {
+                    index = 3;
+                }
                 break;
             case R.id.rb_myCenter:
-
                 if (FuLiCenterApplication.getUser() == null) {
                     MFGT.gotoLoginActivity(this);
                 }else {
@@ -175,10 +178,19 @@ public class MainActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         L.e(TAG, "onActivityResult,requestCode:" + requestCode);
         // 判断是否由登录界面登录成功后跳转回来
-        if (requestCode == I.REQUEST_CODE_LOGIN && FuLiCenterApplication.getUser() != null) {
-            index = 4;
-            // 更新下方按钮的显示
-            updateRadioButtonView();
+        if (FuLiCenterApplication.getUser() != null) {
+            // 如果是点击个人中心要正确显示底部按钮
+            if (requestCode == I.REQUEST_CODE_LOGIN) {
+                index = 4;
+                // 更新下方按钮的显示
+                updateRadioButtonView();
+            }
+            // 购物车界面的显示
+            if (requestCode == I.REQUEST_CODE_CART) {
+                index = 3;
+                // 更新下方按钮的显示
+                updateRadioButtonView();
+            }
         }
     }
 }

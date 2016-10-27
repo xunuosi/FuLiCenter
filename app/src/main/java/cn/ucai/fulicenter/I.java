@@ -32,6 +32,7 @@ public interface I {
     public static final int REQUEST_CODE_REGISTER=666;
     public static final int REQUEST_CODE_LOGIN = 667;
     public static final int REQUEST_CODE_SETTING = 668;
+    public static final int REQUEST_CODE_CART = 669;
 
     /**
      * BeeColud APP ID

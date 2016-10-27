@@ -107,6 +107,12 @@ public class MFGT {
         startActivityForResult((Activity) context,intent,I.REQUEST_CODE_LOGIN);
     }
 
+    public static void gotoLoginActivityFromCart(Context context) {
+        Intent intent = new Intent();
+        intent.setClass(context, LoginActivity.class);
+        startActivityForResult((Activity) context,intent,I.REQUEST_CODE_CART);
+    }
+
     public static void gotoRegisterActivity(Context context) {
         Intent intent = new Intent();
         intent.setClass(context, RegisterActivity.class);

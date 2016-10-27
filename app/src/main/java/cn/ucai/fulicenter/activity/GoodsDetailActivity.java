@@ -1,6 +1,5 @@
 package cn.ucai.fulicenter.activity;
 
-import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.webkit.WebView;
@@ -315,5 +314,10 @@ public class GoodsDetailActivity extends BaseActivity {
 
 // 启动分享GUI
         oks.show(this);
+    }
+
+    @OnClick(R.id.goodsDetail_cart_imageView)
+    public void onClickAdd2Cart() {
+
     }
 }

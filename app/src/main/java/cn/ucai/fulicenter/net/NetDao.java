@@ -267,4 +267,17 @@ public class NetDao {
                 .targetClass(MessageBean.class)
                 .execute(listener);
     }
+
+    public static void addCart(Context mcontext, int goodsId, String username,int count
+            , OkHttpUtils.OnCompleteListener<MessageBean> listener) {
+
+        OkHttpUtils<MessageBean> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_ADD_CART)
+                .addParam(I.GoodsDetails.KEY_GOODS_ID, String.valueOf(goodsId))
+                .addParam(I.User.USER_NAME, username)
+                .addParam(I.Cart.COUNT, String.valueOf(count))
+                .addParam(I.Cart.IS_CHECKED, String.valueOf(I.CART_CHECKED_DEFAULT))
+                .targetClass(MessageBean.class)
+                .execute(listener);
+    }
 }

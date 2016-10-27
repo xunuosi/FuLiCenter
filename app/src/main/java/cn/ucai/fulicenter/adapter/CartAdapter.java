@@ -27,6 +27,8 @@ import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
+import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.MFGT;
 
 
 public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -184,6 +186,17 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             });
                 }
             }
+        }
+
+        /**
+         * 点击图片或标题进入商品详情界面
+         *
+         */
+        @OnClick({R.id.cart_item_goods_imageView,R.id.cart_item_goodsTitle_textView})
+        public void gotoGoodsDetail() {
+            int goodsId = mList.get((Integer) mCartItemLayout.getTag()).getGoodsId();
+            L.e("goodsId:" + goodsId);
+            MFGT.gotoGoodsActivity(mContext, goodsId);
         }
 
         CartItemViewHolder(View view) {

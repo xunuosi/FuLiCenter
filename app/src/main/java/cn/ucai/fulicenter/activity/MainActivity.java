@@ -16,6 +16,7 @@ import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.fragment.BoutiqueFragment;
+import cn.ucai.fulicenter.fragment.CartFragment;
 import cn.ucai.fulicenter.fragment.CategoryFragment;
 import cn.ucai.fulicenter.fragment.MyCenterFragment;
 import cn.ucai.fulicenter.fragment.NewGoodsFragment;
@@ -67,14 +68,11 @@ public class MainActivity extends BaseActivity {
         mFragments[0] = new NewGoodsFragment();
         mFragments[1] = new BoutiqueFragment();
         mFragments[2] = new CategoryFragment();
+        mFragments[3] = new CartFragment();
         mFragments[4] = new MyCenterFragment();
         // .show()可以指定显示哪个fragment显示你可以add很多
         mFragmentManager.beginTransaction()
                 .add(R.id.show_frameLayout, mFragments[0])
-                .add(R.id.show_frameLayout, mFragments[1])
-                .add(R.id.show_frameLayout, mFragments[2])
-                .hide(mFragments[1])
-                .hide(mFragments[2])
                 .show(mFragments[0])
                 .commit();
 

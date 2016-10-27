@@ -19,6 +19,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.CartBean;
+import cn.ucai.fulicenter.bean.GoodsDetailsBean;
+import cn.ucai.fulicenter.utils.ImageLoader;
 import cn.ucai.fulicenter.utils.MFGT;
 
 
@@ -45,20 +47,14 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         CartBean bean = mList.get(position);
+        GoodsDetailsBean goodsBean = bean.getGoods();
 
-            /*((CartItemViewHolder) holder).mBoutiqueTitleTextView
-                    .setText(boutiqueBean.getTitle());
-            ((CartItemViewHolder) holder).mBoutiqueNameTextView
-                    .setText(boutiqueBean.getName());
-            ((CartItemViewHolder) holder).mBoutiqueDescriptionTextView
-                    .setText(boutiqueBean.getDescription());
-
-            ImageLoader.downloadImg(mContext,
-                    ((CartItemViewHolder) holder).mBoutiqueImageView
-                    , boutiqueBean.getImageurl());
-            // 将解析出的每个CartBean存放在父容器的Tag属性中
-            ((CartItemViewHolder) holder).mBoutiqueContentLayout
-                    .setTag(boutiqueBean);*/
+        CartItemViewHolder viewHolder = (CartItemViewHolder) holder;
+        ImageLoader.downloadImg(mContext, viewHolder.mCartItemGoodsImageView
+                , goodsBean.getGoodsThumb());
+        viewHolder.mCartItemGoodsTitleTextView.setText(goodsBean.getGoodsName());
+        viewHolder.mCartItemGoodsPriceTextView.setText(goodsBean.getCurrencyPrice());
+        viewHolder.mCartItemCountTextView.setText(String.valueOf(bean.getCount()));
     }
 
 

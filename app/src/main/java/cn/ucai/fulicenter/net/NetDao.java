@@ -6,6 +6,7 @@ package cn.ucai.fulicenter.net;
 
         import cn.ucai.fulicenter.I;
         import cn.ucai.fulicenter.bean.BoutiqueBean;
+        import cn.ucai.fulicenter.bean.CartBean;
         import cn.ucai.fulicenter.bean.CategoryChildBean;
         import cn.ucai.fulicenter.bean.CategoryGroupBean;
         import cn.ucai.fulicenter.bean.CollectBean;
@@ -216,6 +217,16 @@ public class NetDao {
                 .addParam(I.Collect.USER_NAME, username)
                 .addParam(I.Collect.GOODS_ID, String.valueOf(goodsId))
                 .targetClass(MessageBean.class)
+                .execute(listener);
+    }
+
+    public static void findCarts(Context mcontext, String username
+            , OkHttpUtils.OnCompleteListener<CartBean[]> listener) {
+
+        OkHttpUtils<CartBean[]> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_FIND_CARTS)
+                .addParam(I.Collect.USER_NAME, username)
+                .targetClass(CartBean[].class)
                 .execute(listener);
     }
 }

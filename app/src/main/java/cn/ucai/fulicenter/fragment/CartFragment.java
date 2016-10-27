@@ -133,7 +133,7 @@ public class CartFragment extends BaseFragment {
     }
 
     private void downLoadData2() {
-        NetDao.findCarts2(mContext, "yujie",
+        NetDao.findCarts2(mContext, user.getMuserName(),
                 new OkHttpUtils.OnCompleteListener<String>() {
                     @Override
                     public void onSuccess(String json) {
@@ -145,6 +145,10 @@ public class CartFragment extends BaseFragment {
                                     .getListCartBeanFromJson(json);
                             mList = list;
                             mAdapter.initList(mList);
+                            if (list == null || list.size() == 0) {
+                                changeView(false);
+                                return;
+                            }
                             changeView(true);
                         } else {
                             changeView(false);
@@ -239,6 +243,9 @@ public class CartFragment extends BaseFragment {
         @Override
         public void onReceive(Context context, Intent intent) {
             settlementAccount();
+            if (mList == null || mList.size() == 0) {
+                changeView(false);
+            }
         }
     }
 

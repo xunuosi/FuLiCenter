@@ -114,12 +114,16 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         new OkHttpUtils.OnCompleteListener<MessageBean>() {
                             @Override
                             public void onSuccess(MessageBean result) {
-                                // 如果服务器成功更新刷新集合中的数据
-                                bean.setCount(count);
-                                // 发送广播更新数据显示
-                                mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATE_CART));
-                                // 更新数据数量显示
-                                mCartItemCountTextView.setText(String.valueOf(count));
+                                if (result.isSuccess()) {
+                                    // 如果服务器成功更新刷新集合中的数据
+                                    bean.setCount(count);
+                                    // 发送广播更新数据显示
+                                    mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATE_CART));
+                                    // 更新数据数量显示
+                                    mCartItemCountTextView.setText(String.valueOf(count));
+                                } else {
+                                    CommonUtils.showShortToast(R.string.internet_error);
+                                }
                             }
 
                             @Override
@@ -139,12 +143,16 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         new OkHttpUtils.OnCompleteListener<MessageBean>() {
                             @Override
                             public void onSuccess(MessageBean result) {
-                                // 如果服务器成功更新刷新集合中的数据
-                                bean.setCount(count);
-                                // 发送广播更新数据显示
-                                mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATE_CART));
-                                // 更新数据数量显示
-                                mCartItemCountTextView.setText(String.valueOf(count));
+                                if (result.isSuccess()) {
+                                    // 如果服务器成功更新刷新集合中的数据
+                                    bean.setCount(count);
+                                    // 发送广播更新数据显示
+                                    mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATE_CART));
+                                    // 更新数据数量显示
+                                    mCartItemCountTextView.setText(String.valueOf(count));
+                                } else {
+                                    CommonUtils.showShortToast(R.string.internet_error);
+                                }
                             }
 
                             @Override
@@ -152,6 +160,29 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                                 CommonUtils.showShortToast(R.string.internet_error);
                             }
                         });
+            } else {
+                if (bean != null) {
+                    NetDao.deleteCart(mContext, bean.getId(),
+                            new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                                @Override
+                                public void onSuccess(MessageBean result) {
+                                    if (result.isSuccess()) {
+                                        mList.remove(bean);
+                                        notifyDataSetChanged();
+                                        CommonUtils.showShortToast(result.getMsg());
+                                        // 发送广播更新数据显示
+                                        mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATE_CART));
+                                    } else {
+                                        CommonUtils.showShortToast(R.string.internet_error);
+                                    }
+                                }
+
+                                @Override
+                                public void onError(String error) {
+                                    CommonUtils.showShortToast(R.string.internet_error);
+                                }
+                            });
+                }
             }
         }
 

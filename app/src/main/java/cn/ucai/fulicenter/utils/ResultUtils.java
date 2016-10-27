@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.ucai.fulicenter.I;
+import cn.ucai.fulicenter.bean.CartBean;
+import cn.ucai.fulicenter.bean.GoodsDetailsBean;
 import cn.ucai.fulicenter.bean.Result;
 
 public class ResultUtils {
@@ -74,6 +76,46 @@ public class ResultUtils {
             e.printStackTrace();
         }
         return  null;
+    }
+
+    public static ArrayList<CartBean> getListCartBeanFromJson(String jsonStr) {
+        ArrayList<CartBean> list = new ArrayList<>();
+        Log.e("Utils","jsonStr="+jsonStr);
+        try {
+            if (jsonStr == null || jsonStr.isEmpty() || jsonStr.length() < 3) return null;
+            JSONArray array = new JSONArray(jsonStr);
+            Log.e("Utils","array.length="+array.length());
+            for (int i=0;i<array.length();i++) {
+                CartBean result = new CartBean();
+                JSONObject jsonObject = array.getJSONObject(i);
+                if(!jsonObject.isNull("id")) {
+                    result.setId(jsonObject.getInt("id"));
+                }
+                if (!jsonObject.isNull("userName")) {
+                    result.setUserName(jsonObject.getString("userName"));
+                }
+                if(!jsonObject.isNull("goodsId")) {
+                    result.setGoodsId(jsonObject.getInt("goodsId"));
+                }
+                if (!jsonObject.isNull("count")) {
+                    result.setCount(jsonObject.getInt("count"));
+                }
+                if(!jsonObject.isNull("isChecked")) {
+                    // 默认都是未选中状态
+                    result.setChecked(false);
+                }
+                if (!jsonObject.isNull("goods")) {
+                    GoodsDetailsBean bean = new Gson()
+                            .fromJson(jsonObject.getString("goods"),GoodsDetailsBean.class);
+                    result.setGoods(bean);
+                }
+                list.add(result);
+            }
+            return list;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public static <T> Result getListResultFromJson(String jsonStr,Class<T> clazz){

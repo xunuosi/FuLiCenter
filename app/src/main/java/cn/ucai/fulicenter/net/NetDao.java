@@ -229,4 +229,20 @@ public class NetDao {
                 .targetClass(CartBean[].class)
                 .execute(listener);
     }
+
+    /**
+     * 使用自定义的ResultUtils方法时使用
+     * @param mcontext
+     * @param username
+     * @param listener
+     */
+    public static void findCarts2(Context mcontext, String username
+            , OkHttpUtils.OnCompleteListener<String> listener) {
+
+        OkHttpUtils<String> utils = new OkHttpUtils<>(mcontext);
+        utils.setRequestUrl(I.REQUEST_FIND_CARTS)
+                .addParam(I.Collect.USER_NAME, username)
+                .targetClass(String.class)
+                .execute(listener);
+    }
 }

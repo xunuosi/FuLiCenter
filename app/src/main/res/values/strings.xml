@@ -68,6 +68,7 @@
     <string name="delete_fail">Delete Fail</string>
     <string name="delete_success">Del Success</string>
     <string name="collect_success">Collected</string>
+    <string name="internet_error">Internet Error</string>
 
 
 </resources>

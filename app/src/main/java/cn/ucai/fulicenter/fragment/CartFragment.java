@@ -28,9 +28,11 @@ import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.ResultUtils;
 import cn.ucai.fulicenter.views.SpaceItemDecoration;
 
 public class CartFragment extends BaseFragment {
+    private static final String TAG = CartFragment.class.getSimpleName();
 
     @BindView(R.id.newgoods_refresh_text_view)
     TextView mNewgoodsRefreshTextView;
@@ -73,8 +75,7 @@ public class CartFragment extends BaseFragment {
             public void onRefresh() {
                 mNewgoodsSrl.setRefreshing(true);
                 mNewgoodsRefreshTextView.setVisibility(View.VISIBLE);
-
-                downLoadData();
+                downLoadData2();
             }
         });
     }
@@ -83,7 +84,8 @@ public class CartFragment extends BaseFragment {
     protected void initData() {
         user = FuLiCenterApplication.getUser();
         if (user != null) {
-            downLoadData();
+            //downLoadData();
+            downLoadData2();
         }
     }
 
@@ -101,6 +103,34 @@ public class CartFragment extends BaseFragment {
                             mAdapter.initList(mList);
                         }
 
+                    }
+
+                    @Override
+                    public void onError(String error) {
+                        mNewgoodsRefreshTextView.setVisibility(View.GONE);
+                        mNewgoodsSrl.setRefreshing(false);
+                        CommonUtils.showLongToast(I.INTERNET_ERROR);
+                        L.e("ERROR:"+error);
+                    }
+                });
+    }
+
+    private void downLoadData2() {
+        NetDao.findCarts2(mContext, "yujie",
+                new OkHttpUtils.OnCompleteListener<String>() {
+                    @Override
+                    public void onSuccess(String json) {
+                        // 获取到数据后修正SwipRefresh的状态
+                        mNewgoodsSrl.setRefreshing(false);
+                        mNewgoodsRefreshTextView.setVisibility(View.GONE);
+                        if (json != null && json.length() > 0) {
+                            ArrayList<CartBean> mList = ResultUtils
+                                    .getListCartBeanFromJson(json);
+                            L.e(TAG, "List:"+mList);
+                            mAdapter.initList(mList);
+                        } else {
+                            CommonUtils.showShortToast(R.string.internet_error);
+                        }
                     }
 
                     @Override

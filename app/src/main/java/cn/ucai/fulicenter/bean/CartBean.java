@@ -1,7 +1,9 @@
 package cn.ucai.fulicenter.bean;
 
 
-public class CartBean {
+import java.io.Serializable;
+
+public class CartBean implements Serializable{
 
     /**
      * id : 35

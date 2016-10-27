@@ -245,11 +245,6 @@ public class GoodsDetailActivity extends BaseActivity {
                             // 根据状态改变显示
                             checkCollectStatus();
                             CommonUtils.showShortToast(R.string.delete_success);
-                            // 发出广播用于正确显示收藏宝贝界面数据
-                            Intent intent = new Intent(BROAD_CAST);
-                            intent.putExtra(TAG, DEL_COLLECT);
-                            // 发送广播
-                            sendBroadcast(intent);
                         } else {
                             CommonUtils.showShortToast(R.string.delete_fail);
                         }
@@ -273,11 +268,6 @@ public class GoodsDetailActivity extends BaseActivity {
                             // 根据状态改变显示
                             checkCollectStatus();
                             CommonUtils.showShortToast(R.string.collect_success);
-                            // 发出广播用于正确显示收藏宝贝界面数据
-                            Intent intent = new Intent(BROAD_CAST);
-                            intent.putExtra(TAG, ADD_COLLECT);
-                            // 发送广播
-                            sendBroadcast(intent);
                         } else {
                             CommonUtils.showShortToast(R.string.delete_fail);
                         }

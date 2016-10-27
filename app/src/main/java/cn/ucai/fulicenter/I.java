@@ -82,6 +82,7 @@ public interface I {
      * 广播action
      */
     String BROADCAST_UPDATE_CART = "cn.ucai.fulicenter.adapter.CartAdapter";
+    boolean CART_CHECKED_DEFAULT = false;
 
     interface Goods {
         String KEY_RESULT = "result";

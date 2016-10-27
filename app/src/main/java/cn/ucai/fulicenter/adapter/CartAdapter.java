@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,8 +22,11 @@ import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.CartBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
+import cn.ucai.fulicenter.bean.MessageBean;
+import cn.ucai.fulicenter.net.NetDao;
+import cn.ucai.fulicenter.net.OkHttpUtils;
+import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ImageLoader;
-import cn.ucai.fulicenter.utils.MFGT;
 
 
 public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -69,6 +71,8 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     }
                 }
         );
+        // 传入下标获取集合中的对象
+        viewHolder.mCartItemLayout.setTag(position);
     }
 
 
@@ -82,7 +86,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         mList = newList;
         notifyDataSetChanged();
     }
-    
+
     class CartItemViewHolder extends RecyclerView.ViewHolder{
         @BindView(R.id.cart_item_checkBox)
         CheckBox mCartItemCheckBox;
@@ -100,6 +104,56 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         TextView mCartItemGoodsPriceTextView;
         @BindView(R.id.cart_item_layout)
         RelativeLayout mCartItemLayout;
+
+        @OnClick(R.id.cart_item_add_imageView)
+        public void addCart() {
+            final CartBean bean = mList.get((Integer) mCartItemLayout.getTag());
+            if (bean != null) {
+                final int count = bean.getCount() + 1;
+                NetDao.updateCart(mContext, bean.getId(), count,
+                        new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                            @Override
+                            public void onSuccess(MessageBean result) {
+                                // 如果服务器成功更新刷新集合中的数据
+                                bean.setCount(count);
+                                // 发送广播更新数据显示
+                                mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATE_CART));
+                                // 更新数据数量显示
+                                mCartItemCountTextView.setText(String.valueOf(count));
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                CommonUtils.showShortToast(R.string.internet_error);
+                            }
+                        });
+            }
+        }
+
+        @OnClick(R.id.cart_item_del_imageView)
+        public void delCart() {
+            final CartBean bean = mList.get((Integer) mCartItemLayout.getTag());
+            if (bean != null && bean.getCount() > 1) {
+                final int count = bean.getCount() - 1;
+                NetDao.updateCart(mContext, bean.getId(), count,
+                        new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                            @Override
+                            public void onSuccess(MessageBean result) {
+                                // 如果服务器成功更新刷新集合中的数据
+                                bean.setCount(count);
+                                // 发送广播更新数据显示
+                                mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATE_CART));
+                                // 更新数据数量显示
+                                mCartItemCountTextView.setText(String.valueOf(count));
+                            }
+
+                            @Override
+                            public void onError(String error) {
+                                CommonUtils.showShortToast(R.string.internet_error);
+                            }
+                        });
+            }
+        }
 
         CartItemViewHolder(View view) {
             super(view);

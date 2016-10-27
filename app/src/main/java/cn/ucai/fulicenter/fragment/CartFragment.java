@@ -1,6 +1,10 @@
 package cn.ucai.fulicenter.fragment;
 
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,19 +12,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.activity.MainActivity;
 import cn.ucai.fulicenter.adapter.CartAdapter;
-import cn.ucai.fulicenter.adapter.CartAdapter;
-import cn.ucai.fulicenter.bean.CartBean;
 import cn.ucai.fulicenter.bean.CartBean;
 import cn.ucai.fulicenter.bean.UserBean;
 import cn.ucai.fulicenter.net.NetDao;
@@ -46,6 +50,16 @@ public class CartFragment extends BaseFragment {
     ArrayList<CartBean> mList;
     CartAdapter mAdapter;
     UserBean user = null;
+    @BindView(R.id.blank_textView)
+    TextView mBlankTextView;
+    @BindView(R.id.total_textView)
+    TextView mTotalTextView;
+    @BindView(R.id.save_textView)
+    TextView mSaveTextView;
+    @BindView(R.id.cart_fragment_settlement_layout)
+    RelativeLayout mCartFragmentSettlementLayout;
+
+    UpdateCartReceiver mReceiver;
 
     public CartFragment() {
         // Required empty public constructor
@@ -59,6 +73,9 @@ public class CartFragment extends BaseFragment {
         View layout = inflater.inflate(R.layout.fragment_cart, container, false);
         ButterKnife.bind(this, layout);
         mContext = (MainActivity) getContext();
+        IntentFilter filter = new IntentFilter(I.BROADCAST_UPDATE_CART);
+        mReceiver = new UpdateCartReceiver();
+        mContext.registerReceiver(mReceiver, filter);
         super.onCreateView(inflater, container, savedInstanceState);
         return layout;
     }
@@ -110,7 +127,7 @@ public class CartFragment extends BaseFragment {
                         mNewgoodsRefreshTextView.setVisibility(View.GONE);
                         mNewgoodsSrl.setRefreshing(false);
                         CommonUtils.showLongToast(I.INTERNET_ERROR);
-                        L.e("ERROR:"+error);
+                        L.e("ERROR:" + error);
                     }
                 });
     }
@@ -124,21 +141,24 @@ public class CartFragment extends BaseFragment {
                         mNewgoodsSrl.setRefreshing(false);
                         mNewgoodsRefreshTextView.setVisibility(View.GONE);
                         if (json != null && json.length() > 0) {
-                            ArrayList<CartBean> mList = ResultUtils
+                            ArrayList<CartBean> list = ResultUtils
                                     .getListCartBeanFromJson(json);
-                            L.e(TAG, "List:"+mList);
+                            mList = list;
                             mAdapter.initList(mList);
+                            changeView(true);
                         } else {
+                            changeView(false);
                             CommonUtils.showShortToast(R.string.internet_error);
                         }
                     }
 
                     @Override
                     public void onError(String error) {
+                        changeView(false);
                         mNewgoodsRefreshTextView.setVisibility(View.GONE);
                         mNewgoodsSrl.setRefreshing(false);
                         CommonUtils.showLongToast(I.INTERNET_ERROR);
-                        L.e("ERROR:"+error);
+                        L.e("ERROR:" + error);
                     }
                 });
     }
@@ -157,12 +177,76 @@ public class CartFragment extends BaseFragment {
         mLinearLayoutManager = new LinearLayoutManager(mContext);
         mNewgoodsRecyclerView.setLayoutManager(mLinearLayoutManager);
         mList = new ArrayList<>();
-        mAdapter = new CartAdapter(mContext,mList);
+        mAdapter = new CartAdapter(mContext, mList);
         mNewgoodsRecyclerView.setAdapter(mAdapter);
         // 是否自动修复大小
         mNewgoodsRecyclerView.setHasFixedSize(true);
         // 设置Item之间的边距 上下左右边距都12px
         mNewgoodsRecyclerView.addItemDecoration(new SpaceItemDecoration(12));
+        changeView(false);
     }
 
+    /**
+     * 根据购物车情况显示视图的方法
+     * @param hasCart
+     */
+    private void changeView(boolean hasCart) {
+        mBlankTextView.setVisibility(hasCart ? View.GONE : View.VISIBLE);
+        mCartFragmentSettlementLayout.setVisibility(hasCart ? View.VISIBLE : View.GONE);
+        mNewgoodsRecyclerView.setVisibility(hasCart ? View.VISIBLE : View.GONE);
+        settlementAccount();
+    }
+
+    /**
+     * 计算合计的方法
+     */
+    private void settlementAccount() {
+        double sumPrice = 0;
+        double savePrice = 0;
+        if (mList != null && mList.size() > 0) {
+            for (CartBean bean : mList) {
+                if (bean.isChecked()) {
+                    sumPrice += getPrice(bean.getGoods().getCurrencyPrice()) * bean.getCount();
+                    savePrice += getPrice(bean.getGoods().getRankPrice()) * bean.getCount();
+                }
+            }
+            L.e(TAG, "sumPrice:" + sumPrice + ",savePrice:" + savePrice);
+            mTotalTextView.setText("合计:" + String.valueOf(sumPrice) + "￥");
+            mSaveTextView.setText("节省:" + String.valueOf(savePrice) + "￥");
+        } else {
+            L.e(TAG, "sumPrice:" + sumPrice + ",savePrice:" + savePrice);
+            mTotalTextView.setText("合计:" + String.valueOf(sumPrice) + "￥");
+            mSaveTextView.setText("节省:" + String.valueOf(savePrice) + "￥");
+        }
+
+    }
+
+    /**
+     * 将价格字符串转换成数字
+     * @param price
+     */
+    private double getPrice(String price) {
+        L.e("xns", price.substring(price.indexOf("￥") + 1));
+        return Double.valueOf(price.substring(price.indexOf("￥") + 1));
+    }
+    @OnClick(R.id.settlement_button)
+    public void onClickSettleAccount() {
+
+    }
+
+    class UpdateCartReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            settlementAccount();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mReceiver != null) {
+            mContext.unregisterReceiver(mReceiver);
+        }
+    }
 }

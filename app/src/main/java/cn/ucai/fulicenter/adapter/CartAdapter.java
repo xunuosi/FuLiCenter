@@ -1,11 +1,13 @@
 package cn.ucai.fulicenter.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -17,6 +19,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.CartBean;
 import cn.ucai.fulicenter.bean.GoodsDetailsBean;
@@ -30,8 +33,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public CartAdapter(Context context, List<CartBean> list) {
         mContext = context;
-        mList = new ArrayList<>();
-        mList.addAll(list);
+        mList = list;
     }
 
 
@@ -46,7 +48,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        CartBean bean = mList.get(position);
+        final CartBean bean = mList.get(position);
         GoodsDetailsBean goodsBean = bean.getGoods();
 
         CartItemViewHolder viewHolder = (CartItemViewHolder) holder;
@@ -55,6 +57,18 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         viewHolder.mCartItemGoodsTitleTextView.setText(goodsBean.getGoodsName());
         viewHolder.mCartItemGoodsPriceTextView.setText(goodsBean.getCurrencyPrice());
         viewHolder.mCartItemCountTextView.setText(String.valueOf(bean.getCount()));
+        viewHolder.mCartItemCheckBox.setChecked(false);
+        viewHolder.mCartItemCheckBox.setOnCheckedChangeListener(
+                new CompoundButton.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        // 改变购物车中数据的选中状态
+                        bean.setChecked(isChecked);
+                        // 发送广播提醒外部修改数据
+                        mContext.sendBroadcast(new Intent(I.BROADCAST_UPDATE_CART));
+                    }
+                }
+        );
     }
 
 
@@ -65,10 +79,7 @@ public class CartAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 
     public void initList(ArrayList<CartBean> newList) {
-        if (mList != null) {
-            mList.clear();
-        }
-        mList.addAll(newList);
+        mList = newList;
         notifyDataSetChanged();
     }
     

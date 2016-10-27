@@ -78,6 +78,10 @@ public interface I {
     int NEW_GOOD = 0;
     int CATEGORY_GOOD = 1;
     int CAT_ID = 0;
+    /**
+     * 广播action
+     */
+    String BROADCAST_UPDATE_CART = "cn.ucai.fulicenter.adapter.CartAdapter";
 
     interface Goods {
         String KEY_RESULT = "result";

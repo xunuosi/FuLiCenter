@@ -1,9 +1,8 @@
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="cn.ucai.fulicenter.fragment.NewGoodsFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -13,12 +12,22 @@
         android:layout_height="match_parent"
        >
        <LinearLayout
+           android:id="@+id/cart_fragment_content"
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:background="@color/list_background"
            android:orientation="vertical">
            <include layout="@layout/title_refresh_layout" />
-
+           <TextView
+               android:id="@+id/blank_textView"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:text="客官空空如也啊～"
+               android:textSize="22sp"
+               android:gravity="center_horizontal"
+               android:textColor="@color/google_red"
+               android:layout_marginTop="100dp"
+               />
            <android.support.v7.widget.RecyclerView
                android:id="@+id/newgoods_recycler_view"
                android:layout_width="match_parent"
@@ -28,5 +37,45 @@
 
        </LinearLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
+    <RelativeLayout
+        android:id="@+id/cart_fragment_settlement_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"
+        >
+        <Button
+            android:id="@+id/settlement_button"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:background="@color/orange"
+            android:text="@string/settlement"
+            android:textSize="16dp"
+            android:layout_alignParentRight="true"
+            />
+        <TextView
+        android:id="@+id/total_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:gravity="center"
+        android:text="合计:0.0￥"
+        android:textSize="14dp"
+        android:textColor="@color/good_detail_currency_price"
+        android:layout_toLeftOf="@id/settlement_button"
+        android:layout_marginRight="5dp"
+        />
+        <TextView
+            android:id="@+id/save_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:gravity="center"
+            android:text="节省:0.0￥"
+            android:textSize="14dp"
+            android:layout_marginRight="5dp"
+            android:textColor="@color/red"
+            android:layout_toLeftOf="@id/settlement_button"
+            android:layout_below="@id/total_textView"
+            />
+    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>

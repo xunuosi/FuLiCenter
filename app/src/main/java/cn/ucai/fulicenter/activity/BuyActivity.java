@@ -26,6 +26,7 @@ import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
 import cn.ucai.fulicenter.bean.CartBean;
+import cn.ucai.fulicenter.bean.MessageBean;
 import cn.ucai.fulicenter.bean.UserBean;
 import cn.ucai.fulicenter.net.NetDao;
 import cn.ucai.fulicenter.net.OkHttpUtils;
@@ -209,6 +210,32 @@ public class BuyActivity extends BaseActivity implements PaymentHandler {
              */
             int code = data.getExtras().getInt("code");
             L.e(TAG, "code:" + code);
+            if (code == 1) {
+                CommonUtils.showShortToast(R.string.pingpp_title_activity_pay_sucessed);
+                paySuccess();
+            } else if (code == -1) {
+                CommonUtils.showShortToast(getString(R.string.pingpp_pay_failed));
+                finish();
+            }
+        }
+    }
+
+    private void paySuccess() {
+        // 支付成功删除购物车的信息
+        for (int i=0;i<cartIdArr.length;i++) {
+            NetDao.deleteCart(mContext, Integer.valueOf(cartIdArr[i])
+                    , new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                        @Override
+                        public void onSuccess(MessageBean result) {
+                            L.e(TAG,"result"+result);
+                        }
+
+                        @Override
+                        public void onError(String error) {
+
+                        }
+                    });
+            finish();
         }
     }
 }

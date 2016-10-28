@@ -74,6 +74,11 @@
     <string name="pay">Confirm Pay</string>
     <string name="noGoods_choosed">Choose Empty</string>
     <string name="pay_title">Entry Address</string>
+    <string name="receiver_name_isEmpty">Receiver Name is Empty</string>
+    <string name="phone_valid">Phone Valid</string>
+    <string name="phone_isEmpty">Phone is Empty</string>
+    <string name="city_isEmpty">City is Empty</string>
+    <string name="address_isEmpty">Address is Empty</string>
 
 
 </resources>

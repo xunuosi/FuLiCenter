@@ -62,4 +62,9 @@
     <string name="pay">确认付款</string>
     <string name="noGoods_choosed">亲～你啥也没选啊～</string>
     <string name="pay_title">填写收货地址</string>
+    <string name="receiver_name_isEmpty">收货人姓名为空</string>
+    <string name="phone_valid">手机号码格式不对</string>
+    <string name="phone_isEmpty">手机号码为空</string>
+    <string name="city_isEmpty">城市选择为空</string>
+    <string name="address_isEmpty">街道地址为空</string>
 </resources>

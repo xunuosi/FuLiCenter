@@ -2,12 +2,16 @@ package cn.ucai.fulicenter.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.ucai.fulicenter.FuLiCenterApplication;
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
@@ -26,6 +30,14 @@ public class PayActivity extends BaseActivity {
     String cartIds;
     @BindView(R.id.total_textView)
     TextView mTotalTextView;
+    @BindView(R.id.pay_name_editText)
+    EditText mPayNameEditText;
+    @BindView(R.id.pay_phone_editText)
+    EditText mPayPhoneEditText;
+    @BindView(R.id.pay_address_editText)
+    EditText mPayAddressEditText;
+    @BindView(R.id.pay_city_spinner)
+    Spinner mPayCitySpinner;
     private Activity mContext;
     UserBean user;
     String[] cartIdArr;
@@ -105,5 +117,39 @@ public class PayActivity extends BaseActivity {
     @Override
     protected void initView() {
         DisplayUtils.initBackWithTitle(mContext, getResources().getString(R.string.pay_title));
+    }
+
+    @OnClick(R.id.settlement_button)
+    public void onClickPay() {
+        String receiver = mPayNameEditText.getText().toString();
+        String phone = mPayPhoneEditText.getText().toString();
+        String city = mPayCitySpinner.getSelectedItem().toString();
+        String address = mPayAddressEditText.getText().toString();
+
+        if (TextUtils.isEmpty(receiver)) {
+            mPayNameEditText.requestFocus();
+            mPayNameEditText.setError(getString(R.string.receiver_name_isEmpty));
+            return;
+        } else if (TextUtils.isEmpty(phone)) {
+            mPayPhoneEditText.requestFocus();
+            mPayPhoneEditText.setError(getString(R.string.phone_isEmpty));
+            return;
+        } else if (!phone.matches("[\\d]{11}")) {
+            mPayPhoneEditText.requestFocus();
+            mPayPhoneEditText.setError(getString(R.string.phone_valid));
+            return;
+        } else if (TextUtils.isEmpty(city)) {
+            CommonUtils.showShortToast(R.string.city_isEmpty);
+            return;
+        } else if (TextUtils.isEmpty(address)) {
+            mPayAddressEditText.requestFocus();
+            mPayAddressEditText.setError(getString(R.string.address_isEmpty));
+            return;
+        }
+        toPay();
+    }
+
+    private void toPay() {
+        L.e(TAG,"支付了");
     }
 }

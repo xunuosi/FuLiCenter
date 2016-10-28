@@ -66,42 +66,12 @@
             android:gravity="center_vertical"
             />
     </RelativeLayout>
-    <RelativeLayout
-        android:id="@+id/pay_city_layout"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_below="@id/pay_phone_layout"
-        android:background="@color/white"
-        >
-        <View
-            android:background="@color/bg_gray_light"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"/>
-        <TextView
-            android:id="@+id/pay_city_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="所在地址:"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:gravity="center_vertical"
-            />
-        <Spinner
-            android:id="@+id/pay_city_spinner"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="5dp"
-            android:inputType="phone"
-            android:layout_toRightOf="@id/pay_city_textView"
-            android:gravity="center_vertical"
-            android:entries="@array/area"
-            />
-    </RelativeLayout>
+
     <RelativeLayout
         android:id="@+id/pay_address_layout"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_below="@id/pay_city_layout"
+        android:layout_below="@+id/pay_city_layout"
         android:background="@color/white"
         >
         <View
@@ -118,7 +88,7 @@
             android:gravity="center_vertical"
             />
         <EditText
-            android:id="@+id/pay_phone_spinner"
+            android:id="@+id/pay_address_editText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
@@ -152,6 +122,38 @@
             android:textColor="@color/good_detail_currency_price"
             android:layout_toLeftOf="@id/settlement_button"
             android:layout_marginRight="5dp"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/pay_city_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:layout_below="@+id/pay_phone_layout"
+        android:layout_alignParentStart="true">
+        <View
+            android:background="@color/bg_gray_light"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
+        <TextView
+            android:id="@+id/pay_city_textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="所在地址:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:gravity="center_vertical"
+            />
+        <Spinner
+            android:id="@+id/pay_city_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="5dp"
+            android:inputType="phone"
+            android:layout_toRightOf="@id/pay_city_textView"
+            android:gravity="center_vertical"
+            android:entries="@array/area"
             />
     </RelativeLayout>
 </RelativeLayout>

@@ -72,6 +72,8 @@
     <string name="settlement">Settle Acconut</string>
     <string name="add_cart_success">Add Success</string>
     <string name="pay">Confirm Pay</string>
+    <string name="noGoods_choosed">Choose Empty</string>
+    <string name="pay_title">Entry Address</string>
 
 
 </resources>

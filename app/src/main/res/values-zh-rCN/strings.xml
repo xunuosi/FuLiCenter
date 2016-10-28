@@ -12,7 +12,7 @@
     <string name="confirmpassword">确认密码</string>
     <string name="register">免费注册</string>
     <string name="user_name_connot_be_empty">帐号不能为空</string>
-    <string name="illegal_user_name">非法帐号,6-16个数字和字母组合,请以字母开头</string>
+    <string name="illegal_user_name">非法帐号,6–16个数字和字母组合,请以字母开头</string>
     <string name="nick_name_connot_be_empty">昵称不能为空</string>
     <string name="password_connot_be_empty">密码不能为空</string>
     <string name="confirm_password_connot_be_empty">确认密码不能为空</string>
@@ -60,4 +60,6 @@
     <string name="settlement">结 算</string>
     <string name="add_cart_success">添加宝贝成功</string>
     <string name="pay">确认付款</string>
+    <string name="noGoods_choosed">亲～你啥也没选啊～</string>
+    <string name="pay_title">填写收货地址</string>
 </resources>

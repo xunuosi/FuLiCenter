@@ -32,6 +32,7 @@ import cn.ucai.fulicenter.net.OkHttpUtils;
 import cn.ucai.fulicenter.utils.CommonUtils;
 import cn.ucai.fulicenter.utils.ConvertUtils;
 import cn.ucai.fulicenter.utils.L;
+import cn.ucai.fulicenter.utils.MFGT;
 import cn.ucai.fulicenter.utils.ResultUtils;
 import cn.ucai.fulicenter.views.SpaceItemDecoration;
 
@@ -60,6 +61,7 @@ public class CartFragment extends BaseFragment {
     RelativeLayout mCartFragmentSettlementLayout;
 
     UpdateCartReceiver mReceiver;
+    StringBuilder sb;// 用于拼接多个购物车id
 
     public CartFragment() {
         // Required empty public constructor
@@ -207,9 +209,11 @@ public class CartFragment extends BaseFragment {
     private void settlementAccount() {
         double sumPrice = 0;
         double savePrice = 0;
+        sb = new StringBuilder();
         if (mList != null && mList.size() > 0) {
             for (CartBean bean : mList) {
                 if (bean.isChecked()) {
+                    sb.append(bean.getId() + ",");
                     sumPrice += getPrice(bean.getGoods().getCurrencyPrice()) * bean.getCount();
                     savePrice += getPrice(bean.getGoods().getRankPrice()) * bean.getCount();
                 }
@@ -235,7 +239,12 @@ public class CartFragment extends BaseFragment {
     }
     @OnClick(R.id.settlement_button)
     public void onClickSettleAccount() {
-
+        // 判断是否有商品被选中
+        if (sb != null && sb.length() > 0) {
+            MFGT.gotoPayActivity(mContext, sb.toString());
+        } else {
+            CommonUtils.showShortToast(R.string.noGoods_choosed);
+        }
     }
 
     class UpdateCartReceiver extends BroadcastReceiver {

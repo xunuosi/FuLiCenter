@@ -59,4 +59,5 @@
     <string name="internet_error">网络异常</string>
     <string name="settlement">结 算</string>
     <string name="add_cart_success">添加宝贝成功</string>
+    <string name="pay">确认付款</string>
 </resources>

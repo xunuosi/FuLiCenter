@@ -71,6 +71,7 @@
     <string name="internet_error">Internet Error</string>
     <string name="settlement">Settle Acconut</string>
     <string name="add_cart_success">Add Success</string>
+    <string name="pay">Confirm Pay</string>
 
 
 </resources>

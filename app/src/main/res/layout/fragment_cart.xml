@@ -50,7 +50,7 @@
             android:layout_height="60dp"
             android:background="@color/orange"
             android:text="@string/settlement"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:layout_alignParentRight="true"
             />
         <TextView
@@ -59,7 +59,7 @@
         android:layout_height="30dp"
         android:gravity="center"
         android:text="合计:0.0￥"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:textColor="@color/good_detail_currency_price"
         android:layout_toLeftOf="@id/settlement_button"
         android:layout_marginRight="5dp"
@@ -70,7 +70,7 @@
             android:layout_height="30dp"
             android:gravity="center"
             android:text="节省:0.0￥"
-            android:textSize="14dp"
+            android:textSize="14sp"
             android:layout_marginRight="5dp"
             android:textColor="@color/red"
             android:layout_toLeftOf="@id/settlement_button"

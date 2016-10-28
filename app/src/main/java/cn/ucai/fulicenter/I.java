@@ -83,6 +83,8 @@ public interface I {
      */
     String BROADCAST_UPDATE_CART = "cn.ucai.fulicenter.adapter.CartAdapter";
     boolean CART_CHECKED_DEFAULT = false;
+    int CART_CHECKED_DEFAULT_INTEGER = 0;
+    int CART_ADD_COUNT_DEFAULT = 1;
 
     interface Goods {
         String KEY_RESULT = "result";

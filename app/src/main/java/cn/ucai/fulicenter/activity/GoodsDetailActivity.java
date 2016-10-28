@@ -318,6 +318,26 @@ public class GoodsDetailActivity extends BaseActivity {
 
     @OnClick(R.id.goodsDetail_cart_imageView)
     public void onClickAdd2Cart() {
+        user = FuLiCenterApplication.getUser();
+        if (user != null) {
+            NetDao.addCart(mContext, goodsId, user.getMuserName(),
+                    new OkHttpUtils.OnCompleteListener<MessageBean>() {
+                        @Override
+                        public void onSuccess(MessageBean result) {
+                            if (result != null && result.isSuccess()) {
+                                L.e(TAG, "goodsId:" + goodsId);
+                                CommonUtils.showShortToast(R.string.add_cart_success);
+                            } else {
+                                CommonUtils.showShortToast(I.INTERNET_ERROR);
+                            }
 
+                        }
+
+                        @Override
+                        public void onError(String error) {
+                            CommonUtils.showShortToast(error);
+                        }
+                    });
+        }
     }
 }

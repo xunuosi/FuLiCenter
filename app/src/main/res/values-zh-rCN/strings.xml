@@ -58,4 +58,5 @@
     <string name="collect_success">收藏宝贝成功</string>
     <string name="internet_error">网络异常</string>
     <string name="settlement">结 算</string>
+    <string name="add_cart_success">添加宝贝成功</string>
 </resources>

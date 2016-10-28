@@ -338,6 +338,8 @@ public class GoodsDetailActivity extends BaseActivity {
                             CommonUtils.showShortToast(error);
                         }
                     });
+        } else {
+            MFGT.gotoLoginActivity(mContext);
         }
     }
 }

@@ -122,7 +122,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="5dp"
-            android:inputType="phone"
             android:layout_toRightOf="@id/pay_address_textView"
             android:gravity="center_vertical"
             />
@@ -136,7 +135,7 @@
         >
         <Button
             android:id="@+id/settlement_button"
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="60dp"
             android:background="@color/orange"
             android:text="@string/pay"

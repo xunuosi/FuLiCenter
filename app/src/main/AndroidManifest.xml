@@ -83,6 +83,7 @@
 
         <activity android:name=".activity.PayActivity">
         </activity>
+
     </application>
 
 </manifest>

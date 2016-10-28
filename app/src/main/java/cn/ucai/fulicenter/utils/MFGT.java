@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cn.ucai.fulicenter.I;
 import cn.ucai.fulicenter.R;
@@ -15,7 +14,7 @@ import cn.ucai.fulicenter.activity.CollectGoodsActivity;
 import cn.ucai.fulicenter.activity.GoodsDetailActivity;
 import cn.ucai.fulicenter.activity.LoginActivity;
 import cn.ucai.fulicenter.activity.MainActivity;
-import cn.ucai.fulicenter.activity.PayActivity;
+import cn.ucai.fulicenter.activity.BuyActivity;
 import cn.ucai.fulicenter.activity.RegisterActivity;
 import cn.ucai.fulicenter.activity.SettingsActivity;
 import cn.ucai.fulicenter.bean.BoutiqueBean;
@@ -139,7 +138,7 @@ public class MFGT {
 
     public static void gotoPayActivity(Context context,String cartIds) {
         Intent intent = new Intent().putExtra(I.Cart.ID, cartIds);
-        intent.setClass(context, PayActivity.class);
+        intent.setClass(context, BuyActivity.class);
         startActivity(context, intent);
     }
 }

@@ -2,10 +2,10 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_pay"
+    android:id="@+id/activity_buy"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="cn.ucai.fulicenter.activity.PayActivity">
+    tools:context="cn.ucai.fulicenter.activity.BuyActivity">
     <include layout="@layout/white_title_image_text"/>
     <RelativeLayout
         android:id="@+id/pay_name_layout"

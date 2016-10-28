@@ -1,13 +1,23 @@
 package cn.ucai.fulicenter.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.pingplusplus.android.PingppLog;
+import com.pingplusplus.libone.PaymentHandler;
+import com.pingplusplus.libone.PingppOne;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,8 +34,10 @@ import cn.ucai.fulicenter.utils.L;
 import cn.ucai.fulicenter.utils.ResultUtils;
 import cn.ucai.fulicenter.views.DisplayUtils;
 
-public class PayActivity extends BaseActivity {
-    private static final String TAG = PayActivity.class.getSimpleName();
+
+public class BuyActivity extends BaseActivity implements PaymentHandler {
+    private static final String TAG = BuyActivity.class.getSimpleName();
+    private static String URL = "http://218.244.151.190/demo/charge";
 
     String cartIds;
     @BindView(R.id.total_textView)
@@ -42,15 +54,22 @@ public class PayActivity extends BaseActivity {
     UserBean user;
     String[] cartIdArr;
     ArrayList<CartBean> mList;
+    double savePrice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setContentView(R.layout.activity_pay);
+        setContentView(R.layout.activity_buy);
         ButterKnife.bind(this);
-        mContext = PayActivity.this;
+        mContext = BuyActivity.this;
         cartIds = getIntent().getStringExtra(I.Cart.ID);
         L.e(TAG, "cartIds:" + cartIds);
         super.onCreate(savedInstanceState);
+        //设置需要使用的支付方式
+        PingppOne.enableChannels(new String[]{"wx", "alipay", "upacp", "bfb", "jdpay_wap"});
+
+        PingppOne.CONTENT_TYPE = "application/json";
+
+        PingppLog.DEBUG = true;
     }
 
     @Override
@@ -93,7 +112,7 @@ public class PayActivity extends BaseActivity {
      * 计算合计的方法
      */
     private void settlementAccount() {
-        double savePrice = 0;
+        savePrice = 0;
         for (CartBean bean : mList) {
             for (String carId : cartIdArr) {
                 if (carId.equals(String.valueOf(bean.getId()))) {
@@ -150,6 +169,46 @@ public class PayActivity extends BaseActivity {
     }
 
     private void toPay() {
-        L.e(TAG,"支付了");
+        // 产生个订单号
+        String orderNo = new SimpleDateFormat("yyyyMMddhhmmss")
+                .format(new Date());
+
+        // 计算总金额（以分为单位）
+        int amount = (int) (savePrice * 100);
+
+        // 构建账单json对象
+        JSONObject bill = new JSONObject();
+
+        // 自定义的额外信息 选填
+        JSONObject extras = new JSONObject();
+        try {
+            extras.put("extra1", "extra1");
+            extras.put("extra2", "extra2");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            bill.put("order_no", orderNo);
+            bill.put("amount", amount);
+            bill.put("extras", extras);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        //壹收款: 创建支付通道的对话框
+        PingppOne.showPaymentChannels(getSupportFragmentManager(), bill.toString(), URL, this);
+    }
+
+    @Override
+    public void handlePaymentResult(Intent data) {
+        if (data != null) {
+            /**
+             * code：支付结果码  -2:服务端错误、 -1：失败、 0：取消、1：成功
+             * error_msg：支付结果信息
+             */
+            int code = data.getExtras().getInt("code");
+            L.e(TAG, "code:" + code);
+        }
     }
 }
